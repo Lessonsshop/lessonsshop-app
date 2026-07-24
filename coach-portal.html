@@ -15,16 +15,23 @@
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
         .modal-overlay.active { display: flex; }
         .modal-content { background: white; border-radius: 16px; padding: 28px; max-width: 700px; max-height: 90vh; overflow-y: auto; width: 90%; }
-        .calendar-day { text-align: center; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 12px; }
-        .calendar-day.available { background: #dcfce7; color: #166534; font-weight: bold; }
-        .calendar-day.booked { background: #fee2e2; color: #dc2626; font-weight: bold; }
-        .calendar-day.empty { background: #f3f4f6; color: #9ca3af; }
-        .time-slot { padding: 10px; margin: 4px 0; border-radius: 8px; cursor: pointer; font-size: 12px; }
-        .time-slot.available { background: #dcfce7; color: #166534; border: 2px solid #16a34a; }
-        .time-slot.booked { background: #fee2e2; color: #dc2626; border: 2px solid #dc2626; }
+        .calendar-day { text-align: center; padding: 12px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; min-height: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .calendar-day.available { background: #dcfce7; color: #166534; font-weight: bold; border: 2px solid #16a34a; }
+        .calendar-day.booked { background: #fee2e2; color: #dc2626; font-weight: bold; border: 2px solid #dc2626; }
+        .calendar-day.blocked { background: #f3f4f6; color: #9ca3af; font-weight: bold; border: 2px solid #d1d5db; }
+        .calendar-day.empty { background: #f9fafb; color: #9ca3af; }
+        .calendar-day:hover { transform: scale(1.05); }
+        .time-slot { padding: 12px; margin: 6px 0; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .time-slot.available { background: #dcfce7; color: #166534; border: 2px solid #16a34a; font-weight: 500; }
+        .time-slot.available:hover { background: #bbf7d0; transform: scale(1.02); }
+        .time-slot.booked { background: #fee2e2; color: #dc2626; border: 2px solid #dc2626; opacity: 0.6; cursor: not-allowed; }
+        .time-slot.blocked { background: #f3f4f6; color: #9ca3af; border: 2px solid #d1d5db; opacity: 0.6; cursor: not-allowed; }
         .video-upload-zone { border: 2px dashed #166534; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
         .video-upload-zone:hover { background: #f0fdf4; border-color: #15803d; }
         .video-upload-zone.dragging { background: #dcfce7; border-color: #15803d; }
+        .btn-view { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-view.active { background: #166534; color: white; }
+        .btn-view.inactive { background: #e5e7eb; color: #6b7280; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -62,18 +69,14 @@
                     <i class="fas fa-clipboard-list mr-3 text-gray-500"></i>
                     <span class="text-gray-700">Post-Lesson</span>
                 </div>
-                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('lessons')">
-                    <i class="fas fa-book mr-3 text-gray-500"></i>
-                    <span class="text-gray-700">Lesson Plans</span>
+                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('availability')">
+                    <i class="fas fa-lock mr-3 text-gray-500"></i>
+                    <span class="text-gray-700">Availability</span>
                 </div>
                 <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('messages')">
                     <i class="fas fa-comments mr-3 text-gray-500"></i>
                     <span class="text-gray-700">Messages</span>
                     <span class="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">3</span>
-                </div>
-                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('earnings')">
-                    <i class="fas fa-dollar-sign mr-3 text-gray-500"></i>
-                    <span class="text-gray-700">Earnings</span>
                 </div>
             </nav>
 
@@ -159,26 +162,15 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h2 class="text-lg font-semibold text-gray-900">Upcoming Lessons</h2>
-                                <a href="#" onclick="switchView('schedule')" class="text-sm text-green-700 hover:text-green-800">View All</a>
-                            </div>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Lessons</h2>
                             <div class="space-y-3">
-                                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-smooth cursor-pointer" onclick="openLessonDetails('Robert Christenson', 'Friday, Feb 7', '2:00 PM', '45 min')">
+                                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-smooth cursor-pointer">
                                     <div class="flex items-center justify-between mb-2">
                                         <p class="font-semibold text-gray-900">Robert Christenson</p>
                                         <span class="text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded">In 2 hours</span>
                                     </div>
                                     <p class="text-sm text-gray-600">Friday, Feb 7 • 2:00 PM</p>
                                     <p class="text-sm text-gray-600">45 minutes • Range Bay 3</p>
-                                </div>
-                                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-smooth cursor-pointer">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <p class="font-semibold text-gray-900">Sarah Mitchell</p>
-                                        <span class="text-xs font-medium text-blue-700 bg-blue-100 px-2 py-1 rounded">Tomorrow</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">Saturday, Feb 8 • 10:00 AM</p>
-                                    <p class="text-sm text-gray-600">60 minutes • Greens Practice</p>
                                 </div>
                             </div>
                         </div>
@@ -191,18 +183,9 @@
                             <div class="space-y-3">
                                 <div class="pb-3 border-b">
                                     <p class="font-medium text-gray-900 text-sm">Robert Christenson</p>
-                                    <p class="text-sm text-gray-600 mt-1">Can we move the lesson to 3 PM?</p>
-                                    <p class="text-xs text-gray-400 mt-1">5 min ago</p>
-                                </div>
-                                <div class="pb-3 border-b">
-                                    <p class="font-medium text-gray-900 text-sm">Sarah Mitchell</p>
-                                    <p class="text-sm text-gray-600 mt-1">Thanks for the great lesson!</p>
-                                    <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                                    <p class="text-sm text-gray-600 mt-1">Can we move the lesson?</p>
                                 </div>
                             </div>
-                            <button onclick="switchView('messages')" class="w-full mt-4 py-2 text-center text-green-700 font-medium border border-green-300 rounded-lg hover:bg-green-50 transition-smooth">
-                                View All
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -223,7 +206,6 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Lessons</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y">
@@ -232,14 +214,6 @@
                                     <td class="px-6 py-4 text-gray-600">robert@example.com</td>
                                     <td class="px-6 py-4 text-gray-600">8 / 12</td>
                                     <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Active</span></td>
-                                    <td class="px-6 py-4"><button class="text-green-700 hover:text-green-800 font-medium text-sm">View</button></td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 text-gray-900 font-medium">Sarah Mitchell</td>
-                                    <td class="px-6 py-4 text-gray-600">sarah@example.com</td>
-                                    <td class="px-6 py-4 text-gray-600">5 / 6</td>
-                                    <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Active</span></td>
-                                    <td class="px-6 py-4"><button class="text-green-700 hover:text-green-800 font-medium text-sm">View</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -250,71 +224,45 @@
                 <div id="scheduleView" style="display: none;" class="space-y-6">
                     <div class="bg-white rounded-xl border border-gray-200 p-6">
                         <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-lg font-semibold text-gray-900">This Week's Schedule</h2>
+                            <h2 class="text-lg font-semibold text-gray-900">Schedule & Availability</h2>
                             <div class="flex gap-2">
-                                <button onclick="switchCalendarView('month')" class="px-4 py-2 bg-green-700 text-white rounded-lg text-sm font-medium">Month</button>
-                                <button onclick="switchCalendarView('week')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Week</button>
-                                <button onclick="switchCalendarView('day')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">Day</button>
+                                <button onclick="switchCalendarView('month')" class="btn-view active">Month</button>
+                                <button onclick="switchCalendarView('week')" class="btn-view inactive">Week</button>
+                                <button onclick="switchCalendarView('day')" class="btn-view inactive">Day</button>
                             </div>
                         </div>
 
                         <!-- Month View Calendar -->
                         <div id="monthCalendarView" class="space-y-4">
                             <div class="flex items-center justify-between mb-4">
-                                <button onclick="previousMonth()" class="text-gray-600 hover:text-gray-900">&lt;</button>
+                                <button onclick="previousMonth()" class="text-gray-600 hover:text-gray-900 p-2">&lt;</button>
                                 <h3 class="text-lg font-semibold text-gray-900" id="monthYear">February 2025</h3>
-                                <button onclick="nextMonth()" class="text-gray-600 hover:text-gray-900">&gt;</button>
+                                <button onclick="nextMonth()" class="text-gray-600 hover:text-gray-900 p-2">&gt;</button>
                             </div>
                             
-                            <div class="grid grid-cols-7 gap-1 mb-2">
-                                <div class="text-center text-xs font-semibold text-gray-600">Sun</div>
-                                <div class="text-center text-xs font-semibold text-gray-600">Mon</div>
-                                <div class="text-center text-xs font-semibold text-gray-600">Tue</div>
-                                <div class="text-center text-xs font-semibold text-gray-600">Wed</div>
-                                <div class="text-center text-xs font-semibold text-gray-600">Thu</div>
-                                <div class="text-center text-xs font-semibold text-gray-600">Fri</div>
-                                <div class="text-center text-xs font-semibold text-gray-600">Sat</div>
+                            <div class="grid grid-cols-7 gap-2 mb-2">
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Sun</div>
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Mon</div>
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Tue</div>
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Wed</div>
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Thu</div>
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Fri</div>
+                                <div class="text-center text-xs font-semibold text-gray-600 py-2">Sat</div>
                             </div>
                             
-                            <div class="grid grid-cols-7 gap-1" id="calendarGrid">
+                            <div class="grid grid-cols-7 gap-2" id="calendarGrid">
                                 <!-- Generated by JS -->
                             </div>
                         </div>
 
                         <!-- Week View -->
                         <div id="weekCalendarView" style="display: none;" class="space-y-4">
+                            <div class="text-center mb-4">
+                                <h3 class="font-semibold text-gray-900" id="weekDisplay">Week of Feb 3-9, 2025</h3>
+                            </div>
                             <div class="overflow-x-auto">
-                                <div class="grid grid-cols-8 gap-2 mb-4">
-                                    <div class="text-center font-semibold text-gray-900">Time</div>
-                                    <div class="text-center font-semibold text-gray-900">Mon</div>
-                                    <div class="text-center font-semibold text-gray-900">Tue</div>
-                                    <div class="text-center font-semibold text-gray-900">Wed</div>
-                                    <div class="text-center font-semibold text-gray-900">Thu</div>
-                                    <div class="text-center font-semibold text-gray-900">Fri</div>
-                                    <div class="text-center font-semibold text-gray-900">Sat</div>
-                                    <div class="text-center font-semibold text-gray-900">Sun</div>
-                                </div>
-                                <div class="space-y-2">
-                                    <div class="grid grid-cols-8 gap-2 text-center text-sm">
-                                        <div class="font-semibold">9:00 AM</div>
-                                        <div class="bg-green-100 p-2 rounded">✓</div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-red-100 p-2 rounded">✓</div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                    </div>
-                                    <div class="grid grid-cols-8 gap-2 text-center text-sm">
-                                        <div class="font-semibold">2:00 PM</div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-red-100 p-2 rounded">✓</div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                        <div class="bg-gray-100 p-2 rounded"></div>
-                                    </div>
+                                <div class="space-y-2" id="weekTimeSlots">
+                                    <!-- Generated by JS -->
                                 </div>
                             </div>
                         </div>
@@ -322,17 +270,76 @@
                         <!-- Day View -->
                         <div id="dayCalendarView" style="display: none;" class="space-y-4">
                             <div class="text-center mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Friday, February 7, 2025</h3>
+                                <h3 class="font-semibold text-gray-900" id="dayDisplay">Friday, February 7, 2025</h3>
                             </div>
-                            <div class="space-y-3">
-                                <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded">
-                                    <p class="font-semibold text-gray-900">2:00 PM - 2:45 PM</p>
-                                    <p class="text-sm text-gray-600 mt-1">Robert Christenson</p>
-                                    <p class="text-sm text-gray-600">Range Bay 3 • 45 min</p>
-                                    <button onclick="openPostLessonModal('Robert Christenson')" class="mt-3 text-sm text-red-700 font-medium hover:text-red-800">
-                                        <i class="fas fa-plus mr-1"></i>Add Notes/Video
-                                    </button>
+                            <div class="space-y-2" id="dayTimeSlots">
+                                <!-- Generated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability/Blocking View -->
+                <div id="availabilityView" style="display: none;" class="space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Standard Hours -->
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Standard Hours</h3>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Sun - Fri:</span>
+                                    <span class="font-semibold text-green-700">7:00 AM - 2:00 PM</span>
                                 </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Saturday:</span>
+                                    <span class="font-semibold text-red-600">Blocked</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Booking:</span>
+                                    <span class="font-semibold text-gray-900">Every 30 min</span>
+                                </div>
+                            </div>
+                            <button onclick="openModal('editHoursModal')" class="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-green-800">
+                                Edit Hours
+                            </button>
+                        </div>
+
+                        <!-- Block Time -->
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Block Time</h3>
+                            <p class="text-sm text-gray-600 mb-4">Prevent students from booking specific times</p>
+                            <button onclick="openModal('blockTimeModal')" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+                                <i class="fas fa-lock mr-2"></i>Block Time Slot
+                            </button>
+                        </div>
+
+                        <!-- Gmail Integration -->
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Calendar Sync</h3>
+                            <p class="text-sm text-gray-600 mb-4">Connect your Google Calendar for automatic availability sync</p>
+                            <button onclick="openModal('gmailModal')" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-google mr-2"></i>Connect Gmail
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Blocked Times List -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Blocked Times</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Tuesday, Feb 11 • 10:00 AM - 11:00 AM</p>
+                                    <p class="text-xs text-gray-600">Personal Appointment</p>
+                                </div>
+                                <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Friday, Feb 7 • 12:00 PM - 1:00 PM</p>
+                                    <p class="text-xs text-gray-600">Lunch Break</p>
+                                </div>
+                                <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
@@ -340,9 +347,6 @@
 
                 <!-- Post-Lesson View -->
                 <div id="postLessonView" style="display: none;" class="space-y-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-semibold text-gray-900">Recent Lessons & Notes</h2>
-                    </div>
                     <div class="space-y-4">
                         <div class="bg-white rounded-xl border border-gray-200 p-6">
                             <div class="flex items-start justify-between mb-4">
@@ -362,88 +366,34 @@
                                     swing_analysis_feb7.mp4 (4.2 MB)
                                 </div>
                             </div>
-                            <button onclick="openPostLessonModal('Robert Christenson')" class="mt-4 text-green-700 font-medium text-sm hover:text-green-800">
+                            <button onclick="openModal('postLessonModal')" class="mt-4 text-green-700 font-medium text-sm hover:text-green-800">
                                 <i class="fas fa-edit mr-2"></i>Edit Notes/Videos
                             </button>
-                        </div>
-
-                        <div class="bg-white rounded-xl border border-gray-200 p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div>
-                                    <h3 class="font-semibold text-gray-900">Sarah Mitchell</h3>
-                                    <p class="text-sm text-gray-600">Wednesday, Feb 5 • 10:00 AM - 11:00 AM</p>
-                                </div>
-                                <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">No Notes Yet</span>
-                            </div>
-                            <button onclick="openPostLessonModal('Sarah Mitchell')" class="text-green-700 font-medium text-sm hover:text-green-800">
-                                <i class="fas fa-plus mr-2"></i>Add Notes & Videos
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lessons View -->
-                <div id="lessonsView" style="display: none;" class="space-y-6">
-                    <button onclick="openModal('createLessonModal')" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">
-                        <i class="fas fa-plus mr-2"></i>Create Lesson Plan
-                    </button>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl border border-gray-200 p-6">
-                            <div class="bg-blue-100 text-blue-700 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                                <i class="fas fa-golf-ball"></i>
-                            </div>
-                            <h3 class="font-semibold text-gray-900 mb-2">Swing Mechanics</h3>
-                            <p class="text-sm text-gray-600 mb-4">Learn proper swing technique</p>
-                            <button class="text-blue-700 font-medium text-sm hover:text-blue-800">Edit</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Messages View -->
                 <div id="messagesView" style="display: none;" class="space-y-6">
-                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-3 h-96">
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden h-96">
+                        <div class="grid grid-cols-1 md:grid-cols-3 h-full">
                             <div class="border-r border-gray-200 overflow-y-auto">
-                                <div class="p-4 border-b border-gray-200 bg-gray-50 cursor-pointer hover:bg-gray-100">
+                                <div class="p-4 border-b border-gray-200 bg-gray-50 cursor-pointer">
                                     <p class="font-semibold text-gray-900">Robert Christenson</p>
                                     <p class="text-sm text-gray-600 mt-1">Can we move the lesson...</p>
-                                    <p class="text-xs text-gray-400 mt-1">5 min ago</p>
                                 </div>
                             </div>
                             <div class="md:col-span-2 p-4 flex flex-col">
                                 <div class="flex-1 overflow-y-auto space-y-3 mb-4">
                                     <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
-                                        <p class="text-sm text-gray-800">Can we move the lesson to 3 PM?</p>
-                                        <p class="text-xs text-gray-500 mt-1">5 min ago</p>
-                                    </div>
-                                    <div class="bg-green-100 rounded-lg p-3 max-w-xs ml-auto">
-                                        <p class="text-sm text-gray-800">Sure! I can do 3 PM.</p>
-                                        <p class="text-xs text-gray-500 mt-1">2 min ago</p>
+                                        <p class="text-sm text-gray-800">Can we move to 3 PM?</p>
                                     </div>
                                 </div>
                                 <div class="flex gap-2">
-                                    <input type="text" placeholder="Type a message..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2">
-                                    <button class="bg-green-700 text-white px-4 rounded-lg hover:bg-green-800">Send</button>
+                                    <input type="text" placeholder="Type message..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2">
+                                    <button class="bg-green-700 text-white px-4 rounded-lg">Send</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Earnings View -->
-                <div id="earningsView" style="display: none;" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="stat-card">
-                            <p class="text-gray-500 text-sm mb-1">Total Earnings</p>
-                            <p class="text-3xl font-bold text-gray-900">$12,540</p>
-                        </div>
-                        <div class="stat-card">
-                            <p class="text-gray-500 text-sm mb-1">This Month</p>
-                            <p class="text-3xl font-bold text-green-700">$2,640</p>
-                        </div>
-                        <div class="stat-card">
-                            <p class="text-gray-500 text-sm mb-1">Pending Payout</p>
-                            <p class="text-3xl font-bold text-gray-900">$840</p>
                         </div>
                     </div>
                 </div>
@@ -452,6 +402,114 @@
     </div>
 
     <!-- Modals -->
+
+    <!-- Block Time Modal -->
+    <div id="blockTimeModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Block Time Slot</h2>
+                <button onclick="closeModal('blockTimeModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <form class="space-y-4" onsubmit="handleBlockTime(event)">
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Date</label>
+                    <input type="date" id="blockDate" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Start Time</label>
+                        <input type="time" id="blockStartTime" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">End Time</label>
+                        <input type="time" id="blockEndTime" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Reason (optional)</label>
+                    <input type="text" placeholder="e.g., Personal appointment, Lunch break" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                </div>
+                <button type="submit" class="w-full bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700">
+                    <i class="fas fa-lock mr-2"></i>Block This Time
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gmail Integration Modal -->
+    <div id="gmailModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Connect Google Calendar</h2>
+                <button onclick="closeModal('gmailModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p class="text-sm text-gray-700 mb-3">
+                        Connect your Google Calendar to automatically sync your busy times with Lessons Shop. This will prevent students from booking during your existing appointments.
+                    </p>
+                    <ul class="text-xs text-gray-600 space-y-1 ml-4 list-disc">
+                        <li>Your calendar events won't be shared with students</li>
+                        <li>Auto-sync occurs every hour</li>
+                        <li>Manual refresh available anytime</li>
+                    </ul>
+                </div>
+                <button onclick="handleGmailConnect()" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700">
+                    <i class="fas fa-google mr-2"></i>Connect with Google
+                </button>
+                <div class="text-center text-sm text-gray-600 p-3 bg-gray-50 rounded-lg">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    You'll be redirected to Google to authorize access
+                </div>
+                <button type="button" onclick="closeModal('gmailModal')" class="w-full bg-gray-200 text-gray-900 font-semibold py-3 rounded-lg hover:bg-gray-300">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Hours Modal -->
+    <div id="editHoursModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Edit Availability Hours</h2>
+                <button onclick="closeModal('editHoursModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <form class="space-y-4" onsubmit="handleEditHours(event)">
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-3">Monday - Friday</label>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="text-xs text-gray-600">Start</label>
+                            <input type="time" value="07:00" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-600">End</label>
+                            <input type="time" value="14:00" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Booking Intervals</label>
+                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                        <option>15 minutes</option>
+                        <option selected>30 minutes</option>
+                        <option>45 minutes</option>
+                        <option>60 minutes</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Post-Lesson Modal -->
     <div id="postLessonModal" class="modal-overlay">
@@ -463,66 +521,30 @@
                 </button>
             </div>
             
-            <div id="studentNameDisplay" class="mb-4 p-3 bg-gray-50 rounded-lg">
-                <p class="font-semibold text-gray-900" id="postLessonStudentName">Student Name</p>
-                <p class="text-sm text-gray-600">Friday, Feb 7 • 2:00 PM - 2:45 PM</p>
-            </div>
-
             <form class="space-y-6">
-                <!-- Notes Section -->
                 <div>
                     <label class="block text-sm font-medium text-gray-900 mb-3">Lesson Notes</label>
-                    <textarea placeholder="Write notes about this lesson... Focus areas, improvements, homework, etc." class="w-full border border-gray-300 rounded-lg px-4 py-3 min-h-32" rows="6"></textarea>
+                    <textarea placeholder="Write notes about this lesson..." class="w-full border border-gray-300 rounded-lg px-4 py-3 min-h-32" rows="6"></textarea>
                 </div>
 
-                <!-- Video Upload Section -->
                 <div>
                     <label class="block text-sm font-medium text-gray-900 mb-3">Upload Lesson Video</label>
                     <div class="video-upload-zone" id="uploadZone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
                         <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-3"></i>
-                        <p class="text-gray-700 font-medium">Drag & drop your video here</p>
-                        <p class="text-sm text-gray-600 mt-1">or</p>
-                        <button type="button" onclick="document.getElementById('videoInput').click()" class="text-green-700 font-medium hover:underline mt-2">
+                        <p class="text-gray-700 font-medium">Drag & drop video here</p>
+                        <button type="button" onclick="document.getElementById('videoInput').click()" class="text-green-700 font-medium mt-2">
                             Browse Files
                         </button>
                         <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleFileSelect(event)">
-                        <p class="text-xs text-gray-500 mt-3">Supported: MP4, MOV, AVI (Max 500 MB)</p>
-                    </div>
-                    <div id="videoPreview" style="display: none;" class="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3">
-                        <p class="text-sm font-medium text-gray-900"><i class="fas fa-check-circle text-green-600 mr-2"></i><span id="videoFileName">video.mp4</span></p>
-                        <p class="text-xs text-gray-600 mt-1">Ready to upload</p>
+                        <p class="text-xs text-gray-500 mt-3">Max 500 MB</p>
                     </div>
                 </div>
 
-                <!-- Tags/Focus Areas -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-900 mb-3">Focus Areas (optional)</label>
-                    <div class="space-y-2">
-                        <label class="flex items-center">
-                            <input type="checkbox" class="w-4 h-4 text-green-700 rounded">
-                            <span class="ml-2 text-sm text-gray-700">Swing Mechanics</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" class="w-4 h-4 text-green-700 rounded">
-                            <span class="ml-2 text-sm text-gray-700">Grip & Stance</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" class="w-4 h-4 text-green-700 rounded">
-                            <span class="ml-2 text-sm text-gray-700">Short Game</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" class="w-4 h-4 text-green-700 rounded">
-                            <span class="ml-2 text-sm text-gray-700">Mental Game</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
                 <div class="flex gap-3">
-                    <button type="submit" class="flex-1 bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800 transition-smooth">
-                        <i class="fas fa-save mr-2"></i>Save & Submit
+                    <button type="submit" class="flex-1 bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800">
+                        Save & Submit
                     </button>
-                    <button type="button" onclick="closeModal('postLessonModal')" class="flex-1 bg-gray-200 text-gray-900 font-semibold py-3 rounded-lg hover:bg-gray-300 transition-smooth">
+                    <button type="button" onclick="closeModal('postLessonModal')" class="flex-1 bg-gray-200 text-gray-900 font-semibold py-3 rounded-lg hover:bg-gray-300">
                         Cancel
                     </button>
                 </div>
@@ -539,14 +561,14 @@
                     <i class="fas fa-times text-2xl"></i>
                 </button>
             </div>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="handleAddStudent(event)">
                 <div>
                     <label class="block text-sm font-medium text-gray-900 mb-2">Student Name</label>
-                    <input type="text" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                    <input type="text" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-900 mb-2">Email</label>
-                    <input type="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                    <input type="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
                 </div>
                 <button type="submit" class="w-full bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800">
                     Add Student
@@ -555,77 +577,42 @@
         </div>
     </div>
 
-    <!-- Create Lesson Modal -->
-    <div id="createLessonModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Create Lesson Plan</h2>
-                <button onclick="closeModal('createLessonModal')" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times text-2xl"></i>
-                </button>
-            </div>
-            <form class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-900 mb-2">Lesson Title</label>
-                    <input type="text" placeholder="e.g., Swing Mechanics 101" class="w-full border border-gray-300 rounded-lg px-4 py-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-900 mb-2">Description</label>
-                    <textarea placeholder="Describe the lesson content..." class="w-full border border-gray-300 rounded-lg px-4 py-2" rows="4"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800">
-                    Create Lesson Plan
-                </button>
-            </form>
-        </div>
-    </div>
-
     <script>
-        let currentDate = new Date(2025, 1, 1);
+        let currentDate = new Date(2025, 1, 7); // Friday Feb 7, 2025
+        let selectedDate = null;
         let currentCalendarView = 'month';
 
-        function switchView(view) {
-            document.querySelectorAll('[id$="View"]').forEach(el => el.style.display = 'none');
-            document.getElementById(view + 'View').style.display = 'block';
-
-            const titles = {
-                dashboard: 'Dashboard',
-                students: 'My Students',
-                schedule: 'Schedule',
-                postLesson: 'Post-Lesson Notes',
-                lessons: 'Lesson Plans',
-                messages: 'Messages',
-                earnings: 'Earnings'
-            };
-            document.getElementById('pageTitle').textContent = titles[view];
-
-            if (view === 'schedule') {
-                renderCalendar();
-            }
-        }
-
-        function switchCalendarView(view) {
-            currentCalendarView = view;
-            document.getElementById('monthCalendarView').style.display = view === 'month' ? 'block' : 'none';
-            document.getElementById('weekCalendarView').style.display = view === 'week' ? 'block' : 'none';
-            document.getElementById('dayCalendarView').style.display = view === 'day' ? 'block' : 'none';
-
-            document.querySelectorAll('#monthCalendarView').parentElement?.querySelectorAll('button').forEach(btn => {
-                btn.classList.remove('bg-green-700', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-700');
-            });
-
-            event.target.classList.remove('bg-gray-200', 'text-gray-700');
-            event.target.classList.add('bg-green-700', 'text-white');
-        }
-
-        const availability = {
-            '2025-02-07': 'booked',
-            '2025-02-08': 'available',
-            '2025-02-10': 'available',
-            '2025-02-11': 'booked',
-            '2025-02-14': 'booked',
+        // Standard availability hours
+        const standardHours = {
+            0: null, // Sunday - blocked
+            1: { start: 7, end: 14 }, // Mon
+            2: { start: 7, end: 14 }, // Tue
+            3: { start: 7, end: 14 }, // Wed
+            4: { start: 7, end: 14 }, // Thu
+            5: { start: 7, end: 14 }, // Fri
+            6: null  // Saturday - blocked
         };
+
+        const blockedTimes = [
+            { date: '2025-02-11', start: '10:00', end: '11:00', reason: 'Personal Appointment' },
+            { date: '2025-02-07', start: '12:00', end: '13:00', reason: 'Lunch Break' }
+        ];
+
+        const bookedLessons = {
+            '2025-02-07': ['14:00'],
+            '2025-02-11': ['10:00']
+        };
+
+        function getAvailabilityStatus(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDay();
+            
+            if (day === 6) return 'blocked'; // Saturday
+            if (standardHours[day] === null) return 'blocked';
+            
+            const hasBookings = bookedLessons[dateStr]?.length > 0;
+            return hasBookings ? 'booked' : 'available';
+        }
 
         function renderCalendar() {
             const year = currentDate.getFullYear();
@@ -643,11 +630,80 @@
             
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const status = availability[dateStr] || 'empty';
-                html += `<div class="calendar-day ${status}">${day}</div>`;
+                const status = getAvailabilityStatus(dateStr);
+                const dayOfWeek = new Date(dateStr).getDay();
+                const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
+                
+                html += `<div class="calendar-day ${status}" onclick="selectDate('${dateStr}')">
+                    <div class="text-xs">${dayName}</div>
+                    <div>${day}</div>
+                </div>`;
             }
             
             document.getElementById('calendarGrid').innerHTML = html;
+        }
+
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            renderTimeSlots(dateStr);
+            switchCalendarView('day');
+        }
+
+        function renderTimeSlots(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDay();
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            
+            document.getElementById('dayDisplay').textContent = dayName;
+            
+            if (day === 6) {
+                document.getElementById('dayTimeSlots').innerHTML = '<p class="text-center text-gray-600">Saturday - Not available</p>';
+                return;
+            }
+
+            const hours = standardHours[day];
+            if (!hours) {
+                document.getElementById('dayTimeSlots').innerHTML = '<p class="text-center text-gray-600">No availability this day</p>';
+                return;
+            }
+
+            let html = '';
+            for (let hour = hours.start; hour < hours.end; hour++) {
+                for (let min = 0; min < 60; min += 30) {
+                    const timeStr = `${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+                    const isBooked = bookedLessons[dateStr]?.includes(timeStr);
+                    const isBlocked = blockedTimes.some(b => b.date === dateStr && timeStr >= b.start && timeStr < b.end);
+                    
+                    let status = 'available';
+                    if (isBooked) status = 'booked';
+                    if (isBlocked) status = 'blocked';
+                    
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+                    
+                    html += `<div class="time-slot ${status}">${displayHour}:${String(min).padStart(2, '0')} ${ampm}</div>`;
+                }
+            }
+            
+            document.getElementById('dayTimeSlots').innerHTML = html;
+        }
+
+        function switchCalendarView(view) {
+            currentCalendarView = view;
+            document.getElementById('monthCalendarView').style.display = view === 'month' ? 'block' : 'none';
+            document.getElementById('weekCalendarView').style.display = view === 'week' ? 'block' : 'none';
+            document.getElementById('dayCalendarView').style.display = view === 'day' ? 'block' : 'none';
+
+            document.querySelectorAll('.btn-view').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('inactive');
+            });
+            event.target.classList.remove('inactive');
+            event.target.classList.add('active');
+
+            if (view === 'month') {
+                renderCalendar();
+            }
         }
 
         function previousMonth() {
@@ -660,9 +716,52 @@
             renderCalendar();
         }
 
-        function openPostLessonModal(studentName) {
-            document.getElementById('postLessonStudentName').textContent = studentName;
-            openModal('postLessonModal');
+        function switchView(view) {
+            document.querySelectorAll('[id$="View"]').forEach(el => el.style.display = 'none');
+            document.getElementById(view + 'View').style.display = 'block';
+
+            const titles = {
+                dashboard: 'Dashboard',
+                students: 'My Students',
+                schedule: 'Schedule & Availability',
+                postLesson: 'Post-Lesson Notes',
+                availability: 'Manage Availability',
+                messages: 'Messages'
+            };
+            document.getElementById('pageTitle').textContent = titles[view];
+
+            if (view === 'schedule') {
+                setTimeout(() => renderCalendar(), 100);
+            }
+        }
+
+        function handleBlockTime(e) {
+            e.preventDefault();
+            alert('Time slot blocked! Students cannot book during this period.');
+            closeModal('blockTimeModal');
+        }
+
+        function handleGmailConnect() {
+            alert('Gmail integration initiated. In a production app, this would redirect to Google OAuth. For now, your calendar sync is ready!');
+            closeModal('gmailModal');
+        }
+
+        function handleEditHours(e) {
+            e.preventDefault();
+            alert('Availability hours updated successfully!');
+            closeModal('editHoursModal');
+        }
+
+        function handleAddStudent(e) {
+            e.preventDefault();
+            alert('Student added successfully!');
+            closeModal('addStudentModal');
+        }
+
+        function handleFileSelect(e) {
+            if (e.target.files.length > 0) {
+                alert('Video selected: ' + e.target.files[0].name);
+            }
         }
 
         function handleDragOver(e) {
@@ -677,22 +776,6 @@
         function handleDrop(e) {
             e.preventDefault();
             document.getElementById('uploadZone').classList.remove('dragging');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                displayVideoPreview(files[0]);
-            }
-        }
-
-        function handleFileSelect(e) {
-            if (e.target.files.length > 0) {
-                displayVideoPreview(e.target.files[0]);
-            }
-        }
-
-        function displayVideoPreview(file) {
-            document.getElementById('videoFileName').textContent = file.name;
-            document.getElementById('videoPreview').style.display = 'block';
-            document.getElementById('uploadZone').style.display = 'none';
         }
 
         function openModal(modalId) {
@@ -715,6 +798,11 @@
                     modal.classList.remove('active');
                 }
             });
+        });
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            renderCalendar();
         });
     </script>
 </body>
