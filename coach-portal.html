@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Portal - Lessons Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; }
+        .sidebar-active { background: #f0fdf4; color: #166534; border-left: 4px solid #166534; }
+        .transition-smooth { transition: all 0.3s ease; }
+        .stat-card { border-radius: 12px; padding: 20px; background: white; border: 1px solid #e5e7eb; }
+        .stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: 16px; padding: 28px; max-width: 600px; max-height: 90vh; overflow-y: auto; width: 90%; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 p-6 overflow-y-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-green-700 rounded-lg flex items-center justify-center text-white">
+                    <i class="fas fa-golf-ball"></i>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">Lessons Shop</h1>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <div class="sidebar-active px-4 py-3 rounded-lg cursor-pointer" onclick="switchView('dashboard')">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    <span class="font-medium">Dashboard</span>
+                </div>
+                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('students')">
+                    <i class="fas fa-users mr-3 text-gray-500"></i>
+                    <span class="text-gray-700">My Students</span>
+                </div>
+                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('schedule')">
+                    <i class="fas fa-calendar mr-3 text-gray-500"></i>
+                    <span class="text-gray-700">Schedule</span>
+                </div>
+                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('lessons')">
+                    <i class="fas fa-book mr-3 text-gray-500"></i>
+                    <span class="text-gray-700">Lessons</span>
+                </div>
+                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('messages')">
+                    <i class="fas fa-comments mr-3 text-gray-500"></i>
+                    <span class="text-gray-700">Messages</span>
+                    <span class="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">3</span>
+                </div>
+                <div class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-smooth" onclick="switchView('earnings')">
+                    <i class="fas fa-dollar-sign mr-3 text-gray-500"></i>
+                    <span class="text-gray-700">Earnings</span>
+                </div>
+            </nav>
+
+            <!-- Divider -->
+            <div class="border-t my-6"></div>
+
+            <!-- User Profile -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center text-white font-bold">JD</div>
+                    <div>
+                        <p class="font-semibold text-gray-900 text-sm">John Davis</p>
+                        <p class="text-xs text-gray-500">Golf Coach</p>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="w-full py-2 text-sm text-red-600 font-medium hover:bg-red-50 rounded-lg transition-smooth">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Top Bar -->
+            <div class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+                <h1 class="text-2xl font-bold text-gray-900" id="pageTitle">Dashboard</h1>
+                <div class="flex items-center gap-4">
+                    <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <i class="fas fa-cog text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="p-8">
+                <!-- Dashboard View -->
+                <div id="dashboardView" class="space-y-8">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm mb-1">Total Students</p>
+                                    <p class="text-3xl font-bold text-gray-900">12</p>
+                                </div>
+                                <i class="fas fa-users text-4xl text-blue-100 text-opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm mb-1">This Week</p>
+                                    <p class="text-3xl font-bold text-gray-900">8</p>
+                                    <p class="text-xs text-gray-500 mt-1">Lessons Booked</p>
+                                </div>
+                                <i class="fas fa-calendar text-4xl text-green-100 text-opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm mb-1">Total Earnings</p>
+                                    <p class="text-3xl font-bold text-gray-900">$2,640</p>
+                                    <p class="text-xs text-green-600 mt-1">↑ 12% from last month</p>
+                                </div>
+                                <i class="fas fa-dollar-sign text-4xl text-yellow-100 text-opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm mb-1">Avg Rating</p>
+                                    <p class="text-3xl font-bold text-gray-900">4.8</p>
+                                    <p class="text-xs text-yellow-600 mt-1">⭐ From 45 Reviews</p>
+                                </div>
+                                <i class="fas fa-star text-4xl text-yellow-100 text-opacity-50"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Lessons & Messages -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Upcoming Lessons -->
+                        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-lg font-semibold text-gray-900">Upcoming Lessons</h2>
+                                <a href="#" onclick="switchView('schedule')" class="text-sm text-green-700 hover:text-green-800">View All</a>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-smooth">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="font-semibold text-gray-900">Robert Christenson</p>
+                                        <span class="text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded">In 2 hours</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Friday, Feb 7 • 2:00 PM</p>
+                                    <p class="text-sm text-gray-600">45 minutes • Range Bay 3</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-smooth">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="font-semibold text-gray-900">Sarah Mitchell</p>
+                                        <span class="text-xs font-medium text-blue-700 bg-blue-100 px-2 py-1 rounded">Tomorrow</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Saturday, Feb 8 • 10:00 AM</p>
+                                    <p class="text-sm text-gray-600">60 minutes • Greens Practice</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-smooth">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="font-semibold text-gray-900">Michael Chen</p>
+                                        <span class="text-xs font-medium text-gray-700 bg-gray-100 px-2 py-1 rounded">3 days</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Monday, Feb 10 • 3:00 PM</p>
+                                    <p class="text-sm text-gray-600">45 minutes • Range Bay 1</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Messages -->
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-lg font-semibold text-gray-900">Recent Messages</h2>
+                                <span class="text-xs font-medium bg-red-100 text-red-700 px-2 py-1 rounded-full">3 New</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="pb-3 border-b">
+                                    <p class="font-medium text-gray-900 text-sm">Robert Christenson</p>
+                                    <p class="text-sm text-gray-600 mt-1">Can we move the lesson to 3 PM?</p>
+                                    <p class="text-xs text-gray-400 mt-1">5 min ago</p>
+                                </div>
+                                <div class="pb-3 border-b">
+                                    <p class="font-medium text-gray-900 text-sm">Sarah Mitchell</p>
+                                    <p class="text-sm text-gray-600 mt-1">Thanks for the great lesson yesterday!</p>
+                                    <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-900 text-sm">Michael Chen</p>
+                                    <p class="text-sm text-gray-600 mt-1">I have a question about my swing...</p>
+                                    <p class="text-xs text-gray-400 mt-1">3 hours ago</p>
+                                </div>
+                            </div>
+                            <button onclick="switchView('messages')" class="w-full mt-4 py-2 text-center text-green-700 font-medium border border-green-300 rounded-lg hover:bg-green-50 transition-smooth">
+                                View All Messages
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Students View -->
+                <div id="studentsView" style="display: none;" class="space-y-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div></div>
+                        <button onclick="openModal('addStudentModal')" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">
+                            <i class="fas fa-plus mr-2"></i>Add New Student
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Student Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Lessons</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 text-gray-900 font-medium">Robert Christenson</td>
+                                    <td class="px-6 py-4 text-gray-600">robert@example.com</td>
+                                    <td class="px-6 py-4 text-gray-600">8 / 12</td>
+                                    <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Active</span></td>
+                                    <td class="px-6 py-4"><button class="text-green-700 hover:text-green-800 font-medium text-sm">View</button></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 text-gray-900 font-medium">Sarah Mitchell</td>
+                                    <td class="px-6 py-4 text-gray-600">sarah@example.com</td>
+                                    <td class="px-6 py-4 text-gray-600">5 / 6</td>
+                                    <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Active</span></td>
+                                    <td class="px-6 py-4"><button class="text-green-700 hover:text-green-800 font-medium text-sm">View</button></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 text-gray-900 font-medium">Michael Chen</td>
+                                    <td class="px-6 py-4 text-gray-600">michael@example.com</td>
+                                    <td class="px-6 py-4 text-gray-600">3 / 10</td>
+                                    <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Active</span></td>
+                                    <td class="px-6 py-4"><button class="text-green-700 hover:text-green-800 font-medium text-sm">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Schedule View -->
+                <div id="scheduleView" style="display: none;" class="space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+                            <h2 class="text-lg font-semibold text-gray-900 mb-4">This Week's Schedule</h2>
+                            <div class="space-y-4">
+                                <div class="border-l-4 border-green-700 bg-green-50 p-4 rounded">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Friday, Feb 7</p>
+                                            <p class="text-sm text-gray-600 mt-1">2:00 PM - 2:45 PM | Robert Christenson</p>
+                                            <p class="text-sm text-gray-600">Range Bay 3</p>
+                                        </div>
+                                        <button class="text-green-700 font-medium text-sm hover:text-green-800">Edit</button>
+                                    </div>
+                                </div>
+                                <div class="border-l-4 border-blue-400 bg-blue-50 p-4 rounded">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Saturday, Feb 8</p>
+                                            <p class="text-sm text-gray-600 mt-1">10:00 AM - 11:00 AM | Sarah Mitchell</p>
+                                            <p class="text-sm text-gray-600">Greens Practice</p>
+                                        </div>
+                                        <button class="text-blue-700 font-medium text-sm hover:text-blue-800">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-gray-600 text-sm mb-1">Hours This Week</p>
+                                    <p class="text-2xl font-bold text-gray-900">6.75 hrs</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm mb-1">Earnings This Week</p>
+                                    <p class="text-2xl font-bold text-green-700">$540</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 text-sm mb-1">Available Slots</p>
+                                    <p class="text-2xl font-bold text-gray-900">4</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lessons View -->
+                <div id="lessonsView" style="display: none;" class="space-y-6">
+                    <button onclick="openModal('createLessonModal')" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">
+                        <i class="fas fa-plus mr-2"></i>Create Lesson Plan
+                    </button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <div class="bg-blue-100 text-blue-700 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-golf-ball"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Swing Mechanics</h3>
+                            <p class="text-sm text-gray-600 mb-4">Learn proper swing technique and body mechanics for improved consistency.</p>
+                            <button class="text-blue-700 font-medium text-sm hover:text-blue-800">Edit</button>
+                        </div>
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <div class="bg-green-100 text-green-700 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-hand-fist"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Grip & Stance</h3>
+                            <p class="text-sm text-gray-600 mb-4">Master the fundamentals of grip, stance, and alignment for every club.</p>
+                            <button class="text-green-700 font-medium text-sm hover:text-green-800">Edit</button>
+                        </div>
+                        <div class="bg-white rounded-xl border border-gray-200 p-6">
+                            <div class="bg-yellow-100 text-yellow-700 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2">Short Game</h3>
+                            <p class="text-sm text-gray-600 mb-4">Develop precision skills in chipping, pitching, and putting.</p>
+                            <button class="text-yellow-700 font-medium text-sm hover:text-yellow-800">Edit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages View -->
+                <div id="messagesView" style="display: none;" class="space-y-6">
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-3 h-96">
+                            <!-- Conversation List -->
+                            <div class="border-r border-gray-200 overflow-y-auto">
+                                <div class="p-4 border-b border-gray-200 bg-gray-50 cursor-pointer hover:bg-gray-100">
+                                    <p class="font-semibold text-gray-900">Robert Christenson</p>
+                                    <p class="text-sm text-gray-600 mt-1">Can we move the lesson...</p>
+                                    <p class="text-xs text-gray-400 mt-1">5 min ago</p>
+                                </div>
+                                <div class="p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50">
+                                    <p class="font-semibold text-gray-900">Sarah Mitchell</p>
+                                    <p class="text-sm text-gray-600 mt-1">Thanks for the great lesson...</p>
+                                    <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                                </div>
+                                <div class="p-4 cursor-pointer hover:bg-gray-50">
+                                    <p class="font-semibold text-gray-900">Michael Chen</p>
+                                    <p class="text-sm text-gray-600 mt-1">I have a question about...</p>
+                                    <p class="text-xs text-gray-400 mt-1">3 hours ago</p>
+                                </div>
+                            </div>
+
+                            <!-- Message Thread -->
+                            <div class="md:col-span-2 p-4 flex flex-col">
+                                <div class="flex-1 overflow-y-auto space-y-3 mb-4">
+                                    <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
+                                        <p class="text-sm text-gray-800">Can we move the lesson to 3 PM?</p>
+                                        <p class="text-xs text-gray-500 mt-1">5 min ago</p>
+                                    </div>
+                                    <div class="bg-green-100 rounded-lg p-3 max-w-xs ml-auto">
+                                        <p class="text-sm text-gray-800">Sure! I can do 3 PM instead.</p>
+                                        <p class="text-xs text-gray-500 mt-1">2 min ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="text" placeholder="Type a message..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2">
+                                    <button class="bg-green-700 text-white px-4 rounded-lg hover:bg-green-800">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings View -->
+                <div id="earningsView" style="display: none;" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="stat-card">
+                            <p class="text-gray-500 text-sm mb-1">Total Earnings (All Time)</p>
+                            <p class="text-3xl font-bold text-gray-900">$12,540</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-gray-500 text-sm mb-1">This Month</p>
+                            <p class="text-3xl font-bold text-green-700">$2,640</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="text-gray-500 text-sm mb-1">Pending Payout</p>
+                            <p class="text-3xl font-bold text-gray-900">$840</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Transactions</h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="border-b">
+                                    <tr>
+                                        <th class="text-left py-2 text-gray-600">Date</th>
+                                        <th class="text-left py-2 text-gray-600">Student</th>
+                                        <th class="text-left py-2 text-gray-600">Duration</th>
+                                        <th class="text-right py-2 text-gray-600">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y">
+                                    <tr>
+                                        <td class="py-3">Feb 5, 2025</td>
+                                        <td>Robert Christenson</td>
+                                        <td>45 min</td>
+                                        <td class="text-right text-green-700 font-medium">+$45</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">Feb 3, 2025</td>
+                                        <td>Sarah Mitchell</td>
+                                        <td>60 min</td>
+                                        <td class="text-right text-green-700 font-medium">+$60</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">Feb 1, 2025</td>
+                                        <td>Michael Chen</td>
+                                        <td>45 min</td>
+                                        <td class="text-right text-green-700 font-medium">+$45</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Add New Student</h2>
+                <button onclick="closeModal('addStudentModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Student Name</label>
+                    <input type="text" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Email</label>
+                    <input type="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Phone</label>
+                    <input type="tel" placeholder="Phone Number" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Skill Level</label>
+                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                        <option>Beginner</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800">
+                    Add Student
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Lesson Plan Modal -->
+    <div id="createLessonModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Create Lesson Plan</h2>
+                <button onclick="closeModal('createLessonModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Lesson Title</label>
+                    <input type="text" placeholder="e.g., Swing Mechanics 101" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Description</label>
+                    <textarea placeholder="Describe the lesson content..." class="w-full border border-gray-300 rounded-lg px-4 py-2" rows="4"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-900 mb-2">Duration</label>
+                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                        <option>30 minutes</option>
+                        <option>45 minutes</option>
+                        <option>60 minutes</option>
+                        <option>90 minutes</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800">
+                    Create Lesson Plan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchView(view) {
+            // Hide all views
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('studentsView').style.display = 'none';
+            document.getElementById('scheduleView').style.display = 'none';
+            document.getElementById('lessonsView').style.display = 'none';
+            document.getElementById('messagesView').style.display = 'none';
+            document.getElementById('earningsView').style.display = 'none';
+
+            // Show selected view
+            document.getElementById(view + 'View').style.display = 'block';
+
+            // Update page title
+            const titles = {
+                dashboard: 'Dashboard',
+                students: 'My Students',
+                schedule: 'Schedule',
+                lessons: 'Lesson Plans',
+                messages: 'Messages',
+                earnings: 'Earnings'
+            };
+            document.getElementById('pageTitle').textContent = titles[view];
+
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-active').forEach(el => {
+                el.classList.remove('sidebar-active');
+                el.style.background = 'transparent';
+                el.style.color = '#4b5563';
+                el.style.borderLeft = 'none';
+            });
+            event.target.closest('div').classList.add('sidebar-active');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to sign out?')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
