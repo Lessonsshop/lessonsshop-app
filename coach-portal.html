@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; }
-        .sidebar-active { background: #f0fdf4; color: #166534; border-left: 4px solid #166534; }
+        .sidebar-active { background: #eff6ff; color: #2563eb; border-left: 4px solid #2563eb; }
         .transition-smooth { transition: all 0.3s ease; }
         .stat-card { border-radius: 12px; padding: 20px; background: white; border: 1px solid #e5e7eb; }
         .stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -16,23 +16,31 @@
         .modal-overlay.active { display: flex; }
         .modal-content { background: white; border-radius: 16px; padding: 28px; max-width: 700px; max-height: 90vh; overflow-y: auto; width: 90%; }
         .calendar-day { text-align: center; padding: 12px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; min-height: 60px; display: flex; flex-direction: column; justify-content: center; }
-        .calendar-day.available { background: #dcfce7; color: #166534; font-weight: bold; border: 2px solid #16a34a; }
+        .calendar-day.available { background: #dbeafe; color: #1e40af; font-weight: bold; border: 2px solid #2563eb; }
         .calendar-day.booked { background: #fee2e2; color: #dc2626; font-weight: bold; border: 2px solid #dc2626; }
         .calendar-day.blocked { background: #f3f4f6; color: #9ca3af; font-weight: bold; border: 2px solid #d1d5db; }
         .calendar-day.empty { background: #f9fafb; color: #9ca3af; }
         .calendar-day:hover { transform: scale(1.05); }
         .time-slot { padding: 12px; margin: 6px 0; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
-        .time-slot.available { background: #dcfce7; color: #166534; border: 2px solid #16a34a; font-weight: 500; }
-        .time-slot.available:hover { background: #bbf7d0; transform: scale(1.02); }
+        .time-slot.available { background: #dbeafe; color: #1e40af; border: 2px solid #2563eb; font-weight: 500; }
+        .time-slot.available:hover { background: #bfdbfe; transform: scale(1.02); }
         .time-slot.booked { background: #fee2e2; color: #dc2626; border: 2px solid #dc2626; opacity: 0.6; cursor: not-allowed; }
         .time-slot.blocked { background: #f3f4f6; color: #9ca3af; border: 2px solid #d1d5db; opacity: 0.6; cursor: not-allowed; }
-        .video-upload-zone { border: 2px dashed #166534; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
-        .video-upload-zone:hover { background: #f0fdf4; border-color: #15803d; }
-        .video-upload-zone.dragging { background: #dcfce7; border-color: #15803d; }
-        .btn-view { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .btn-view.active { background: #166534; color: white; }
+        .video-upload-zone { border: 2px dashed #2563eb; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .video-upload-zone:hover { background: #eff6ff; border-color: #1d4ed8; }
+        .video-upload-zone.dragging { background: #dbeafe; border-color: #1d4ed8; }
+        .btn-primary { background: #2563eb; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary { background: white; color: #2563eb; padding: 12px 24px; border-radius: 8px; font-weight: 600; border: 2px solid #2563eb; transition: all 0.3s ease; cursor: pointer; }
+        .btn-secondary:hover { background: #eff6ff; }
+        .btn-view { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-view.active { background: #2563eb; color: white; }
         .btn-view.inactive { background: #e5e7eb; color: #6b7280; }
         .logo-img { width: 32px; height: 32px; object-fit: contain; }
+        .block-time-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        .day-checkbox { display: flex; align-items: center; gap: 8px; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; }
+        .day-checkbox:hover { background: #f3f4f6; }
+        .hour-input { width: 80px; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 13px; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -62,6 +70,9 @@
                 <button onclick="switchView('students')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
                     <i class="fas fa-users mr-3"></i>My Students
                 </button>
+                <button onclick="switchView('availability')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+                    <i class="fas fa-lock mr-3"></i>Availability
+                </button>
                 <button onclick="switchView('videos')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
                     <i class="fas fa-video mr-3"></i>Video Library
                 </button>
@@ -90,158 +101,210 @@
                     <h1 class="text-3xl font-bold text-gray-900">Coach Portal</h1>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button class="text-gray-600 hover:text-green-700 transition-smooth">
+                    <button class="text-gray-600 hover:text-blue-600 transition-smooth">
                         <i class="fas fa-bell text-xl"></i>
                     </button>
-                    <div class="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center text-white font-bold">MT</div>
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">MT</div>
                 </div>
             </div>
 
             <!-- Dashboard Content -->
             <div id="dashboardView" class="p-8">
-                <!-- Stats Row -->
-                <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <div class="stat-card">
-                        <p class="text-sm text-gray-500 mb-2">Total Students</p>
-                        <p class="text-3xl font-bold text-gray-900">24</p>
-                        <p class="text-xs text-gray-400 mt-2">+2 this week</p>
-                    </div>
-                    <div class="stat-card">
-                        <p class="text-sm text-gray-500 mb-2">Hours This Month</p>
-                        <p class="text-3xl font-bold text-green-700">48</p>
-                        <p class="text-xs text-gray-400 mt-2">Target: 60 hrs</p>
-                    </div>
-                    <div class="stat-card">
-                        <p class="text-sm text-gray-500 mb-2">This Week</p>
-                        <p class="text-3xl font-bold text-blue-700">12</p>
-                        <p class="text-xs text-gray-400 mt-2">Lessons scheduled</p>
-                    </div>
-                    <div class="stat-card">
-                        <p class="text-sm text-gray-500 mb-2">Avg Rating</p>
-                        <p class="text-3xl font-bold text-yellow-600">4.8</p>
-                        <p class="text-xs text-gray-400 mt-2"><i class="fas fa-star"></i> from 18 reviews</p>
-                    </div>
-                </div>
-
-                <!-- Recent Lessons -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">Upcoming Lessons</h2>
-                    <div class="space-y-3">
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-between items-center">
+                        <div class="flex items-center justify-between">
                             <div>
-                                <p class="font-semibold text-gray-900">Robert Christenson</p>
-                                <p class="text-sm text-gray-500">Friday, Feb 7 • 2:00 PM</p>
+                                <p class="text-gray-600 text-sm">Total Students</p>
+                                <p class="text-3xl font-bold text-gray-900">12</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-sm font-medium text-green-700">45 min</p>
-                                <button onclick="openModal('lessonModal')" class="text-sm text-blue-600 hover:text-blue-800">View Details</button>
-                            </div>
+                            <i class="fas fa-users text-3xl text-blue-500"></i>
                         </div>
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-between items-center">
+                    </div>
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
                             <div>
-                                <p class="font-semibold text-gray-900">Sarah Mitchell</p>
-                                <p class="text-sm text-gray-500">Friday, Feb 7 • 3:00 PM</p>
+                                <p class="text-gray-600 text-sm">This Week Lessons</p>
+                                <p class="text-3xl font-bold text-gray-900">8</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-sm font-medium text-green-700">60 min</p>
-                                <button onclick="openModal('lessonModal')" class="text-sm text-blue-600 hover:text-blue-800">View Details</button>
+                            <i class="fas fa-calendar text-3xl text-blue-500"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">Revenue (30d)</p>
+                                <p class="text-3xl font-bold text-gray-900">$2,400</p>
                             </div>
+                            <i class="fas fa-dollar-sign text-3xl text-blue-500"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 text-sm">Avg Rating</p>
+                                <p class="text-3xl font-bold text-gray-900">4.8/5</p>
+                            </div>
+                            <i class="fas fa-star text-3xl text-yellow-500"></i>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Quick Actions -->
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="openModal('availabilityModal')" class="bg-green-700 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-800 transition-smooth text-left">
-                        <i class="fas fa-calendar-check mr-3"></i>
-                        Set Availability
-                    </button>
-                    <button onclick="openModal('videoModal')" class="bg-blue-700 text-white px-6 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-smooth text-left">
-                        <i class="fas fa-upload mr-3"></i>
-                        Upload Video
-                    </button>
+            <!-- Schedule View (Automatically opens in monthly view) -->
+            <div id="scheduleView" class="p-8" style="display: none;">
+                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold mb-6">Schedule</h2>
+                    <div id="calendarContainer"></div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Modals -->
-    <!-- Lesson Details Modal -->
-    <div id="lessonModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Lesson Details</h2>
-                <button onclick="closeModal('lessonModal')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <p class="text-sm text-gray-500">Student</p>
-                    <p class="font-semibold text-gray-900">Robert Christenson</p>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-500">Date & Time</p>
-                    <p class="font-semibold text-gray-900">Friday, Feb 7 • 2:00 PM - 2:45 PM</p>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-500">Location</p>
-                    <p class="font-semibold text-gray-900">Yucaipa Valley Golf Course — Range Bay 3</p>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-500">Focus Areas</p>
-                    <p class="font-semibold text-gray-900">Stance and grip technique</p>
+            <!-- Students View -->
+            <div id="studentsView" class="p-8" style="display: none;">
+                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold mb-6">My Students</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                            <div>
+                                <p class="font-semibold">John Smith</p>
+                                <p class="text-sm text-gray-600">john@example.com</p>
+                            </div>
+                            <button class="btn-secondary">View Profile</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="closeModal('lessonModal')" class="w-full mt-6 bg-green-700 text-white py-3 rounded-lg font-semibold hover:bg-green-800 transition-smooth">Mark Complete</button>
-        </div>
-    </div>
 
-    <!-- Availability Modal -->
-    <div id="availabilityModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Set Your Availability</h2>
-                <button onclick="closeModal('availabilityModal')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-            </div>
-            <p class="text-gray-600 mb-4">Select times when you're available for lessons</p>
-            <button onclick="closeModal('availabilityModal')" class="w-full bg-green-700 text-white py-3 rounded-lg font-semibold hover:bg-green-800 transition-smooth">Save Changes</button>
-        </div>
-    </div>
+            <!-- Availability/Blocking Time View -->
+            <div id="availabilityView" class="p-8" style="display: none;">
+                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold mb-6">Set Availability & Block Time</h2>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4">Block Time for Multiple Days</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-3">Select Days to Block:</label>
+                                <div class="block-time-grid">
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" name="blockDay" value="monday">
+                                        <span>Monday</span>
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" name="blockDay" value="tuesday">
+                                        <span>Tuesday</span>
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" name="blockDay" value="wednesday">
+                                        <span>Wednesday</span>
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" name="blockDay" value="thursday">
+                                        <span>Thursday</span>
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" name="blockDay" value="friday">
+                                        <span>Friday</span>
+                                    </label>
+                                    <label class="day-checkbox">
+                                        <input type="checkbox" name="blockDay" value="saturday">
+                                        <span>Saturday</span>
+                                    </label>
+                                </div>
+                            </div>
 
-    <!-- Video Upload Modal -->
-    <div id="videoModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Upload Instructional Video</h2>
-                <button onclick="closeModal('videoModal')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">From Time:</label>
+                                    <input type="time" class="hour-input w-full" id="blockStartTime">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">To Time:</label>
+                                    <input type="time" class="hour-input w-full" id="blockEndTime">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Block Duration (Weeks):</label>
+                                <input type="number" min="1" max="52" value="1" class="hour-input" id="blockWeeks">
+                            </div>
+
+                            <button class="btn-primary w-full">
+                                Block Selected Time
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="video-upload-zone mb-4">
-                <i class="fas fa-cloud-upload-alt text-3xl text-green-700 mb-2"></i>
-                <p class="font-semibold text-gray-900">Drag and drop video here</p>
-                <p class="text-sm text-gray-500">or click to select file</p>
+
+            <!-- Videos View -->
+            <div id="videosView" class="p-8" style="display: none;">
+                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold mb-6">Video Library</h2>
+                    <div class="video-upload-zone" onclick="document.getElementById('videoUpload').click();">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-3"></i>
+                        <p class="font-medium">Drop videos here or click to upload</p>
+                        <p class="text-sm text-gray-500 mt-1">Max 2GB per file</p>
+                    </div>
+                    <input type="file" id="videoUpload" style="display: none;" accept="video/*">
+                </div>
             </div>
-            <button onclick="closeModal('videoModal')" class="w-full bg-green-700 text-white py-3 rounded-lg font-semibold hover:bg-green-800 transition-smooth">Upload</button>
+
+            <!-- Analytics View -->
+            <div id="analyticsView" class="p-8" style="display: none;">
+                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold mb-6">Analytics</h2>
+                    <p class="text-gray-600">Analytics data coming soon...</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         function switchView(view) {
-            const allViews = document.querySelectorAll('[id$="View"]');
-            allViews.forEach(v => v.style.display = 'none');
+            document.querySelectorAll('[id$="View"]').forEach(el => el.style.display = 'none');
             document.getElementById(view + 'View').style.display = 'block';
-        }
+            
+            document.querySelectorAll('.sidebar-active').forEach(el => el.classList.remove('sidebar-active'));
+            event.target.closest('button').classList.add('sidebar-active');
 
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('active');
+            // Auto-load calendar when switching to schedule view
+            if (view === 'schedule') {
+                generateMonthlyCalendar();
             }
+        }
+
+        function generateMonthlyCalendar() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+
+            let calendar = `<div class="mb-4 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">${firstDay.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
+            </div>`;
+            
+            calendar += '<div class="grid grid-cols-7 gap-2 mb-4">';
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayNames.forEach(day => {
+                calendar += `<div class="text-center font-semibold text-gray-600 p-2">${day}</div>`;
+            });
+            calendar += '</div>';
+
+            calendar += '<div class="grid grid-cols-7 gap-2">';
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                calendar += '<div class="calendar-day empty"></div>';
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const status = Math.random() > 0.7 ? 'available' : (Math.random() > 0.5 ? 'booked' : 'empty');
+                calendar += `<div class="calendar-day ${status}">${day}</div>`;
+            }
+            calendar += '</div>';
+
+            document.getElementById('calendarContainer').innerHTML = calendar;
         }
     </script>
 </body>
