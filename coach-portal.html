@@ -96,7 +96,6 @@
     .status-open { background:#dcfce7; color:#166534; border:1px solid #86efac; }
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
-    .status-off { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
     .hidden-section { display: none; }
     .hidden { display: none !important; }
@@ -134,7 +133,6 @@
         </div>
       </section>
 
-      <!-- DASHBOARD -->
       <section id="dashboardSection">
         <section class="mb-6">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -164,7 +162,6 @@
         </section>
       </section>
 
-      <!-- CALENDAR -->
       <section id="calendarSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
@@ -177,9 +174,7 @@
               <button id="dayViewBtn" class="view-btn">Today</button>
               <button id="weekViewBtn" class="view-btn">Week</button>
               <button id="monthViewBtn" class="view-btn active">Month</button>
-
               <div class="w-px h-7 bg-gray-300 mx-1"></div>
-
               <button id="prevBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">
                 <i class="fa-solid fa-chevron-left"></i>
               </button>
@@ -256,9 +251,7 @@
                   </div>
                 </div>
 
-                <button id="addBlockBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-semibold">
-                  Add Block
-                </button>
+                <button id="addBlockBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-semibold">Add Block</button>
                 <p id="blockMsg" class="text-xs muted"></p>
               </div>
             </div>
@@ -284,18 +277,53 @@
       </section>
 
       <section id="studentsSection" class="hidden-section">
-        <div class="card p-5">
-          <h2 class="text-2xl font-bold mb-1">Students</h2>
-          <p class="muted">Students module placeholder. We can add roster/search next.</p>
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div class="xl:col-span-1">
+            <div class="card p-5 mb-4">
+              <h2 class="text-2xl font-bold mb-1">Students</h2>
+              <p class="muted text-sm mb-3">Search and open student profiles.</p>
+              <input id="studentSearch" type="text" placeholder="Search by name, email, or phone..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <div class="card p-3">
+              <div id="studentsList" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <div class="xl:col-span-2 space-y-4">
+            <div class="card p-5">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xl font-bold">Student Profile</h3>
+                <span id="profileStatus" class="text-xs muted">Select a student</span>
+              </div>
+              <div id="studentProfileContent" class="text-sm">
+                <p class="muted">Choose a student from the list to view full profile details.</p>
+              </div>
+            </div>
+
+            <div class="card p-5">
+              <h3 class="text-xl font-bold mb-2">Add Student</h3>
+              <p class="muted text-sm mb-4">Create a student record and send invite link.</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+                <input id="newStudentName" type="text" placeholder="Full name" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <input id="newStudentEmail" type="email" placeholder="Email" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <input id="newStudentPhone" type="text" placeholder="Phone" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+              </div>
+
+              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">
+                Add Student + Send Invite
+              </button>
+              <p id="addStudentMsg" class="text-xs muted mt-2"></p>
+            </div>
+          </div>
         </div>
       </section>
     </main>
   </div>
 
   <script>
-    // =========================
     // Dashboard
-    // =========================
     const dashboardData = {
       this_month: { label: "previous month", current: { studentsYear: 124, lessonsMonth: 38, lessonsWeek: 11, avgDaily: 1.27, avgSlotsWeek: 22.5, newLessonsMonth: 5 }, previous:{ studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }},
       last_month: { label: "month before last", current: { studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }, previous:{ studentsYear: 109, lessonsMonth: 27, lessonsWeek: 8, avgDaily: 0.90, avgSlotsWeek: 21.8, newLessonsMonth: 2 }},
@@ -314,7 +342,6 @@
     }
     function setText(id, val){ const el=document.getElementById(id); if(el) el.textContent = val; }
     function setHTML(id, val){ const el=document.getElementById(id); if(el) el.innerHTML = val; }
-
     function renderDashboard(rangeKey){
       const d = dashboardData[rangeKey] || dashboardData.this_month, c = d.current, p = d.previous, label = d.label;
       setText("kpi_students_year", formatNumber(c.studentsYear));
@@ -330,13 +357,10 @@
       setHTML("cmp_avg_slots_week", comparisonText(c.avgSlotsWeek, p.avgSlotsWeek, label, false));
       setHTML("cmp_new_lessons_month", comparisonText(c.newLessonsMonth, p.newLessonsMonth, label, true));
     }
-
     document.getElementById("dateRange").addEventListener("change", e => renderDashboard(e.target.value));
     renderDashboard("this_month");
 
-    // =========================
-    // Section Routing
-    // =========================
+    // Section routing
     const sections = {
       dashboard: document.getElementById("dashboardSection"),
       calendar: document.getElementById("calendarSection"),
@@ -355,9 +379,7 @@
       else showSection("dashboard");
     });
 
-    // =========================
-    // Calendar + Availability
-    // =========================
+    // Calendar state
     const calendarGrid = document.getElementById("calendarGrid");
     const monthHeaders = document.getElementById("monthHeaders");
     const weekHeaders = document.getElementById("weekHeaders");
@@ -387,59 +409,31 @@
     const today = new Date();
     let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     let currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    let calendarView = "month"; // month | week | day
+    let calendarView = "month";
 
-    // 30-min slots, Sunday-Friday 7am-2pm, Saturday off
     const SLOT_START_HOUR = 7;
     const SLOT_END_HOUR = 14;
     const SLOT_MINUTES = 30;
     const TOTAL_SLOTS_PER_OPEN_DAY = ((SLOT_END_HOUR - SLOT_START_HOUR) * 60) / SLOT_MINUTES; // 14
 
-    // sample bookings
     const lessonEvents = {
       "2026-07-29": [{ time: "7:00 AM", title: "Piano - Ava M." }, { time: "7:30 AM", title: "Voice - Liam R." }, { time: "9:00 AM", title: "Piano - Nora C." }],
       "2026-07-31": [{ time: "8:00 AM", title: "Guitar - Noah K." }],
-      "2026-08-02": [{ time: "11:00 AM", title: "Drums - Emma T." }, { time: "1:00 PM", title: "Piano - Sophia L." }],
-      "2026-08-05": [
-        { time: "7:00 AM", title: "Voice - Mason B." }, { time: "7:30 AM", title: "Piano - Isla V." }, { time: "8:00 AM", title: "Guitar - Eli J." },
-        { time: "8:30 AM", title: "Voice - Mia P." }, { time: "9:00 AM", title: "Drums - Leo H." }, { time: "9:30 AM", title: "Piano - Nora C." },
-        { time: "10:00 AM", title: "Guitar - Owen D." }, { time: "10:30 AM", title: "Voice - Ava M." }, { time: "11:00 AM", title: "Piano - Liam R." },
-        { time: "11:30 AM", title: "Drums - Emma T." }, { time: "12:00 PM", title: "Guitar - Noah K." }, { time: "12:30 PM", title: "Voice - Sophia L." },
-        { time: "1:00 PM", title: "Piano - Mason B." }, { time: "1:30 PM", title: "Guitar - Isla V." }
-      ]
+      "2026-08-02": [{ time: "11:00 AM", title: "Drums - Emma T." }, { time: "1:00 PM", title: "Piano - Sophia L." }]
     };
 
-    // availability blocks
     let availabilityBlocks = [];
 
-    function ymd(date){
-      const y = date.getFullYear();
-      const m = String(date.getMonth()+1).padStart(2,"0");
-      const d = String(date.getDate()).padStart(2,"0");
-      return `${y}-${m}-${d}`;
-    }
+    function ymd(date){ const y = date.getFullYear(); const m = String(date.getMonth()+1).padStart(2,"0"); const d = String(date.getDate()).padStart(2,"0"); return `${y}-${m}-${d}`; }
     function cloneDate(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
-    function fromYmd(s){ return new Date(s + "T00:00:00"); }
     function isSameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
     function isSaturday(date){ return date.getDay() === 6; }
     function shortDate(date){ return date.toLocaleDateString(undefined, { month: "short", day: "numeric" }); }
     function monthName(year, month){ return new Date(year, month, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" }); }
+    function getWeekStart(date){ const d = cloneDate(date); d.setDate(d.getDate() - d.getDay()); return d; }
+    function addDays(date, n){ const d = cloneDate(date); d.setDate(d.getDate() + n); return d; }
 
-    function getWeekStart(date){
-      const d = cloneDate(date);
-      d.setDate(d.getDate() - d.getDay()); // Sunday
-      return d;
-    }
-    function addDays(date, n){
-      const d = cloneDate(date);
-      d.setDate(d.getDate() + n);
-      return d;
-    }
-
-    function timeToMinutes(t){
-      const [hh, mm] = t.split(":").map(Number);
-      return hh * 60 + mm;
-    }
+    function timeToMinutes(t){ const [hh, mm] = t.split(":").map(Number); return hh * 60 + mm; }
     function eventTimeToMinutes(label){
       const [time, suffix] = label.split(" ");
       const [hRaw, mRaw] = time.split(":").map(Number);
@@ -448,27 +442,18 @@
       return h * 60 + mRaw;
     }
     function to12HourLabel(totalMinutes){
-      const h24 = Math.floor(totalMinutes / 60);
-      const mins = totalMinutes % 60;
+      const h24 = Math.floor(totalMinutes / 60), mins = totalMinutes % 60;
       const suffix = h24 >= 12 ? "PM" : "AM";
-      let h12 = h24 % 12;
-      if (h12 === 0) h12 = 12;
+      let h12 = h24 % 12; if (h12 === 0) h12 = 12;
       return `${h12}:${String(mins).padStart(2,"0")} ${suffix}`;
     }
     function clampToBusinessMinutes(mins){
-      const start = SLOT_START_HOUR * 60;
-      const end = SLOT_END_HOUR * 60;
+      const start = SLOT_START_HOUR * 60, end = SLOT_END_HOUR * 60;
       return Math.max(start, Math.min(end, mins));
     }
-    function overlapMinutes(aStart, aEnd, bStart, bEnd){
-      const s = Math.max(aStart, bStart);
-      const e = Math.min(aEnd, bEnd);
-      return Math.max(0, e - s);
-    }
+    function overlapMinutes(aStart, aEnd, bStart, bEnd){ const s = Math.max(aStart, bStart), e = Math.min(aEnd, bEnd); return Math.max(0, e - s); }
 
-    function getBookedCountForDate(dateKey){
-      return Math.min((lessonEvents[dateKey] || []).length, TOTAL_SLOTS_PER_OPEN_DAY);
-    }
+    function getBookedCountForDate(dateKey){ return Math.min((lessonEvents[dateKey] || []).length, TOTAL_SLOTS_PER_OPEN_DAY); }
 
     function getBlockedSlotsForDate(date){
       if (isSaturday(date)) return TOTAL_SLOTS_PER_OPEN_DAY;
@@ -477,12 +462,10 @@
 
       for (const b of availabilityBlocks){
         if (dateKey < b.startDate || dateKey > b.endDate) continue;
-
         if (b.type === "full_day"){
           blockedMinutes += (SLOT_END_HOUR - SLOT_START_HOUR) * 60;
         } else {
-          const businessStart = SLOT_START_HOUR * 60;
-          const businessEnd = SLOT_END_HOUR * 60;
+          const businessStart = SLOT_START_HOUR * 60, businessEnd = SLOT_END_HOUR * 60;
           const blockStart = clampToBusinessMinutes(timeToMinutes(b.startTime));
           const blockEnd = clampToBusinessMinutes(timeToMinutes(b.endTime));
           blockedMinutes += overlapMinutes(businessStart, businessEnd, blockStart, blockEnd);
@@ -497,11 +480,9 @@
     function isSlotBlocked(dateObj, slotStartMin, slotEndMin){
       if (isSaturday(dateObj)) return true;
       const key = ymd(dateObj);
-
       for (const b of availabilityBlocks){
         if (key < b.startDate || key > b.endDate) continue;
         if (b.type === "full_day") return true;
-
         const blockStart = clampToBusinessMinutes(timeToMinutes(b.startTime));
         const blockEnd = clampToBusinessMinutes(timeToMinutes(b.endTime));
         if (overlapMinutes(slotStartMin, slotEndMin, blockStart, blockEnd) > 0) return true;
@@ -510,52 +491,37 @@
     }
 
     function getAvailabilityForDate(date){
-      if (isSaturday(date)){
-        return { totalSlots: 0, bookedSlots: 0, blockedSlots: 0, availableSlots: 0, isOpenDay: false };
-      }
-
+      if (isSaturday(date)) return { totalSlots: 0, bookedSlots: 0, blockedSlots: 0, availableSlots: 0, isOpenDay: false };
       const totalSlots = TOTAL_SLOTS_PER_OPEN_DAY;
       const bookedSlots = getBookedCountForDate(ymd(date));
       const blockedSlots = getBlockedSlotsForDate(date);
       const availableSlots = Math.max(0, totalSlots - bookedSlots - blockedSlots);
-
       return { totalSlots, bookedSlots, blockedSlots, availableSlots, isOpenDay: true };
     }
 
     function renderBlocksList(){
-      if (!availabilityBlocks.length){
-        blocksList.innerHTML = `<p class="muted">No blocks added.</p>`;
-        return;
-      }
-
+      if (!availabilityBlocks.length){ blocksList.innerHTML = `<p class="muted">No blocks added.</p>`; return; }
       blocksList.innerHTML = availabilityBlocks.map((b) => {
         const label = b.type === "full_day"
           ? `Full day block: ${b.startDate} → ${b.endDate}`
           : `Time block: ${b.startDate} ${b.startTime} → ${b.endDate} ${b.endTime}`;
-
-        return `
-          <div class="border border-gray-200 rounded-lg px-3 py-2 flex items-start justify-between gap-2">
-            <p>${label}</p>
-            <button data-id="${b.id}" class="delete-block-btn text-xs text-red-600 hover:text-red-700 font-semibold">Delete</button>
-          </div>
-        `;
+        return `<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-start justify-between gap-2">
+          <p>${label}</p>
+          <button data-id="${b.id}" class="delete-block-btn text-xs text-red-600 hover:text-red-700 font-semibold">Delete</button>
+        </div>`;
       }).join("");
 
       document.querySelectorAll(".delete-block-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const id = btn.getAttribute("data-id");
           availabilityBlocks = availabilityBlocks.filter(b => b.id !== id);
-          renderBlocksList();
-          renderCalendar();
-          renderSelectedDay();
+          renderBlocksList(); renderCalendar(); renderSelectedDay();
         });
       });
     }
 
     function renderDayCard(date, {otherMonth=false} = {}){
-      const key = ymd(date);
-      const avail = getAvailabilityForDate(date);
-      const eventsCount = (lessonEvents[key] || []).length;
+      const key = ymd(date), avail = getAvailabilityForDate(date), eventsCount = (lessonEvents[key] || []).length;
       const availabilityClass = avail.availableSlots > 0 ? "available-day" : "unavailable-day";
       const availabilityLabel = avail.availableSlots > 0
         ? `<span class="availability-pill open">${avail.availableSlots} open</span>`
@@ -563,27 +529,9 @@
 
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = [
-        "cal-day",
-        availabilityClass,
-        otherMonth ? "other-month" : "",
-        isSameDay(date, today) ? "today" : "",
-        isSameDay(date, selectedDate) ? "selected" : ""
-      ].join(" ").trim();
-
-      btn.innerHTML = `
-        <div class="cal-daynum">${date.getDate()}</div>
-        ${availabilityLabel}
-        ${eventsCount ? `<div class="event-dot"><span class="dot"></span>${eventsCount} booked</div>` : ""}
-      `;
-
-      btn.addEventListener("click", () => {
-        selectedDate = cloneDate(date);
-        if (calendarView === "day") currentDate = cloneDate(date);
-        renderCalendar();
-        renderSelectedDay();
-      });
-
+      btn.className = ["cal-day", availabilityClass, otherMonth ? "other-month" : "", isSameDay(date,today) ? "today" : "", isSameDay(date,selectedDate) ? "selected" : ""].join(" ").trim();
+      btn.innerHTML = `<div class="cal-daynum">${date.getDate()}</div>${availabilityLabel}${eventsCount ? `<div class="event-dot"><span class="dot"></span>${eventsCount} booked</div>` : ""}`;
+      btn.addEventListener("click", () => { selectedDate = cloneDate(date); if (calendarView==="day") currentDate = cloneDate(date); renderCalendar(); renderSelectedDay(); });
       return btn;
     }
 
@@ -595,71 +543,46 @@
     }
 
     function renderRangeLabel(){
-      if (calendarView === "month"){
-        rangeLabel.textContent = monthName(currentDate.getFullYear(), currentDate.getMonth());
-      } else if (calendarView === "week"){
-        const start = getWeekStart(currentDate);
-        const end = addDays(start, 6);
-        rangeLabel.textContent = `${shortDate(start)} - ${shortDate(end)}`;
-      } else {
-        rangeLabel.textContent = currentDate.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
-      }
+      if (calendarView === "month") rangeLabel.textContent = monthName(currentDate.getFullYear(), currentDate.getMonth());
+      else if (calendarView === "week") { const start = getWeekStart(currentDate), end = addDays(start, 6); rangeLabel.textContent = `${shortDate(start)} - ${shortDate(end)}`; }
+      else rangeLabel.textContent = currentDate.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
     }
 
     function renderHeaders(){
-      if (calendarView === "month"){
-        monthHeaders.classList.remove("hidden");
-        weekHeaders.classList.add("hidden");
-      } else if (calendarView === "week"){
+      if (calendarView === "month"){ monthHeaders.classList.remove("hidden"); weekHeaders.classList.add("hidden"); }
+      else if (calendarView === "week"){
         monthHeaders.classList.add("hidden");
         weekHeaders.classList.remove("hidden");
         const start = getWeekStart(currentDate);
         weekHeaders.innerHTML = "";
         for (let i=0;i<7;i++){
-          const d = addDays(start, i);
-          const el = document.createElement("div");
+          const d = addDays(start, i), el = document.createElement("div");
           el.className = "cal-dow";
           el.textContent = d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
           weekHeaders.appendChild(el);
         }
-      } else {
-        monthHeaders.classList.add("hidden");
-        weekHeaders.classList.add("hidden");
-      }
+      } else { monthHeaders.classList.add("hidden"); weekHeaders.classList.add("hidden"); }
     }
 
     function renderCalendar(){
       calendarGrid.innerHTML = "";
-      renderRangeLabel();
-      renderHeaders();
-      setActiveViewBtn();
+      renderRangeLabel(); renderHeaders(); setActiveViewBtn();
 
       if (calendarView === "month"){
         calendarGrid.className = "calendar-grid";
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        const first = new Date(year, month, 1);
-        const startDay = first.getDay();
-        const daysInMonth = new Date(year, month+1, 0).getDate();
-        const prevMonthDays = new Date(year, month, 0).getDate();
-
+        const year = currentDate.getFullYear(), month = currentDate.getMonth();
+        const first = new Date(year, month, 1), startDay = first.getDay(), daysInMonth = new Date(year, month+1, 0).getDate(), prevMonthDays = new Date(year, month, 0).getDate();
         const cells = [];
         for (let i = startDay - 1; i >= 0; i--) cells.push({ date: new Date(year, month-1, prevMonthDays-i), otherMonth: true });
         for (let d=1; d<=daysInMonth; d++) cells.push({ date: new Date(year, month, d), otherMonth: false });
-        while (cells.length < 42){
-          const nextDay = cells.length - (startDay + daysInMonth) + 1;
-          cells.push({ date: new Date(year, month+1, nextDay), otherMonth: true });
-        }
+        while (cells.length < 42){ const nextDay = cells.length - (startDay + daysInMonth) + 1; cells.push({ date: new Date(year, month+1, nextDay), otherMonth: true }); }
         cells.forEach(c => calendarGrid.appendChild(renderDayCard(c.date, {otherMonth: c.otherMonth})));
       }
 
       if (calendarView === "week"){
         calendarGrid.className = "week-grid";
         const start = getWeekStart(currentDate);
-        for (let i=0;i<7;i++){
-          const d = addDays(start, i);
-          calendarGrid.appendChild(renderDayCard(d));
-        }
+        for (let i=0;i<7;i++) calendarGrid.appendChild(renderDayCard(addDays(start, i)));
       }
 
       if (calendarView === "day"){
@@ -667,67 +590,30 @@
         calendarGrid.appendChild(renderDayCard(currentDate));
       }
 
-      // Timeline shown only in Day view
       dayTimelineCard.classList.toggle("hidden", calendarView !== "day");
     }
 
     function renderDayTimeline(){
-      if (calendarView !== "day"){
-        dayTimeline.innerHTML = `<p class="muted">Switch to Today (Day) view to see timeline.</p>`;
-        return;
-      }
-
+      if (calendarView !== "day"){ dayTimeline.innerHTML = `<p class="muted">Switch to Today (Day) view to see timeline.</p>`; return; }
       const day = currentDate;
-      if (isSaturday(day)){
-        dayTimeline.innerHTML = `<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;
-        return;
-      }
+      if (isSaturday(day)){ dayTimeline.innerHTML = `<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`; return; }
 
       const key = ymd(day);
       const events = (lessonEvents[key] || []).map(e => ({ ...e, startMin: eventTimeToMinutes(e.time) }));
-
-      const startMin = SLOT_START_HOUR * 60;
-      const endMin = SLOT_END_HOUR * 60;
-      const step = SLOT_MINUTES;
-
+      const startMin = SLOT_START_HOUR * 60, endMin = SLOT_END_HOUR * 60, step = SLOT_MINUTES;
       const rows = [];
+
       for (let t = startMin; t < endMin; t += step){
-        const slotStart = t;
-        const slotEnd = t + step;
-        const label = to12HourLabel(slotStart);
+        const slotStart = t, slotEnd = t + step, label = to12HourLabel(slotStart);
         const bookedEvent = events.find(e => e.startMin === slotStart);
         const blocked = isSlotBlocked(day, slotStart, slotEnd);
 
         if (bookedEvent){
-          rows.push(`
-            <div class="timeline-row timeline-booked">
-              <div>
-                <span class="timeline-time">${label}</span>
-                <span class="ml-2">${bookedEvent.title}</span>
-              </div>
-              <span class="timeline-status status-booked">Booked</span>
-            </div>
-          `);
+          rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${bookedEvent.title}</span></div><span class="timeline-status status-booked">Booked</span></div>`);
         } else if (blocked){
-          rows.push(`
-            <div class="timeline-row timeline-blocked">
-              <div>
-                <span class="timeline-time">${label}</span>
-                <span class="ml-2">Unavailable</span>
-              </div>
-              <span class="timeline-status status-blocked">Blocked</span>
-            </div>
-          `);
+          rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
         } else {
-          rows.push(`
-            <div class="timeline-row timeline-open">
-              <div>
-                <span class="timeline-time">${label}</span>
-                <span class="ml-2">Open slot</span>
-              </div>
-              <span class="timeline-status status-open">Open</span>
-            </div>
-          `);
+          rows.push(`<div class="timeline-row timeline-open"><div><span class="timeline-time">${label}</span><span class="ml-2">Open slot</span></div><span class="timeline-status status-open">Open</span></div>`);
         }
       }
 
@@ -735,19 +621,16 @@
     }
 
     function renderSelectedDay(){
-      const key = ymd(selectedDate);
-      const avail = getAvailabilityForDate(selectedDate);
+      const key = ymd(selectedDate), avail = getAvailabilityForDate(selectedDate);
       selectedDateLabel.textContent = selectedDate.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
 
       const items = lessonEvents[key] || [];
-      const availabilityLine = `
-        <div class="border rounded-lg px-3 py-2 ${avail.availableSlots > 0 ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}">
-          <p class="font-semibold ${avail.availableSlots > 0 ? 'text-green-800' : 'text-red-800'}">
-            ${avail.isOpenDay ? `Available: ${avail.availableSlots} / ${avail.totalSlots} slots` : 'Closed: Saturday (Off Day)'}
-          </p>
-          ${avail.isOpenDay ? `<p class="text-xs ${avail.availableSlots > 0 ? 'text-green-700' : 'text-red-700'}">Booked: ${avail.bookedSlots} · Blocked: ${avail.blockedSlots}</p>` : ''}
-        </div>
-      `;
+      const availabilityLine = `<div class="border rounded-lg px-3 py-2 ${avail.availableSlots > 0 ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}">
+        <p class="font-semibold ${avail.availableSlots > 0 ? 'text-green-800' : 'text-red-800'}">
+          ${avail.isOpenDay ? `Available: ${avail.availableSlots} / ${avail.totalSlots} slots` : 'Closed: Saturday (Off Day)'}
+        </p>
+        ${avail.isOpenDay ? `<p class="text-xs ${avail.availableSlots > 0 ? 'text-green-700' : 'text-red-700'}">Booked: ${avail.bookedSlots} · Blocked: ${avail.blockedSlots}</p>` : ''}
+      </div>`;
 
       const eventsBlock = items.length
         ? items.map(ev => `<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${ev.title}</span><span class="text-blue-700 font-semibold">${ev.time}</span></div>`).join("")
@@ -757,61 +640,26 @@
       renderDayTimeline();
     }
 
-    // View controls
-    dayViewBtn.addEventListener("click", () => {
-      calendarView = "day";
-      currentDate = cloneDate(today);   // Today mode
-      selectedDate = cloneDate(today);
-      renderCalendar();
-      renderSelectedDay();
-    });
-
-    weekViewBtn.addEventListener("click", () => {
-      calendarView = "week";
-      currentDate = cloneDate(selectedDate);
-      renderCalendar();
-      renderSelectedDay();
-    });
-
-    monthViewBtn.addEventListener("click", () => {
-      calendarView = "month";
-      currentDate = cloneDate(selectedDate);
-      renderCalendar();
-      renderSelectedDay();
-    });
+    dayViewBtn.addEventListener("click", () => { calendarView = "day"; currentDate = cloneDate(today); selectedDate = cloneDate(today); renderCalendar(); renderSelectedDay(); });
+    weekViewBtn.addEventListener("click", () => { calendarView = "week"; currentDate = cloneDate(selectedDate); renderCalendar(); renderSelectedDay(); });
+    monthViewBtn.addEventListener("click", () => { calendarView = "month"; currentDate = cloneDate(selectedDate); renderCalendar(); renderSelectedDay(); });
 
     prevBtn.addEventListener("click", () => {
-      if (calendarView === "month"){
-        currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()-1, 1);
-      } else if (calendarView === "week"){
-        currentDate = addDays(currentDate, -7);
-      } else {
-        currentDate = addDays(currentDate, -1); // yesterday
-        selectedDate = cloneDate(currentDate);
-      }
-      renderCalendar();
-      renderSelectedDay();
+      if (calendarView === "month") currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()-1, 1);
+      else if (calendarView === "week") currentDate = addDays(currentDate, -7);
+      else { currentDate = addDays(currentDate, -1); selectedDate = cloneDate(currentDate); }
+      renderCalendar(); renderSelectedDay();
     });
 
     nextBtn.addEventListener("click", () => {
-      if (calendarView === "month"){
-        currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 1);
-      } else if (calendarView === "week"){
-        currentDate = addDays(currentDate, 7);
-      } else {
-        currentDate = addDays(currentDate, 1); // tomorrow
-        selectedDate = cloneDate(currentDate);
-      }
-      renderCalendar();
-      renderSelectedDay();
+      if (calendarView === "month") currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 1);
+      else if (calendarView === "week") currentDate = addDays(currentDate, 7);
+      else { currentDate = addDays(currentDate, 1); selectedDate = cloneDate(currentDate); }
+      renderCalendar(); renderSelectedDay();
     });
 
-    // Availability editor
-    function syncBlockInputs(){
-      timeInputs.style.display = blockType.value === "time_range" ? "grid" : "none";
-    }
-    blockType.addEventListener("change", syncBlockInputs);
-    syncBlockInputs();
+    function syncBlockInputs(){ timeInputs.style.display = blockType.value === "time_range" ? "grid" : "none"; }
+    blockType.addEventListener("change", syncBlockInputs); syncBlockInputs();
 
     const todayStr = ymd(today);
     blockStartDate.value = todayStr;
@@ -819,29 +667,12 @@
 
     addBlockBtn.addEventListener("click", () => {
       blockMsg.textContent = "";
-      const type = blockType.value;
-      const startDate = blockStartDate.value;
-      const endDate = blockEndDate.value;
-      const startTime = blockStartTime.value;
-      const endTime = blockEndTime.value;
-
-      if (!startDate || !endDate){
-        blockMsg.textContent = "Please select both start and end dates.";
-        return;
-      }
-      if (endDate < startDate){
-        blockMsg.textContent = "End date must be the same or after start date.";
-        return;
-      }
+      const type = blockType.value, startDate = blockStartDate.value, endDate = blockEndDate.value, startTime = blockStartTime.value, endTime = blockEndTime.value;
+      if (!startDate || !endDate){ blockMsg.textContent = "Please select both start and end dates."; return; }
+      if (endDate < startDate){ blockMsg.textContent = "End date must be the same or after start date."; return; }
       if (type === "time_range"){
-        if (!startTime || !endTime){
-          blockMsg.textContent = "Please select both start and end times.";
-          return;
-        }
-        if (endTime <= startTime){
-          blockMsg.textContent = "End time must be later than start time.";
-          return;
-        }
+        if (!startTime || !endTime){ blockMsg.textContent = "Please select both start and end times."; return; }
+        if (endTime <= startTime){ blockMsg.textContent = "End time must be later than start time."; return; }
       }
 
       availabilityBlocks.push({
@@ -851,24 +682,188 @@
         endTime: type === "time_range" ? endTime : null
       });
 
-      renderBlocksList();
-      renderCalendar();
-      renderSelectedDay();
+      renderBlocksList(); renderCalendar(); renderSelectedDay();
       blockMsg.textContent = "Block added.";
     });
 
     clearBlocksBtn.addEventListener("click", () => {
       availabilityBlocks = [];
-      renderBlocksList();
-      renderCalendar();
-      renderSelectedDay();
+      renderBlocksList(); renderCalendar(); renderSelectedDay();
       blockMsg.textContent = "All blocks cleared.";
     });
 
-    // Initial
+    // Students module
+    let studentsData = [
+      {
+        id: "stu_1",
+        name: "Ava Martinez",
+        phone: "(555) 210-8841",
+        email: "ava.martinez@email.com",
+        notes: ["Prefers evening lessons after school.", "Working on rhythm consistency in intermediate piano pieces."],
+        videos: [{ title: "Moonlight Sonata Practice - Week 2", url: "#" }, { title: "Scales Technique Check", url: "#" }],
+        questions: ["Can we spend more time on left-hand independence?", "Do you recommend 20 or 30 min daily practice?"]
+      },
+      {
+        id: "stu_2",
+        name: "Liam Roberts",
+        phone: "(555) 998-1123",
+        email: "liam.roberts@email.com",
+        notes: ["Voice student; focus on breath control and resonance."],
+        videos: [{ title: "Breathing Drill Recording", url: "#" }],
+        questions: ["Is it okay to practice falsetto every day?"]
+      },
+      {
+        id: "stu_3",
+        name: "Sophia Lee",
+        phone: "(555) 441-7770",
+        email: "sophia.lee@email.com",
+        notes: [],
+        videos: [],
+        questions: []
+      }
+    ];
+
+    let selectedStudentId = null;
+    const studentsListEl = document.getElementById("studentsList");
+    const studentSearchEl = document.getElementById("studentSearch");
+    const studentProfileContentEl = document.getElementById("studentProfileContent");
+    const profileStatusEl = document.getElementById("profileStatus");
+    const addStudentBtnEl = document.getElementById("addStudentBtn");
+    const addStudentMsgEl = document.getElementById("addStudentMsg");
+
+    function escapeHtml(str = "") {
+      return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+    }
+
+    function getFilteredStudents() {
+      const q = (studentSearchEl?.value || "").trim().toLowerCase();
+      if (!q) return studentsData;
+      return studentsData.filter(s =>
+        s.name.toLowerCase().includes(q) ||
+        s.email.toLowerCase().includes(q) ||
+        s.phone.toLowerCase().includes(q)
+      );
+    }
+
+    function renderStudentsList() {
+      if (!studentsListEl) return;
+      const filtered = getFilteredStudents();
+
+      if (!filtered.length) {
+        studentsListEl.innerHTML = `<p class="muted text-sm px-2 py-2">No students found.</p>`;
+        return;
+      }
+
+      studentsListEl.innerHTML = filtered.map(s => `
+        <button class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${s.id === selectedStudentId ? 'border-blue-300 bg-blue-50' : 'border-gray-200'}" data-student-id="${s.id}">
+          <p class="font-semibold text-sm">${escapeHtml(s.name)}</p>
+          <p class="text-xs muted">${escapeHtml(s.email)}</p>
+          <p class="text-xs muted">${escapeHtml(s.phone)}</p>
+        </button>
+      `).join("");
+
+      studentsListEl.querySelectorAll("[data-student-id]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedStudentId = btn.getAttribute("data-student-id");
+          renderStudentsList();
+          renderStudentProfile();
+        });
+      });
+    }
+
+    function renderStudentProfile() {
+      if (!studentProfileContentEl || !profileStatusEl) return;
+      const s = studentsData.find(x => x.id === selectedStudentId);
+      if (!s) {
+        profileStatusEl.textContent = "Select a student";
+        studentProfileContentEl.innerHTML = `<p class="muted">Choose a student from the list to view full profile details.</p>`;
+        return;
+      }
+
+      profileStatusEl.textContent = `Viewing: ${s.name}`;
+
+      const notesHtml = s.notes.length
+        ? `<ul class="list-disc ml-5 space-y-1">${s.notes.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
+        : `<p class="muted">No notes uploaded.</p>`;
+
+      const videosHtml = s.videos.length
+        ? `<ul class="list-disc ml-5 space-y-1">${s.videos.map(v => `<li><a href="${v.url}" class="text-blue-600 hover:text-blue-700">${escapeHtml(v.title)}</a></li>`).join("")}</ul>`
+        : `<p class="muted">No videos uploaded.</p>`;
+
+      const questionsHtml = s.questions.length
+        ? `<ul class="list-disc ml-5 space-y-1">${s.questions.map(q => `<li>${escapeHtml(q)}</li>`).join("")}</ul>`
+        : `<p class="muted">No student questions yet.</p>`;
+
+      studentProfileContentEl.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+          <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</div>
+          <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone)}</div>
+          <div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2"><span class="font-semibold">Email:</span> ${escapeHtml(s.email)}</div>
+        </div>
+        <div class="space-y-4">
+          <div><h4 class="font-semibold mb-1">Notes</h4>${notesHtml}</div>
+          <div><h4 class="font-semibold mb-1">Videos</h4>${videosHtml}</div>
+          <div><h4 class="font-semibold mb-1">Questions from Student Portal</h4>${questionsHtml}</div>
+        </div>
+      `;
+    }
+
+    function wireStudentSearch() {
+      if (!studentSearchEl) return;
+      studentSearchEl.addEventListener("input", renderStudentsList);
+    }
+
+    function wireAddStudent() {
+      if (!addStudentBtnEl) return;
+      addStudentBtnEl.addEventListener("click", () => {
+        const nameEl = document.getElementById("newStudentName");
+        const emailEl = document.getElementById("newStudentEmail");
+        const phoneEl = document.getElementById("newStudentPhone");
+
+        const name = (nameEl?.value || "").trim();
+        const email = (emailEl?.value || "").trim();
+        const phone = (phoneEl?.value || "").trim();
+
+        if (!name || !email || !phone) {
+          addStudentMsgEl.textContent = "Please enter name, email, and phone.";
+          return;
+        }
+
+        const newStudent = {
+          id: `stu_${Date.now()}`,
+          name, email, phone,
+          notes: [],
+          videos: [],
+          questions: []
+        };
+
+        studentsData.unshift(newStudent);
+        selectedStudentId = newStudent.id;
+
+        if (nameEl) nameEl.value = "";
+        if (emailEl) emailEl.value = "";
+        if (phoneEl) phoneEl.value = "";
+
+        renderStudentsList();
+        renderStudentProfile();
+
+        const fakeInviteLink = `${window.location.origin}/student-invite.html?email=${encodeURIComponent(email)}`;
+        addStudentMsgEl.innerHTML = `Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.<br><span class="muted">Invite link (placeholder): ${escapeHtml(fakeInviteLink)}</span>`;
+      });
+    }
+
+    function initStudentsModule() {
+      renderStudentsList();
+      renderStudentProfile();
+      wireStudentSearch();
+      wireAddStudent();
+    }
+
+    // Init
     renderBlocksList();
     renderCalendar();
     renderSelectedDay();
+    initStudentsModule();
   </script>
 </body>
 </html>
