@@ -23,6 +23,12 @@
       font-size: 12px;
       font-weight: 600;
     }
+    .logo-wrap img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -34,7 +40,12 @@
           <i class="fa-solid fa-chalkboard-user text-blue-600 text-xl"></i>
           <h1 class="text-xl font-bold">Coach Portal</h1>
         </div>
-        <div class="flex items-center gap-3">
+
+        <!-- Upper-right logo -->
+        <div class="flex items-center gap-4">
+          <div class="logo-wrap">
+            <img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" />
+          </div>
           <span class="pill">Coach</span>
           <a href="index.html" class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
             <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
@@ -44,6 +55,21 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-6">
+      <!-- New left dropdown under header -->
+      <section class="mb-4">
+        <div class="w-full sm:w-72">
+          <label for="quickMenu" class="block text-sm font-medium text-gray-700 mb-1">Quick Menu</label>
+          <select id="quickMenu"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select an option</option>
+            <option value="calendar">Calendar</option>
+            <option value="notes">Notes</option>
+            <option value="students">Students</option>
+          </select>
+        </div>
+      </section>
+
       <!-- Dashboard Header + Filter -->
       <section class="mb-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -67,186 +93,89 @@
 
       <!-- KPI Grid -->
       <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8" id="kpiGrid">
-        <!-- 1 -->
         <article class="card p-5">
           <p class="text-sm muted mb-2">Total Students This Year</p>
           <p class="kpi-value" id="kpi_students_year">0</p>
           <p class="text-sm mt-2" id="cmp_students_year">-</p>
         </article>
 
-        <!-- 2 -->
         <article class="card p-5">
           <p class="text-sm muted mb-2">Lessons This Month</p>
           <p class="kpi-value" id="kpi_lessons_month">0</p>
           <p class="text-sm mt-2" id="cmp_lessons_month">-</p>
         </article>
 
-        <!-- 3 -->
         <article class="card p-5">
           <p class="text-sm muted mb-2">Lessons This Week</p>
           <p class="kpi-value" id="kpi_lessons_week">0</p>
           <p class="text-sm mt-2" id="cmp_lessons_week">-</p>
         </article>
 
-        <!-- 4 -->
         <article class="card p-5">
           <p class="text-sm muted mb-2">Average Daily Lessons</p>
           <p class="kpi-value" id="kpi_avg_daily">0</p>
           <p class="text-sm mt-2" id="cmp_avg_daily">-</p>
         </article>
 
-        <!-- 5 -->
         <article class="card p-5">
           <p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p>
           <p class="kpi-value" id="kpi_avg_slots_week">0</p>
           <p class="text-sm mt-2" id="cmp_avg_slots_week">-</p>
         </article>
 
-        <!-- 6 -->
         <article class="card p-5">
           <p class="text-sm muted mb-2">New Lessons This Month</p>
           <p class="kpi-value" id="kpi_new_lessons_month">0</p>
           <p class="text-sm mt-2" id="cmp_new_lessons_month">-</p>
         </article>
       </section>
-
-      <!-- Optional placeholder sections -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="card p-5">
-          <h3 class="font-semibold mb-2">Upcoming Lessons</h3>
-          <p class="muted text-sm">Your schedule section can stay here.</p>
-        </div>
-        <div class="card p-5">
-          <h3 class="font-semibold mb-2">Students</h3>
-          <p class="muted text-sm">Your student activity section can stay here.</p>
-        </div>
-      </section>
     </main>
   </div>
 
   <script>
-    // Demo dataset for each selected range and its previous comparison period.
-    // Replace with real data later if/when backend is connected.
     const dashboardData = {
       this_month: {
         label: "previous month",
-        current: {
-          studentsYear: 124,
-          lessonsMonth: 38,
-          lessonsWeek: 11,
-          avgDaily: 1.27,
-          avgSlotsWeek: 22.5,
-          newLessonsMonth: 5
-        },
-        previous: {
-          studentsYear: 116,
-          lessonsMonth: 31,
-          lessonsWeek: 9,
-          avgDaily: 1.03,
-          avgSlotsWeek: 24.0,
-          newLessonsMonth: 3
-        }
+        current: { studentsYear: 124, lessonsMonth: 38, lessonsWeek: 11, avgDaily: 1.27, avgSlotsWeek: 22.5, newLessonsMonth: 5 },
+        previous:{ studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9,  avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }
       },
       last_month: {
         label: "month before last",
-        current: {
-          studentsYear: 116,
-          lessonsMonth: 31,
-          lessonsWeek: 9,
-          avgDaily: 1.03,
-          avgSlotsWeek: 24.0,
-          newLessonsMonth: 3
-        },
-        previous: {
-          studentsYear: 109,
-          lessonsMonth: 27,
-          lessonsWeek: 8,
-          avgDaily: 0.90,
-          avgSlotsWeek: 21.8,
-          newLessonsMonth: 2
-        }
+        current: { studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9,  avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 },
+        previous:{ studentsYear: 109, lessonsMonth: 27, lessonsWeek: 8,  avgDaily: 0.90, avgSlotsWeek: 21.8, newLessonsMonth: 2 }
       },
       this_quarter: {
         label: "previous quarter",
-        current: {
-          studentsYear: 124,
-          lessonsMonth: 102,   // interpreted as quarter lessons in selected range
-          lessonsWeek: 10,     // current weekly run-rate
-          avgDaily: 1.13,
-          avgSlotsWeek: 23.2,
-          newLessonsMonth: 12  // interpreted as new lessons in selected range
-        },
-        previous: {
-          studentsYear: 98,
-          lessonsMonth: 88,
-          lessonsWeek: 8,
-          avgDaily: 0.98,
-          avgSlotsWeek: 21.4,
-          newLessonsMonth: 9
-        }
+        current: { studentsYear: 124, lessonsMonth: 102, lessonsWeek: 10, avgDaily: 1.13, avgSlotsWeek: 23.2, newLessonsMonth: 12 },
+        previous:{ studentsYear: 98,  lessonsMonth: 88,  lessonsWeek: 8,  avgDaily: 0.98, avgSlotsWeek: 21.4, newLessonsMonth: 9 }
       },
       this_year: {
         label: "previous year",
-        current: {
-          studentsYear: 124,
-          lessonsMonth: 426,   // interpreted as year lessons in selected range
-          lessonsWeek: 10,
-          avgDaily: 1.17,
-          avgSlotsWeek: 22.9,
-          newLessonsMonth: 46  // interpreted as new lessons in selected range
-        },
-        previous: {
-          studentsYear: 97,
-          lessonsMonth: 371,
-          lessonsWeek: 8,
-          avgDaily: 1.02,
-          avgSlotsWeek: 20.8,
-          newLessonsMonth: 39
-        }
+        current: { studentsYear: 124, lessonsMonth: 426, lessonsWeek: 10, avgDaily: 1.17, avgSlotsWeek: 22.9, newLessonsMonth: 46 },
+        previous:{ studentsYear: 97,  lessonsMonth: 371, lessonsWeek: 8,  avgDaily: 1.02, avgSlotsWeek: 20.8, newLessonsMonth: 39 }
       }
     };
 
-    function formatNumber(value) {
-      if (Number.isInteger(value)) return value.toString();
-      return value.toFixed(2).replace(/\.00$/, "");
-    }
+    function formatNumber(v){ return Number.isInteger(v) ? `${v}` : v.toFixed(2).replace(/\.00$/, ""); }
+    function pctChange(c,p){ if(p===0) return c===0 ? 0 : 100; return ((c-p)/Math.abs(p))*100; }
 
-    function pctChange(current, previous) {
-      if (previous === 0) return current === 0 ? 0 : 100;
-      return ((current - previous) / Math.abs(previous)) * 100;
-    }
-
-    function comparisonText(current, previous, label, isInteger = true) {
+    function comparisonText(current, previous, label, isInteger=true){
       const delta = current - previous;
       const pct = pctChange(current, previous);
-      const sign = delta > 0 ? "+" : delta < 0 ? "" : "";
+      const sign = delta > 0 ? "+" : "";
       const cls = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
-
-      const deltaText = isInteger
-        ? `${sign}${Math.round(delta)}`
-        : `${sign}${delta.toFixed(2).replace(/\.00$/, "")}`;
-
-      const pctText = `${pct > 0 ? "+" : pct < 0 ? "" : ""}${pct.toFixed(1)}%`;
+      const deltaText = isInteger ? `${sign}${Math.round(delta)}` : `${sign}${delta.toFixed(2).replace(/\.00$/, "")}`;
+      const pctText = `${pct > 0 ? "+" : ""}${pct.toFixed(1)}%`;
       return `<span class="${cls}">${deltaText} (${pctText})</span> <span class="muted">vs ${label}</span>`;
     }
 
-    function setText(id, value) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = value;
-    }
+    function setText(id, val){ const el=document.getElementById(id); if(el) el.textContent = val; }
+    function setHTML(id, val){ const el=document.getElementById(id); if(el) el.innerHTML = val; }
 
-    function setHTML(id, value) {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = value;
-    }
+    function renderDashboard(rangeKey){
+      const d = dashboardData[rangeKey] || dashboardData.this_month;
+      const c = d.current, p = d.previous, label = d.label;
 
-    function renderDashboard(rangeKey) {
-      const data = dashboardData[rangeKey] || dashboardData.this_month;
-      const c = data.current;
-      const p = data.previous;
-      const label = data.label;
-
-      // KPI values
       setText("kpi_students_year", formatNumber(c.studentsYear));
       setText("kpi_lessons_month", formatNumber(c.lessonsMonth));
       setText("kpi_lessons_week", formatNumber(c.lessonsWeek));
@@ -254,7 +183,6 @@
       setText("kpi_avg_slots_week", formatNumber(c.avgSlotsWeek));
       setText("kpi_new_lessons_month", formatNumber(c.newLessonsMonth));
 
-      // Comparisons (+N and +X%)
       setHTML("cmp_students_year", comparisonText(c.studentsYear, p.studentsYear, label, true));
       setHTML("cmp_lessons_month", comparisonText(c.lessonsMonth, p.lessonsMonth, label, true));
       setHTML("cmp_lessons_week", comparisonText(c.lessonsWeek, p.lessonsWeek, label, true));
@@ -263,11 +191,13 @@
       setHTML("cmp_new_lessons_month", comparisonText(c.newLessonsMonth, p.newLessonsMonth, label, true));
     }
 
-    document.getElementById("dateRange").addEventListener("change", (e) => {
-      renderDashboard(e.target.value);
+    document.getElementById("dateRange").addEventListener("change", e => renderDashboard(e.target.value));
+
+    document.getElementById("quickMenu").addEventListener("change", (e) => {
+      if (!e.target.value) return;
+      alert(`Selected: ${e.target.options[e.target.selectedIndex].text}. (Routing can be added next.)`);
     });
 
-    // Default load = "this month"
     renderDashboard("this_month");
   </script>
 </body>
