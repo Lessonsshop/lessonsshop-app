@@ -1,311 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coach Portal - Lessons Shop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { font-family: system-ui, -apple-system, sans-serif; }
-        .sidebar-active { background: #eff6ff; color: #2563eb; border-left: 4px solid #2563eb; }
-        .transition-smooth { transition: all 0.3s ease; }
-        .stat-card { border-radius: 12px; padding: 20px; background: white; border: 1px solid #e5e7eb; }
-        .stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
-        .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 16px; padding: 28px; max-width: 700px; max-height: 90vh; overflow-y: auto; width: 90%; }
-        .calendar-day { text-align: center; padding: 12px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; min-height: 60px; display: flex; flex-direction: column; justify-content: center; }
-        .calendar-day.available { background: #dbeafe; color: #1e40af; font-weight: bold; border: 2px solid #2563eb; }
-        .calendar-day.booked { background: #fee2e2; color: #dc2626; font-weight: bold; border: 2px solid #dc2626; }
-        .calendar-day.blocked { background: #f3f4f6; color: #9ca3af; font-weight: bold; border: 2px solid #d1d5db; }
-        .calendar-day.empty { background: #f9fafb; color: #9ca3af; }
-        .calendar-day:hover { transform: scale(1.05); }
-        .time-slot { padding: 12px; margin: 6px 0; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
-        .time-slot.available { background: #dbeafe; color: #1e40af; border: 2px solid #2563eb; font-weight: 500; }
-        .time-slot.available:hover { background: #bfdbfe; transform: scale(1.02); }
-        .time-slot.booked { background: #fee2e2; color: #dc2626; border: 2px solid #dc2626; opacity: 0.6; cursor: not-allowed; }
-        .time-slot.blocked { background: #f3f4f6; color: #9ca3af; border: 2px solid #d1d5db; opacity: 0.6; cursor: not-allowed; }
-        .video-upload-zone { border: 2px dashed #2563eb; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
-        .video-upload-zone:hover { background: #eff6ff; border-color: #1d4ed8; }
-        .video-upload-zone.dragging { background: #dbeafe; border-color: #1d4ed8; }
-        .btn-primary { background: #2563eb; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; border: none; cursor: pointer; }
-        .btn-primary:hover { background: #1d4ed8; }
-        .btn-secondary { background: white; color: #2563eb; padding: 12px 24px; border-radius: 8px; font-weight: 600; border: 2px solid #2563eb; transition: all 0.3s ease; cursor: pointer; }
-        .btn-secondary:hover { background: #eff6ff; }
-        .btn-view { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
-        .btn-view.active { background: #2563eb; color: white; }
-        .btn-view.inactive { background: #e5e7eb; color: #6b7280; }
-        .logo-img { width: 32px; height: 32px; object-fit: contain; }
-        .block-time-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-        .day-checkbox { display: flex; align-items: center; gap: 8px; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; }
-        .day-checkbox:hover { background: #f3f4f6; }
-        .hour-input { width: 80px; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 13px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coach Portal - Lessons Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .transition-smooth { transition: all 0.25s ease; }
+    .sidebar-active { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #2563eb; }
+    .btn-primary { background: #2563eb; color: white; padding: 0.75rem 1rem; border-radius: 0.5rem; font-weight: 600; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .stat-card { background: white; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.25rem; }
+    .logo-img { width: 36px; height: 36px; object-fit: contain; }
+    .pill { display:inline-block; padding:0.25rem 0.65rem; border-radius:9999px; font-size:0.75rem; font-weight:600; }
+    .pill-new { background:#dbeafe; color:#1e40af; }
+
+    @media (max-width: 1023px) {
+      #sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 280px;
+        z-index: 40;
+        transform: translateX(-100%);
+      }
+      #sidebar.open { transform: translateX(0); }
+      #sidebarOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 30;
+        display: none;
+      }
+      #sidebarOverlay.show { display: block; }
+    }
+  </style>
 </head>
-<body class="bg-gray-50">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-white border-r border-gray-200 p-6 overflow-y-auto">
-            <!-- Logo -->
-            <div class="flex items-center gap-3 mb-8">
-                <img src="Lessonsshop - updated logo 1-27-26.jpg" alt="Lessons Shop Logo" class="logo-img">
-                <span class="text-xl font-bold text-gray-900">Lessons Shop</span>
-            </div>
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex min-h-screen">
+    <div id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-            <!-- Coach Info -->
-            <div class="mb-8 pb-6 border-b border-gray-200">
-                <p class="text-xs text-gray-500 mb-2">Logged in as</p>
-                <p class="font-semibold text-gray-900">Coach Mike Thompson</p>
-            </div>
-
-            <!-- Navigation -->
-            <nav class="space-y-2 mb-8">
-                <button onclick="switchView('dashboard')" class="sidebar-active w-full text-left px-4 py-3 rounded-lg font-medium">
-                    <i class="fas fa-chart-line mr-3"></i>Dashboard
-                </button>
-                <button onclick="switchView('schedule')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-                    <i class="fas fa-calendar mr-3"></i>Schedule
-                </button>
-                <button onclick="switchView('students')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-                    <i class="fas fa-users mr-3"></i>My Students
-                </button>
-                <button onclick="switchView('availability')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-                    <i class="fas fa-lock mr-3"></i>Availability
-                </button>
-                <button onclick="switchView('videos')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-                    <i class="fas fa-video mr-3"></i>Video Library
-                </button>
-                <button onclick="switchView('analytics')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-                    <i class="fas fa-bar-chart mr-3"></i>Analytics
-                </button>
-            </nav>
-
-            <!-- Settings & Logout -->
-            <div class="border-t border-gray-200 pt-6 space-y-2">
-                <button class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-                    <i class="fas fa-cog mr-3"></i>Settings
-                </button>
-                <button class="w-full text-left px-4 py-3 rounded-lg font-medium text-red-600 hover:bg-red-50 transition-smooth">
-                    <i class="fas fa-sign-out-alt mr-3"></i>Logout
-                </button>
-            </div>
+    <aside id="sidebar" class="w-72 bg-white border-r border-gray-200 p-6 transition-smooth lg:translate-x-0">
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+          <img src="Lessonsshop - updated logo 1-27-26.jpg" alt="Lessons Shop Logo" class="logo-img">
+          <span class="text-xl font-bold text-gray-900">Lessons Shop</span>
         </div>
+        <button class="lg:hidden text-gray-600" onclick="closeSidebar()"><i class="fas fa-xmark text-xl"></i></button>
+      </div>
 
-        <!-- Main Content -->
-        <div class="flex-1 overflow-y-auto">
-            <!-- Header -->
-            <div class="bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center">
-                <div>
-                    <p class="text-sm text-gray-500">Welcome back,</p>
-                    <h1 class="text-3xl font-bold text-gray-900">Coach Portal</h1>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button class="text-gray-600 hover:text-blue-600 transition-smooth">
-                        <i class="fas fa-bell text-xl"></i>
-                    </button>
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">MT</div>
-                </div>
-            </div>
+      <div class="mb-8 pb-6 border-b border-gray-200">
+        <p class="text-xs text-gray-500 mb-2">Logged in as</p>
+        <p class="font-semibold text-gray-900">Coach Mike Thompson</p>
+      </div>
 
-            <!-- Dashboard Content -->
-            <div id="dashboardView" class="p-8">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="stat-card">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm">Total Students</p>
-                                <p class="text-3xl font-bold text-gray-900">12</p>
-                            </div>
-                            <i class="fas fa-users text-3xl text-blue-500"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm">This Week Lessons</p>
-                                <p class="text-3xl font-bold text-gray-900">8</p>
-                            </div>
-                            <i class="fas fa-calendar text-3xl text-blue-500"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm">Revenue (30d)</p>
-                                <p class="text-3xl font-bold text-gray-900">$2,400</p>
-                            </div>
-                            <i class="fas fa-dollar-sign text-3xl text-blue-500"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm">Avg Rating</p>
-                                <p class="text-3xl font-bold text-gray-900">4.8/5</p>
-                            </div>
-                            <i class="fas fa-star text-3xl text-yellow-500"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <nav class="space-y-2 mb-8">
+        <button data-view-btn="dashboard" onclick="switchView('dashboard')" class="sidebar-active w-full text-left px-4 py-3 rounded-lg font-medium">
+          <i class="fas fa-chart-line mr-3"></i>Dashboard
+        </button>
+        <button data-view-btn="schedule" onclick="switchView('schedule')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+          <i class="fas fa-calendar mr-3"></i>Schedule
+        </button>
+        <button data-view-btn="students" onclick="switchView('students')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+          <i class="fas fa-users mr-3"></i>My Students
+          <span id="newNotesBadge" class="ml-2 pill pill-new hidden">New notes</span>
+        </button>
+        <button data-view-btn="availability" onclick="switchView('availability')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+          <i class="fas fa-lock mr-3"></i>Availability
+        </button>
+        <button data-view-btn="videos" onclick="switchView('videos')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+          <i class="fas fa-video mr-3"></i>Video Library
+        </button>
+        <button data-view-btn="analytics" onclick="switchView('analytics')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+          <i class="fas fa-chart-bar mr-3"></i>Analytics
+        </button>
+      </nav>
 
-            <!-- Schedule View (Automatically opens in monthly view) -->
-            <div id="scheduleView" class="p-8" style="display: none;">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 class="text-2xl font-bold mb-6">Schedule</h2>
-                    <div id="calendarContainer"></div>
-                </div>
-            </div>
+      <div class="border-t border-gray-200 pt-6 space-y-2">
+        <button onclick="openSettings()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
+          <i class="fas fa-cog mr-3"></i>Settings
+        </button>
+        <button onclick="logout()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-red-600 hover:bg-red-50 transition-smooth">
+          <i class="fas fa-sign-out-alt mr-3"></i>Logout
+        </button>
+      </div>
+    </aside>
 
-            <!-- Students View -->
-            <div id="studentsView" class="p-8" style="display: none;">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 class="text-2xl font-bold mb-6">My Students</h2>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                            <div>
-                                <p class="font-semibold">John Smith</p>
-                                <p class="text-sm text-gray-600">john@example.com</p>
-                            </div>
-                            <button class="btn-secondary">View Profile</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Availability/Blocking Time View -->
-            <div id="availabilityView" class="p-8" style="display: none;">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 class="text-2xl font-bold mb-6">Set Availability & Block Time</h2>
-                    
-                    <div class="mb-8">
-                        <h3 class="text-lg font-semibold mb-4">Block Time for Multiple Days</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-3">Select Days to Block:</label>
-                                <div class="block-time-grid">
-                                    <label class="day-checkbox">
-                                        <input type="checkbox" name="blockDay" value="monday">
-                                        <span>Monday</span>
-                                    </label>
-                                    <label class="day-checkbox">
-                                        <input type="checkbox" name="blockDay" value="tuesday">
-                                        <span>Tuesday</span>
-                                    </label>
-                                    <label class="day-checkbox">
-                                        <input type="checkbox" name="blockDay" value="wednesday">
-                                        <span>Wednesday</span>
-                                    </label>
-                                    <label class="day-checkbox">
-                                        <input type="checkbox" name="blockDay" value="thursday">
-                                        <span>Thursday</span>
-                                    </label>
-                                    <label class="day-checkbox">
-                                        <input type="checkbox" name="blockDay" value="friday">
-                                        <span>Friday</span>
-                                    </label>
-                                    <label class="day-checkbox">
-                                        <input type="checkbox" name="blockDay" value="saturday">
-                                        <span>Saturday</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium mb-2">From Time:</label>
-                                    <input type="time" class="hour-input w-full" id="blockStartTime">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-2">To Time:</label>
-                                    <input type="time" class="hour-input w-full" id="blockEndTime">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Block Duration (Weeks):</label>
-                                <input type="number" min="1" max="52" value="1" class="hour-input" id="blockWeeks">
-                            </div>
-
-                            <button class="btn-primary w-full">
-                                Block Selected Time
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Videos View -->
-            <div id="videosView" class="p-8" style="display: none;">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 class="text-2xl font-bold mb-6">Video Library</h2>
-                    <div class="video-upload-zone" onclick="document.getElementById('videoUpload').click();">
-                        <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-3"></i>
-                        <p class="font-medium">Drop videos here or click to upload</p>
-                        <p class="text-sm text-gray-500 mt-1">Max 2GB per file</p>
-                    </div>
-                    <input type="file" id="videoUpload" style="display: none;" accept="video/*">
-                </div>
-            </div>
-
-            <!-- Analytics View -->
-            <div id="analyticsView" class="p-8" style="display: none;">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 class="text-2xl font-bold mb-6">Analytics</h2>
-                    <p class="text-gray-600">Analytics data coming soon...</p>
-                </div>
-            </div>
+    <main class="flex-1 overflow-y-auto min-w-0">
+      <div class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden text-gray-700" onclick="toggleSidebar()"><i class="fas fa-bars text-xl"></i></button>
+          <div>
+            <p class="text-sm text-gray-500">Welcome back,</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Coach Portal</h1>
+          </div>
         </div>
-    </div>
+        <div class="flex items-center gap-4">
+          <button class="text-gray-600 hover:text-blue-600 transition-smooth"><i class="fas fa-bell text-xl"></i></button>
+          <button onclick="viewProfile()" class="btn-primary">View Profile</button>
+          <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">MT</div>
+        </div>
+      </div>
 
-    <script>
-        function switchView(view) {
-            document.querySelectorAll('[id$="View"]').forEach(el => el.style.display = 'none');
-            document.getElementById(view + 'View').style.display = 'block';
-            
-            document.querySelectorAll('.sidebar-active').forEach(el => el.classList.remove('sidebar-active'));
-            event.target.closest('button').classList.add('sidebar-active');
+      <section id="dashboardView" class="p-4 sm:p-6 lg:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="stat-card"><p class="text-gray-600 text-sm">Total Students</p><p class="text-3xl font-bold text-gray-900 mt-2">12</p></div>
+          <div class="stat-card"><p class="text-gray-600 text-sm">Lessons This Week</p><p class="text-3xl font-bold text-gray-900 mt-2">18</p></div>
+          <div class="stat-card"><p class="text-gray-600 text-sm">Available Slots</p><p class="text-3xl font-bold text-gray-900 mt-2">9</p></div>
+          <div class="stat-card"><p class="text-gray-600 text-sm">Avg Rating</p><p class="text-3xl font-bold text-gray-900 mt-2">4.9</p></div>
+        </div>
+      </section>
 
-            // Auto-load calendar when switching to schedule view
-            if (view === 'schedule') {
-                generateMonthlyCalendar();
-            }
-        }
+      <section id="scheduleView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Schedule view</div></section>
 
-        function generateMonthlyCalendar() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDayOfWeek = firstDay.getDay();
+      <!-- Phase 3: coach sees student notes + indicator -->
+      <section id="studentsView" class="p-4 sm:p-6 lg:p-8 hidden">
+        <div class="bg-white rounded-lg border p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold">My Students</h2>
+            <button onclick="markNotesSeen()" class="px-3 py-2 rounded-lg border text-sm hover:bg-gray-50">Mark notes as seen</button>
+          </div>
+          <p class="text-sm text-gray-600 mb-4">Recent student notes feed (demo):</p>
+          <div class="space-y-3">
+            <div class="p-3 rounded-lg border bg-blue-50">
+              <p class="font-semibold text-sm text-gray-900">Robert Christenson</p>
+              <p class="text-sm text-gray-700 mt-1">“Worked on takeaway and tempo for 30 minutes today.”</p>
+            </div>
+            <div class="p-3 rounded-lg border bg-blue-50">
+              <p class="font-semibold text-sm text-gray-900">Jamie Lee</p>
+              <p class="text-sm text-gray-700 mt-1">“Putting drill: 50 reps completed.”</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            let calendar = `<div class="mb-4 flex justify-between items-center">
-                <h3 class="text-lg font-semibold">${firstDay.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
-            </div>`;
-            
-            calendar += '<div class="grid grid-cols-7 gap-2 mb-4">';
-            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            dayNames.forEach(day => {
-                calendar += `<div class="text-center font-semibold text-gray-600 p-2">${day}</div>`;
-            });
-            calendar += '</div>';
+      <section id="availabilityView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Availability view</div></section>
+      <section id="videosView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Video Library view</div></section>
+      <section id="analyticsView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Analytics view</div></section>
+      <section id="settingsView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Settings view</div></section>
+      <section id="profileView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Profile view</div></section>
+    </main>
+  </div>
 
-            calendar += '<div class="grid grid-cols-7 gap-2">';
-            for (let i = 0; i < startingDayOfWeek; i++) {
-                calendar += '<div class="calendar-day empty"></div>';
-            }
-            
-            for (let day = 1; day <= daysInMonth; day++) {
-                const status = Math.random() > 0.7 ? 'available' : (Math.random() > 0.5 ? 'booked' : 'empty');
-                calendar += `<div class="calendar-day ${status}">${day}</div>`;
-            }
-            calendar += '</div>';
+  <script>
+    const coachViews = ['dashboard', 'schedule', 'students', 'availability', 'videos', 'analytics', 'settings', 'profile'];
 
-            document.getElementById('calendarContainer').innerHTML = calendar;
-        }
-    </script>
+    function switchView(view) {
+      coachViews.forEach(v => {
+        const section = document.getElementById(v + 'View');
+        if (!section) return;
+        if (v === view) section.classList.remove('hidden');
+        else section.classList.add('hidden');
+      });
+
+      const navButtons = document.querySelectorAll('[data-view-btn]');
+      navButtons.forEach(btn => {
+        const isActive = btn.getAttribute('data-view-btn') === view;
+        btn.classList.toggle('sidebar-active', isActive);
+        btn.classList.toggle('text-gray-600', !isActive);
+      });
+
+      if (view === 'students') markNotesSeen();
+      closeSidebar();
+    }
+
+    function openSettings() { switchView('settings'); }
+    function viewProfile() { switchView('profile'); }
+    function logout() { window.location.href = 'login.html'; }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('show');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+    }
+
+    // Phase 3 notification indicator
+    function showNotesIndicator() {
+      const badge = document.getElementById('newNotesBadge');
+      if (badge) badge.classList.remove('hidden');
+    }
+    function markNotesSeen() {
+      const badge = document.getElementById('newNotesBadge');
+      if (badge) badge.classList.add('hidden');
+    }
+
+    // Demo: show "new notes" 1 second after load
+    setTimeout(showNotesIndicator, 1000);
+  </script>
 </body>
 </html>
