@@ -3,192 +3,272 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coach Portal - Lessons Shop</title>
+  <title>Lessons Shop - Coach Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
-    .transition-smooth { transition: all 0.25s ease; }
-    .sidebar-active { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #2563eb; }
-    .btn-primary { background: #2563eb; color: white; padding: 0.75rem 1rem; border-radius: 0.5rem; font-weight: 600; }
-    .btn-primary:hover { background: #1d4ed8; }
-    .stat-card { background: white; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.25rem; }
-    .logo-img { width: 36px; height: 36px; object-fit: contain; }
-    .pill { display:inline-block; padding:0.25rem 0.65rem; border-radius:9999px; font-size:0.75rem; font-weight:600; }
-    .pill-new { background:#dbeafe; color:#1e40af; }
-
-    @media (max-width: 1023px) {
-      #sidebar {
-        position: fixed;
-        inset: 0 auto 0 0;
-        width: 280px;
-        z-index: 40;
-        transform: translateX(-100%);
-      }
-      #sidebar.open { transform: translateX(0); }
-      #sidebarOverlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.4);
-        z-index: 30;
-        display: none;
-      }
-      #sidebarOverlay.show { display: block; }
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .card { border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; }
+    .muted { color: #6b7280; }
+    .kpi-value { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+    .up { color: #16a34a; font-weight: 600; }
+    .down { color: #dc2626; font-weight: 600; }
+    .flat { color: #6b7280; font-weight: 600; }
+    .pill {
+      border: 1px solid #dbeafe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-  <div class="flex min-h-screen">
-    <div id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-    <aside id="sidebar" class="w-72 bg-white border-r border-gray-200 p-6 transition-smooth lg:translate-x-0">
-      <div class="flex items-center justify-between mb-8">
+<body class="bg-gray-50 text-gray-900">
+  <div class="min-h-screen">
+    <!-- Top Nav -->
+    <header class="bg-white border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="Lessonsshop updated logo.jpg" alt="Lessons Shop Logo" class="logo-img">
-          <span class="text-xl font-bold text-gray-900">Lessons Shop</span>
+          <i class="fa-solid fa-chalkboard-user text-blue-600 text-xl"></i>
+          <h1 class="text-xl font-bold">Coach Portal</h1>
         </div>
-        <button class="lg:hidden text-gray-600" onclick="closeSidebar()"><i class="fas fa-xmark text-xl"></i></button>
-      </div>
-
-      <div class="mb-8 pb-6 border-b border-gray-200">
-        <p class="text-xs text-gray-500 mb-2">Logged in as</p>
-        <p class="font-semibold text-gray-900">Coach Mike Thompson</p>
-      </div>
-
-      <nav class="space-y-2 mb-8">
-        <button data-view-btn="dashboard" onclick="switchView('dashboard')" class="sidebar-active w-full text-left px-4 py-3 rounded-lg font-medium">
-          <i class="fas fa-chart-line mr-3"></i>Dashboard
-        </button>
-        <button data-view-btn="schedule" onclick="switchView('schedule')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-calendar mr-3"></i>Schedule
-        </button>
-        <button data-view-btn="students" onclick="switchView('students')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-users mr-3"></i>My Students
-          <span id="newNotesBadge" class="ml-2 pill pill-new hidden">New notes</span>
-        </button>
-        <button data-view-btn="availability" onclick="switchView('availability')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-lock mr-3"></i>Availability
-        </button>
-        <button data-view-btn="videos" onclick="switchView('videos')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-video mr-3"></i>Video Library
-        </button>
-        <button data-view-btn="analytics" onclick="switchView('analytics')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-chart-bar mr-3"></i>Analytics
-        </button>
-      </nav>
-
-      <div class="border-t border-gray-200 pt-6 space-y-2">
-        <button onclick="openSettings()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-cog mr-3"></i>Settings
-        </button>
-        <button onclick="logout()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-red-600 hover:bg-red-50 transition-smooth">
-          <i class="fas fa-sign-out-alt mr-3"></i>Logout
-        </button>
-      </div>
-    </aside>
-
-    <main class="flex-1 overflow-y-auto min-w-0">
-      <div class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <button class="lg:hidden text-gray-700" onclick="toggleSidebar()"><i class="fas fa-bars text-xl"></i></button>
+          <span class="pill">Coach</span>
+          <a href="index.html" class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
+            <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6">
+      <!-- Dashboard Header + Filter -->
+      <section class="mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <p class="text-sm text-gray-500">Welcome back,</p>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Coach Portal</h1>
+            <h2 class="text-2xl font-bold">Dashboard</h2>
+            <p class="muted">Overview metrics with period comparisons.</p>
           </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <button class="text-gray-600 hover:text-blue-600 transition-smooth"><i class="fas fa-bell text-xl"></i></button>
-          <button onclick="viewProfile()" class="btn-primary">View Profile</button>
-          <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">MT</div>
-        </div>
-      </div>
-
-      <section id="dashboardView" class="p-4 sm:p-6 lg:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div class="stat-card"><p class="text-gray-600 text-sm">Total Students</p><p class="text-3xl font-bold text-gray-900 mt-2">12</p></div>
-          <div class="stat-card"><p class="text-gray-600 text-sm">Lessons This Week</p><p class="text-3xl font-bold text-gray-900 mt-2">18</p></div>
-          <div class="stat-card"><p class="text-gray-600 text-sm">Available Slots</p><p class="text-3xl font-bold text-gray-900 mt-2">9</p></div>
-          <div class="stat-card"><p class="text-gray-600 text-sm">Avg Rating</p><p class="text-3xl font-bold text-gray-900 mt-2">4.9</p></div>
-        </div>
-      </section>
-
-      <section id="scheduleView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Schedule view</div></section>
-
-      <!-- Phase 3: coach sees student notes + indicator -->
-      <section id="studentsView" class="p-4 sm:p-6 lg:p-8 hidden">
-        <div class="bg-white rounded-lg border p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-bold">My Students</h2>
-            <button onclick="markNotesSeen()" class="px-3 py-2 rounded-lg border text-sm hover:bg-gray-50">Mark notes as seen</button>
-          </div>
-          <p class="text-sm text-gray-600 mb-4">Recent student notes feed (demo):</p>
-          <div class="space-y-3">
-            <div class="p-3 rounded-lg border bg-blue-50">
-              <p class="font-semibold text-sm text-gray-900">Robert Christenson</p>
-              <p class="text-sm text-gray-700 mt-1">“Worked on takeaway and tempo for 30 minutes today.”</p>
-            </div>
-            <div class="p-3 rounded-lg border bg-blue-50">
-              <p class="font-semibold text-sm text-gray-900">Jamie Lee</p>
-              <p class="text-sm text-gray-700 mt-1">“Putting drill: 50 reps completed.”</p>
-            </div>
+          <div class="flex items-center gap-2">
+            <label for="dateRange" class="text-sm font-medium text-gray-700">Date Range:</label>
+            <select id="dateRange"
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="this_month">This month</option>
+              <option value="last_month">Last month</option>
+              <option value="this_quarter">This quarter</option>
+              <option value="this_year">This year</option>
+            </select>
           </div>
         </div>
       </section>
 
-      <section id="availabilityView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Availability view</div></section>
-      <section id="videosView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Video Library view</div></section>
-      <section id="analyticsView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Analytics view</div></section>
-      <section id="settingsView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Settings view</div></section>
-      <section id="profileView" class="p-4 sm:p-6 lg:p-8 hidden"><div class="bg-white rounded-lg border p-6">Profile view</div></section>
+      <!-- KPI Grid -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8" id="kpiGrid">
+        <!-- 1 -->
+        <article class="card p-5">
+          <p class="text-sm muted mb-2">Total Students This Year</p>
+          <p class="kpi-value" id="kpi_students_year">0</p>
+          <p class="text-sm mt-2" id="cmp_students_year">-</p>
+        </article>
+
+        <!-- 2 -->
+        <article class="card p-5">
+          <p class="text-sm muted mb-2">Lessons This Month</p>
+          <p class="kpi-value" id="kpi_lessons_month">0</p>
+          <p class="text-sm mt-2" id="cmp_lessons_month">-</p>
+        </article>
+
+        <!-- 3 -->
+        <article class="card p-5">
+          <p class="text-sm muted mb-2">Lessons This Week</p>
+          <p class="kpi-value" id="kpi_lessons_week">0</p>
+          <p class="text-sm mt-2" id="cmp_lessons_week">-</p>
+        </article>
+
+        <!-- 4 -->
+        <article class="card p-5">
+          <p class="text-sm muted mb-2">Average Daily Lessons</p>
+          <p class="kpi-value" id="kpi_avg_daily">0</p>
+          <p class="text-sm mt-2" id="cmp_avg_daily">-</p>
+        </article>
+
+        <!-- 5 -->
+        <article class="card p-5">
+          <p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p>
+          <p class="kpi-value" id="kpi_avg_slots_week">0</p>
+          <p class="text-sm mt-2" id="cmp_avg_slots_week">-</p>
+        </article>
+
+        <!-- 6 -->
+        <article class="card p-5">
+          <p class="text-sm muted mb-2">New Lessons This Month</p>
+          <p class="kpi-value" id="kpi_new_lessons_month">0</p>
+          <p class="text-sm mt-2" id="cmp_new_lessons_month">-</p>
+        </article>
+      </section>
+
+      <!-- Optional placeholder sections -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="card p-5">
+          <h3 class="font-semibold mb-2">Upcoming Lessons</h3>
+          <p class="muted text-sm">Your schedule section can stay here.</p>
+        </div>
+        <div class="card p-5">
+          <h3 class="font-semibold mb-2">Students</h3>
+          <p class="muted text-sm">Your student activity section can stay here.</p>
+        </div>
+      </section>
     </main>
   </div>
 
   <script>
-    const coachViews = ['dashboard', 'schedule', 'students', 'availability', 'videos', 'analytics', 'settings', 'profile'];
+    // Demo dataset for each selected range and its previous comparison period.
+    // Replace with real data later if/when backend is connected.
+    const dashboardData = {
+      this_month: {
+        label: "previous month",
+        current: {
+          studentsYear: 124,
+          lessonsMonth: 38,
+          lessonsWeek: 11,
+          avgDaily: 1.27,
+          avgSlotsWeek: 22.5,
+          newLessonsMonth: 5
+        },
+        previous: {
+          studentsYear: 116,
+          lessonsMonth: 31,
+          lessonsWeek: 9,
+          avgDaily: 1.03,
+          avgSlotsWeek: 24.0,
+          newLessonsMonth: 3
+        }
+      },
+      last_month: {
+        label: "month before last",
+        current: {
+          studentsYear: 116,
+          lessonsMonth: 31,
+          lessonsWeek: 9,
+          avgDaily: 1.03,
+          avgSlotsWeek: 24.0,
+          newLessonsMonth: 3
+        },
+        previous: {
+          studentsYear: 109,
+          lessonsMonth: 27,
+          lessonsWeek: 8,
+          avgDaily: 0.90,
+          avgSlotsWeek: 21.8,
+          newLessonsMonth: 2
+        }
+      },
+      this_quarter: {
+        label: "previous quarter",
+        current: {
+          studentsYear: 124,
+          lessonsMonth: 102,   // interpreted as quarter lessons in selected range
+          lessonsWeek: 10,     // current weekly run-rate
+          avgDaily: 1.13,
+          avgSlotsWeek: 23.2,
+          newLessonsMonth: 12  // interpreted as new lessons in selected range
+        },
+        previous: {
+          studentsYear: 98,
+          lessonsMonth: 88,
+          lessonsWeek: 8,
+          avgDaily: 0.98,
+          avgSlotsWeek: 21.4,
+          newLessonsMonth: 9
+        }
+      },
+      this_year: {
+        label: "previous year",
+        current: {
+          studentsYear: 124,
+          lessonsMonth: 426,   // interpreted as year lessons in selected range
+          lessonsWeek: 10,
+          avgDaily: 1.17,
+          avgSlotsWeek: 22.9,
+          newLessonsMonth: 46  // interpreted as new lessons in selected range
+        },
+        previous: {
+          studentsYear: 97,
+          lessonsMonth: 371,
+          lessonsWeek: 8,
+          avgDaily: 1.02,
+          avgSlotsWeek: 20.8,
+          newLessonsMonth: 39
+        }
+      }
+    };
 
-    function switchView(view) {
-      coachViews.forEach(v => {
-        const section = document.getElementById(v + 'View');
-        if (!section) return;
-        if (v === view) section.classList.remove('hidden');
-        else section.classList.add('hidden');
-      });
-
-      const navButtons = document.querySelectorAll('[data-view-btn]');
-      navButtons.forEach(btn => {
-        const isActive = btn.getAttribute('data-view-btn') === view;
-        btn.classList.toggle('sidebar-active', isActive);
-        btn.classList.toggle('text-gray-600', !isActive);
-      });
-
-      if (view === 'students') markNotesSeen();
-      closeSidebar();
+    function formatNumber(value) {
+      if (Number.isInteger(value)) return value.toString();
+      return value.toFixed(2).replace(/\.00$/, "");
     }
 
-    function openSettings() { switchView('settings'); }
-    function viewProfile() { switchView('profile'); }
-    function logout() { window.location.href = 'login.html'; }
-
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
-      document.getElementById('sidebarOverlay').classList.toggle('show');
-    }
-    function closeSidebar() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('sidebarOverlay').classList.remove('show');
+    function pctChange(current, previous) {
+      if (previous === 0) return current === 0 ? 0 : 100;
+      return ((current - previous) / Math.abs(previous)) * 100;
     }
 
-    // Phase 3 notification indicator
-    function showNotesIndicator() {
-      const badge = document.getElementById('newNotesBadge');
-      if (badge) badge.classList.remove('hidden');
-    }
-    function markNotesSeen() {
-      const badge = document.getElementById('newNotesBadge');
-      if (badge) badge.classList.add('hidden');
+    function comparisonText(current, previous, label, isInteger = true) {
+      const delta = current - previous;
+      const pct = pctChange(current, previous);
+      const sign = delta > 0 ? "+" : delta < 0 ? "" : "";
+      const cls = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
+
+      const deltaText = isInteger
+        ? `${sign}${Math.round(delta)}`
+        : `${sign}${delta.toFixed(2).replace(/\.00$/, "")}`;
+
+      const pctText = `${pct > 0 ? "+" : pct < 0 ? "" : ""}${pct.toFixed(1)}%`;
+      return `<span class="${cls}">${deltaText} (${pctText})</span> <span class="muted">vs ${label}</span>`;
     }
 
-    // Demo: show "new notes" 1 second after load
-    setTimeout(showNotesIndicator, 1000);
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function setHTML(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = value;
+    }
+
+    function renderDashboard(rangeKey) {
+      const data = dashboardData[rangeKey] || dashboardData.this_month;
+      const c = data.current;
+      const p = data.previous;
+      const label = data.label;
+
+      // KPI values
+      setText("kpi_students_year", formatNumber(c.studentsYear));
+      setText("kpi_lessons_month", formatNumber(c.lessonsMonth));
+      setText("kpi_lessons_week", formatNumber(c.lessonsWeek));
+      setText("kpi_avg_daily", formatNumber(c.avgDaily));
+      setText("kpi_avg_slots_week", formatNumber(c.avgSlotsWeek));
+      setText("kpi_new_lessons_month", formatNumber(c.newLessonsMonth));
+
+      // Comparisons (+N and +X%)
+      setHTML("cmp_students_year", comparisonText(c.studentsYear, p.studentsYear, label, true));
+      setHTML("cmp_lessons_month", comparisonText(c.lessonsMonth, p.lessonsMonth, label, true));
+      setHTML("cmp_lessons_week", comparisonText(c.lessonsWeek, p.lessonsWeek, label, true));
+      setHTML("cmp_avg_daily", comparisonText(c.avgDaily, p.avgDaily, label, false));
+      setHTML("cmp_avg_slots_week", comparisonText(c.avgSlotsWeek, p.avgSlotsWeek, label, false));
+      setHTML("cmp_new_lessons_month", comparisonText(c.newLessonsMonth, p.newLessonsMonth, label, true));
+    }
+
+    document.getElementById("dateRange").addEventListener("change", (e) => {
+      renderDashboard(e.target.value);
+    });
+
+    // Default load = "this month"
+    renderDashboard("this_month");
   </script>
 </body>
 </html>
