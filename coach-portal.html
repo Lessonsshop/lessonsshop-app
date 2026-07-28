@@ -29,6 +29,58 @@
       object-fit: contain;
       display: block;
     }
+
+    /* Calendar */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .cal-dow {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      text-align: center;
+      padding: 6px 0;
+    }
+    .cal-day {
+      min-height: 96px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 8px;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .cal-day:hover { border-color: #93c5fd; box-shadow: 0 0 0 2px #dbeafe inset; }
+    .cal-day.other-month { background: #f9fafb; color: #9ca3af; }
+    .cal-day.today { border-color: #3b82f6; box-shadow: 0 0 0 2px #bfdbfe inset; }
+    .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
+    .cal-daynum { font-size: 13px; font-weight: 700; }
+    .event-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #1e3a8a;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      padding: 2px 8px;
+      width: fit-content;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto;
+    }
+    .hidden-section { display: none; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -37,7 +89,6 @@
     <header class="bg-white border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <!-- Your logo now on upper-left -->
           <div class="logo-wrap">
             <img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" />
           </div>
@@ -54,7 +105,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-6">
-      <!-- New left dropdown under header -->
+      <!-- Quick Menu -->
       <section class="mb-4">
         <div class="w-full sm:w-72">
           <label for="quickMenu" class="block text-sm font-medium text-gray-700 mb-1">Quick Menu</label>
@@ -69,69 +120,128 @@
         </div>
       </section>
 
-      <!-- Dashboard Header + Filter -->
-      <section class="mb-6">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <h2 class="text-2xl font-bold">Dashboard</h2>
-            <p class="muted">Overview metrics with period comparisons.</p>
+      <!-- DASHBOARD SECTION -->
+      <section id="dashboardSection">
+        <section class="mb-6">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h2 class="text-2xl font-bold">Dashboard</h2>
+              <p class="muted">Overview metrics with period comparisons.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <label for="dateRange" class="text-sm font-medium text-gray-700">Date Range:</label>
+              <select id="dateRange"
+                class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="this_month">This month</option>
+                <option value="last_month">Last month</option>
+                <option value="this_quarter">This quarter</option>
+                <option value="this_year">This year</option>
+              </select>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <label for="dateRange" class="text-sm font-medium text-gray-700">Date Range:</label>
-            <select id="dateRange"
-              class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="this_month">This month</option>
-              <option value="last_month">Last month</option>
-              <option value="this_quarter">This quarter</option>
-              <option value="this_year">This year</option>
-            </select>
+        </section>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8" id="kpiGrid">
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Total Students This Year</p>
+            <p class="kpi-value" id="kpi_students_year">0</p>
+            <p class="text-sm mt-2" id="cmp_students_year">-</p>
+          </article>
+
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Lessons This Month</p>
+            <p class="kpi-value" id="kpi_lessons_month">0</p>
+            <p class="text-sm mt-2" id="cmp_lessons_month">-</p>
+          </article>
+
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Lessons This Week</p>
+            <p class="kpi-value" id="kpi_lessons_week">0</p>
+            <p class="text-sm mt-2" id="cmp_lessons_week">-</p>
+          </article>
+
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Average Daily Lessons</p>
+            <p class="kpi-value" id="kpi_avg_daily">0</p>
+            <p class="text-sm mt-2" id="cmp_avg_daily">-</p>
+          </article>
+
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p>
+            <p class="kpi-value" id="kpi_avg_slots_week">0</p>
+            <p class="text-sm mt-2" id="cmp_avg_slots_week">-</p>
+          </article>
+
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">New Lessons This Month</p>
+            <p class="kpi-value" id="kpi_new_lessons_month">0</p>
+            <p class="text-sm mt-2" id="cmp_new_lessons_month">-</p>
+          </article>
+        </section>
+      </section>
+
+      <!-- CALENDAR SECTION -->
+      <section id="calendarSection" class="hidden-section">
+        <div class="card p-5 mb-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h2 class="text-2xl font-bold">Calendar</h2>
+              <p class="muted text-sm">Select a day to view lesson details.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="prevMonthBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <p id="monthLabel" class="min-w-40 text-center font-semibold"></p>
+              <button id="nextMonthBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+              <button id="todayBtn" class="px-3 py-2 text-sm border border-blue-300 text-blue-700 rounded-lg bg-blue-50 hover:bg-blue-100">
+                Today
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-4">
+          <div class="calendar-grid mb-2">
+            <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
+            <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+        </div>
+
+        <div class="card p-5">
+          <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
+          <div id="selectedDayEvents" class="space-y-2 text-sm">
+            <p class="muted">No day selected.</p>
           </div>
         </div>
       </section>
 
-      <!-- KPI Grid -->
-      <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8" id="kpiGrid">
-        <article class="card p-5">
-          <p class="text-sm muted mb-2">Total Students This Year</p>
-          <p class="kpi-value" id="kpi_students_year">0</p>
-          <p class="text-sm mt-2" id="cmp_students_year">-</p>
-        </article>
+      <!-- NOTES SECTION -->
+      <section id="notesSection" class="hidden-section">
+        <div class="card p-5">
+          <h2 class="text-2xl font-bold mb-1">Notes</h2>
+          <p class="muted">Notes module placeholder. We can add rich notes next.</p>
+        </div>
+      </section>
 
-        <article class="card p-5">
-          <p class="text-sm muted mb-2">Lessons This Month</p>
-          <p class="kpi-value" id="kpi_lessons_month">0</p>
-          <p class="text-sm mt-2" id="cmp_lessons_month">-</p>
-        </article>
-
-        <article class="card p-5">
-          <p class="text-sm muted mb-2">Lessons This Week</p>
-          <p class="kpi-value" id="kpi_lessons_week">0</p>
-          <p class="text-sm mt-2" id="cmp_lessons_week">-</p>
-        </article>
-
-        <article class="card p-5">
-          <p class="text-sm muted mb-2">Average Daily Lessons</p>
-          <p class="kpi-value" id="kpi_avg_daily">0</p>
-          <p class="text-sm mt-2" id="cmp_avg_daily">-</p>
-        </article>
-
-        <article class="card p-5">
-          <p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p>
-          <p class="kpi-value" id="kpi_avg_slots_week">0</p>
-          <p class="text-sm mt-2" id="cmp_avg_slots_week">-</p>
-        </article>
-
-        <article class="card p-5">
-          <p class="text-sm muted mb-2">New Lessons This Month</p>
-          <p class="kpi-value" id="kpi_new_lessons_month">0</p>
-          <p class="text-sm mt-2" id="cmp_new_lessons_month">-</p>
-        </article>
+      <!-- STUDENTS SECTION -->
+      <section id="studentsSection" class="hidden-section">
+        <div class="card p-5">
+          <h2 class="text-2xl font-bold mb-1">Students</h2>
+          <p class="muted">Students module placeholder. We can add roster/search next.</p>
+        </div>
       </section>
     </main>
   </div>
 
   <script>
+    // =========================
+    // Dashboard logic
+    // =========================
     const dashboardData = {
       this_month: {
         label: "previous month",
@@ -191,13 +301,186 @@
     }
 
     document.getElementById("dateRange").addEventListener("change", e => renderDashboard(e.target.value));
+    renderDashboard("this_month");
+
+    // =========================
+    // Section routing
+    // =========================
+    const sections = {
+      dashboard: document.getElementById("dashboardSection"),
+      calendar: document.getElementById("calendarSection"),
+      notes: document.getElementById("notesSection"),
+      students: document.getElementById("studentsSection")
+    };
+
+    function showSection(sectionName){
+      Object.values(sections).forEach(el => el.classList.add("hidden-section"));
+      if (sections[sectionName]) sections[sectionName].classList.remove("hidden-section");
+    }
 
     document.getElementById("quickMenu").addEventListener("change", (e) => {
-      if (!e.target.value) return;
-      alert(`Selected: ${e.target.options[e.target.selectedIndex].text}. (Routing can be added next.)`);
+      const value = e.target.value;
+      if (value === "calendar") showSection("calendar");
+      else if (value === "notes") showSection("notes");
+      else if (value === "students") showSection("students");
+      else showSection("dashboard");
     });
 
-    renderDashboard("this_month");
+    // =========================
+    // Calendar logic
+    // =========================
+    const monthLabel = document.getElementById("monthLabel");
+    const calendarGrid = document.getElementById("calendarGrid");
+    const selectedDateLabel = document.getElementById("selectedDateLabel");
+    const selectedDayEvents = document.getElementById("selectedDayEvents");
+
+    const today = new Date();
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth();
+    let selectedDateKey = null;
+
+    // Sample events (YYYY-MM-DD)
+    const lessonEvents = {
+      "2026-07-29": [
+        { time: "3:00 PM", title: "Piano - Ava M." },
+        { time: "5:30 PM", title: "Voice - Liam R." }
+      ],
+      "2026-07-31": [
+        { time: "4:00 PM", title: "Guitar - Noah K." }
+      ],
+      "2026-08-02": [
+        { time: "11:00 AM", title: "Drums - Emma T." },
+        { time: "1:00 PM", title: "Piano - Sophia L." }
+      ],
+      "2026-08-05": [
+        { time: "6:00 PM", title: "Voice - Mason B." }
+      ]
+    };
+
+    function ymd(date){
+      const y = date.getFullYear();
+      const m = String(date.getMonth()+1).padStart(2,"0");
+      const d = String(date.getDate()).padStart(2,"0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function monthName(year, month){
+      return new Date(year, month, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    }
+
+    function renderSelectedDay(){
+      if (!selectedDateKey){
+        selectedDateLabel.textContent = "Selected Day";
+        selectedDayEvents.innerHTML = `<p class="muted">No day selected.</p>`;
+        return;
+      }
+
+      const d = new Date(selectedDateKey + "T00:00:00");
+      selectedDateLabel.textContent = d.toLocaleDateString(undefined, {
+        weekday: "long", month: "long", day: "numeric", year: "numeric"
+      });
+
+      const items = lessonEvents[selectedDateKey] || [];
+      if (!items.length){
+        selectedDayEvents.innerHTML = `<p class="muted">No lessons scheduled.</p>`;
+        return;
+      }
+
+      selectedDayEvents.innerHTML = items.map(ev => `
+        <div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between">
+          <span class="font-medium">${ev.title}</span>
+          <span class="text-blue-700 font-semibold">${ev.time}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderCalendar(){
+      monthLabel.textContent = monthName(viewYear, viewMonth);
+      calendarGrid.innerHTML = "";
+
+      const firstOfMonth = new Date(viewYear, viewMonth, 1);
+      const startDay = firstOfMonth.getDay(); // 0=Sun
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+      const prevMonthDays = new Date(viewYear, viewMonth, 0).getDate();
+
+      const cells = [];
+
+      // Leading days from previous month
+      for (let i = startDay - 1; i >= 0; i--){
+        const dayNum = prevMonthDays - i;
+        const d = new Date(viewYear, viewMonth - 1, dayNum);
+        cells.push({ date: d, otherMonth: true });
+      }
+
+      // Current month days
+      for (let day = 1; day <= daysInMonth; day++){
+        const d = new Date(viewYear, viewMonth, day);
+        cells.push({ date: d, otherMonth: false });
+      }
+
+      // Trailing days to fill 6 rows x 7 = 42
+      while (cells.length < 42){
+        const nextDay = cells.length - (startDay + daysInMonth) + 1;
+        const d = new Date(viewYear, viewMonth + 1, nextDay);
+        cells.push({ date: d, otherMonth: true });
+      }
+
+      const todayKey = ymd(today);
+
+      cells.forEach(cell => {
+        const key = ymd(cell.date);
+        const hasEvents = !!lessonEvents[key]?.length;
+        const isToday = key === todayKey;
+        const isSelected = key === selectedDateKey;
+
+        const div = document.createElement("button");
+        div.type = "button";
+        div.className = [
+          "cal-day",
+          cell.otherMonth ? "other-month" : "",
+          isToday ? "today" : "",
+          isSelected ? "selected" : ""
+        ].join(" ").trim();
+
+        const dayNum = cell.date.getDate();
+        div.innerHTML = `
+          <div class="cal-daynum">${dayNum}</div>
+          ${hasEvents ? `<div class="event-dot"><span class="dot"></span>${lessonEvents[key].length} lesson${lessonEvents[key].length>1?"s":""}</div>` : ""}
+        `;
+
+        div.addEventListener("click", () => {
+          selectedDateKey = key;
+          renderCalendar();
+          renderSelectedDay();
+        });
+
+        calendarGrid.appendChild(div);
+      });
+    }
+
+    document.getElementById("prevMonthBtn").addEventListener("click", () => {
+      viewMonth--;
+      if (viewMonth < 0){ viewMonth = 11; viewYear--; }
+      renderCalendar();
+    });
+
+    document.getElementById("nextMonthBtn").addEventListener("click", () => {
+      viewMonth++;
+      if (viewMonth > 11){ viewMonth = 0; viewYear++; }
+      renderCalendar();
+    });
+
+    document.getElementById("todayBtn").addEventListener("click", () => {
+      viewYear = today.getFullYear();
+      viewMonth = today.getMonth();
+      selectedDateKey = ymd(today);
+      renderCalendar();
+      renderSelectedDay();
+    });
+
+    renderCalendar();
+    renderSelectedDay();
   </script>
 </body>
 </html>
