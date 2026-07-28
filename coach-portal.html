@@ -23,69 +23,43 @@
       font-size: 12px;
       font-weight: 600;
     }
-    .logo-wrap img {
-      height: 42px;
-      width: auto;
-      object-fit: contain;
-      display: block;
-    }
+    .logo-wrap img { height: 42px; width: auto; object-fit: contain; display: block; }
 
-    /* Calendar */
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 8px;
-    }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .cal-dow {
-      font-size: 12px;
-      font-weight: 700;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      text-align: center;
-      padding: 6px 0;
+      font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase;
+      letter-spacing: .04em; text-align: center; padding: 6px 0;
     }
     .cal-day {
-      min-height: 96px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 8px;
-      background: #fff;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      min-height: 118px; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px;
+      cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease;
     }
-    .cal-day:hover { border-color: #93c5fd; box-shadow: 0 0 0 2px #dbeafe inset; }
-    .cal-day.other-month { background: #f9fafb; color: #9ca3af; }
-    .cal-day.today { border-color: #3b82f6; box-shadow: 0 0 0 2px #bfdbfe inset; }
+    .cal-day:hover { transform: translateY(-1px); }
+    .cal-day.other-month { opacity: .55; }
+    .cal-day.available-day { background: #ecfdf3; border-color: #86efac; }
+    .cal-day.unavailable-day { background: #fef2f2; border-color: #fca5a5; }
+    .cal-day.today { box-shadow: 0 0 0 2px #93c5fd inset; }
     .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
+
     .cal-daynum { font-size: 13px; font-weight: 700; }
     .event-dot {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #1e3a8a;
-      background: #eff6ff;
-      border: 1px solid #dbeafe;
-      border-radius: 999px;
-      padding: 2px 8px;
-      width: fit-content;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #1e3a8a;
+      background: #eff6ff; border: 1px solid #dbeafe; border-radius: 999px; padding: 2px 8px; width: fit-content;
+      max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .dot {
-      width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto;
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto; }
+
+    .availability-pill {
+      font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 8px; width: fit-content;
     }
+    .availability-pill.open { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
+    .availability-pill.closed { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
+
     .hidden-section { display: none; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
   <div class="min-h-screen">
-    <!-- Top Nav -->
     <header class="bg-white border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -94,7 +68,6 @@
           </div>
           <h1 class="text-xl font-bold">Coach Portal</h1>
         </div>
-
         <div class="flex items-center gap-4">
           <span class="pill">Coach</span>
           <a href="index.html" class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
@@ -105,13 +78,10 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-6">
-      <!-- Quick Menu -->
       <section class="mb-4">
         <div class="w-full sm:w-72">
           <label for="quickMenu" class="block text-sm font-medium text-gray-700 mb-1">Quick Menu</label>
-          <select id="quickMenu"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <select id="quickMenu" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">Select an option</option>
             <option value="calendar">Calendar</option>
             <option value="notes">Notes</option>
@@ -120,7 +90,6 @@
         </div>
       </section>
 
-      <!-- DASHBOARD SECTION -->
       <section id="dashboardSection">
         <section class="mb-6">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -130,9 +99,7 @@
             </div>
             <div class="flex items-center gap-2">
               <label for="dateRange" class="text-sm font-medium text-gray-700">Date Range:</label>
-              <select id="dateRange"
-                class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
+              <select id="dateRange" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="this_month">This month</option>
                 <option value="last_month">Last month</option>
                 <option value="this_quarter">This quarter</option>
@@ -143,84 +110,106 @@
         </section>
 
         <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8" id="kpiGrid">
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">Total Students This Year</p>
-            <p class="kpi-value" id="kpi_students_year">0</p>
-            <p class="text-sm mt-2" id="cmp_students_year">-</p>
-          </article>
-
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">Lessons This Month</p>
-            <p class="kpi-value" id="kpi_lessons_month">0</p>
-            <p class="text-sm mt-2" id="cmp_lessons_month">-</p>
-          </article>
-
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">Lessons This Week</p>
-            <p class="kpi-value" id="kpi_lessons_week">0</p>
-            <p class="text-sm mt-2" id="cmp_lessons_week">-</p>
-          </article>
-
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">Average Daily Lessons</p>
-            <p class="kpi-value" id="kpi_avg_daily">0</p>
-            <p class="text-sm mt-2" id="cmp_avg_daily">-</p>
-          </article>
-
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p>
-            <p class="kpi-value" id="kpi_avg_slots_week">0</p>
-            <p class="text-sm mt-2" id="cmp_avg_slots_week">-</p>
-          </article>
-
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">New Lessons This Month</p>
-            <p class="kpi-value" id="kpi_new_lessons_month">0</p>
-            <p class="text-sm mt-2" id="cmp_new_lessons_month">-</p>
-          </article>
+          <article class="card p-5"><p class="text-sm muted mb-2">Total Students This Year</p><p class="kpi-value" id="kpi_students_year">0</p><p class="text-sm mt-2" id="cmp_students_year">-</p></article>
+          <article class="card p-5"><p class="text-sm muted mb-2">Lessons This Month</p><p class="kpi-value" id="kpi_lessons_month">0</p><p class="text-sm mt-2" id="cmp_lessons_month">-</p></article>
+          <article class="card p-5"><p class="text-sm muted mb-2">Lessons This Week</p><p class="kpi-value" id="kpi_lessons_week">0</p><p class="text-sm mt-2" id="cmp_lessons_week">-</p></article>
+          <article class="card p-5"><p class="text-sm muted mb-2">Average Daily Lessons</p><p class="kpi-value" id="kpi_avg_daily">0</p><p class="text-sm mt-2" id="cmp_avg_daily">-</p></article>
+          <article class="card p-5"><p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p><p class="kpi-value" id="kpi_avg_slots_week">0</p><p class="text-sm mt-2" id="cmp_avg_slots_week">-</p></article>
+          <article class="card p-5"><p class="text-sm muted mb-2">New Lessons This Month</p><p class="kpi-value" id="kpi_new_lessons_month">0</p><p class="text-sm mt-2" id="cmp_new_lessons_month">-</p></article>
         </section>
       </section>
 
-      <!-- CALENDAR SECTION -->
       <section id="calendarSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <h2 class="text-2xl font-bold">Calendar</h2>
-              <p class="muted text-sm">Select a day to view lesson details.</p>
+              <p class="muted text-sm">Green = has availability, Red = no times available. (30-min slots)</p>
             </div>
             <div class="flex items-center gap-2">
-              <button id="prevMonthBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">
-                <i class="fa-solid fa-chevron-left"></i>
-              </button>
+              <button id="prevMonthBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fa-solid fa-chevron-left"></i></button>
               <p id="monthLabel" class="min-w-40 text-center font-semibold"></p>
-              <button id="nextMonthBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">
-                <i class="fa-solid fa-chevron-right"></i>
-              </button>
-              <button id="todayBtn" class="px-3 py-2 text-sm border border-blue-300 text-blue-700 rounded-lg bg-blue-50 hover:bg-blue-100">
-                Today
-              </button>
+              <button id="nextMonthBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fa-solid fa-chevron-right"></i></button>
+              <button id="todayBtn" class="px-3 py-2 text-sm border border-blue-300 text-blue-700 rounded-lg bg-blue-50 hover:bg-blue-100">Today</button>
             </div>
           </div>
         </div>
 
-        <div class="card p-4 mb-4">
-          <div class="calendar-grid mb-2">
-            <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
-            <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
-          </div>
-          <div id="calendarGrid" class="calendar-grid"></div>
-        </div>
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div class="xl:col-span-2">
+            <div class="card p-4 mb-4">
+              <div class="calendar-grid mb-2">
+                <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
+                <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+              </div>
+              <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
 
-        <div class="card p-5">
-          <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
-          <div id="selectedDayEvents" class="space-y-2 text-sm">
-            <p class="muted">No day selected.</p>
+            <div class="card p-5">
+              <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
+              <div id="selectedDayEvents" class="space-y-2 text-sm">
+                <p class="muted">No day selected.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Availability Editor -->
+          <div class="xl:col-span-1">
+            <div class="card p-5 mb-4">
+              <h3 class="text-lg font-bold mb-1">Edit Availability</h3>
+              <p class="text-sm muted mb-4">Block time by hours or multiple days.</p>
+
+              <div class="space-y-3">
+                <div>
+                  <label class="text-sm font-medium">Block Type</label>
+                  <select id="blockType" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <option value="time_range">Time range</option>
+                    <option value="full_day">Full day(s)</option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-sm font-medium">Start Date</label>
+                    <input id="blockStartDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium">End Date</label>
+                    <input id="blockEndDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                  </div>
+                </div>
+
+                <div id="timeInputs" class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-sm font-medium">Start Time</label>
+                    <input id="blockStartTime" type="time" step="1800" value="07:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium">End Time</label>
+                    <input id="blockEndTime" type="time" step="1800" value="14:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                  </div>
+                </div>
+
+                <button id="addBlockBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-semibold">
+                  Add Block
+                </button>
+                <p id="blockMsg" class="text-xs muted"></p>
+              </div>
+            </div>
+
+            <div class="card p-5">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-lg font-bold">Current Blocks</h3>
+                <button id="clearBlocksBtn" class="text-xs text-red-600 hover:text-red-700 font-semibold">Clear All</button>
+              </div>
+              <div id="blocksList" class="space-y-2 text-sm">
+                <p class="muted">No blocks added.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- NOTES SECTION -->
       <section id="notesSection" class="hidden-section">
         <div class="card p-5">
           <h2 class="text-2xl font-bold mb-1">Notes</h2>
@@ -228,7 +217,6 @@
         </div>
       </section>
 
-      <!-- STUDENTS SECTION -->
       <section id="studentsSection" class="hidden-section">
         <div class="card p-5">
           <h2 class="text-2xl font-bold mb-1">Students</h2>
@@ -239,59 +227,33 @@
   </div>
 
   <script>
-    // =========================
-    // Dashboard logic
-    // =========================
+    // Dashboard
     const dashboardData = {
-      this_month: {
-        label: "previous month",
-        current: { studentsYear: 124, lessonsMonth: 38, lessonsWeek: 11, avgDaily: 1.27, avgSlotsWeek: 22.5, newLessonsMonth: 5 },
-        previous:{ studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9,  avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }
-      },
-      last_month: {
-        label: "month before last",
-        current: { studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9,  avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 },
-        previous:{ studentsYear: 109, lessonsMonth: 27, lessonsWeek: 8,  avgDaily: 0.90, avgSlotsWeek: 21.8, newLessonsMonth: 2 }
-      },
-      this_quarter: {
-        label: "previous quarter",
-        current: { studentsYear: 124, lessonsMonth: 102, lessonsWeek: 10, avgDaily: 1.13, avgSlotsWeek: 23.2, newLessonsMonth: 12 },
-        previous:{ studentsYear: 98,  lessonsMonth: 88,  lessonsWeek: 8,  avgDaily: 0.98, avgSlotsWeek: 21.4, newLessonsMonth: 9 }
-      },
-      this_year: {
-        label: "previous year",
-        current: { studentsYear: 124, lessonsMonth: 426, lessonsWeek: 10, avgDaily: 1.17, avgSlotsWeek: 22.9, newLessonsMonth: 46 },
-        previous:{ studentsYear: 97,  lessonsMonth: 371, lessonsWeek: 8,  avgDaily: 1.02, avgSlotsWeek: 20.8, newLessonsMonth: 39 }
-      }
+      this_month: { label: "previous month", current: { studentsYear: 124, lessonsMonth: 38, lessonsWeek: 11, avgDaily: 1.27, avgSlotsWeek: 22.5, newLessonsMonth: 5 }, previous:{ studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }},
+      last_month: { label: "month before last", current: { studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }, previous:{ studentsYear: 109, lessonsMonth: 27, lessonsWeek: 8, avgDaily: 0.90, avgSlotsWeek: 21.8, newLessonsMonth: 2 }},
+      this_quarter:{ label: "previous quarter", current: { studentsYear: 124, lessonsMonth: 102, lessonsWeek: 10, avgDaily: 1.13, avgSlotsWeek: 23.2, newLessonsMonth: 12 }, previous:{ studentsYear: 98, lessonsMonth: 88, lessonsWeek: 8, avgDaily: 0.98, avgSlotsWeek: 21.4, newLessonsMonth: 9 }},
+      this_year:   { label: "previous year", current: { studentsYear: 124, lessonsMonth: 426, lessonsWeek: 10, avgDaily: 1.17, avgSlotsWeek: 22.9, newLessonsMonth: 46 }, previous:{ studentsYear: 97, lessonsMonth: 371, lessonsWeek: 8, avgDaily: 1.02, avgSlotsWeek: 20.8, newLessonsMonth: 39 }}
     };
 
     function formatNumber(v){ return Number.isInteger(v) ? `${v}` : v.toFixed(2).replace(/\.00$/, ""); }
     function pctChange(c,p){ if(p===0) return c===0 ? 0 : 100; return ((c-p)/Math.abs(p))*100; }
-
     function comparisonText(current, previous, label, isInteger=true){
-      const delta = current - previous;
-      const pct = pctChange(current, previous);
-      const sign = delta > 0 ? "+" : "";
+      const delta = current - previous, pct = pctChange(current, previous), sign = delta > 0 ? "+" : "";
       const cls = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
       const deltaText = isInteger ? `${sign}${Math.round(delta)}` : `${sign}${delta.toFixed(2).replace(/\.00$/, "")}`;
       const pctText = `${pct > 0 ? "+" : ""}${pct.toFixed(1)}%`;
       return `<span class="${cls}">${deltaText} (${pctText})</span> <span class="muted">vs ${label}</span>`;
     }
-
     function setText(id, val){ const el=document.getElementById(id); if(el) el.textContent = val; }
     function setHTML(id, val){ const el=document.getElementById(id); if(el) el.innerHTML = val; }
-
     function renderDashboard(rangeKey){
-      const d = dashboardData[rangeKey] || dashboardData.this_month;
-      const c = d.current, p = d.previous, label = d.label;
-
+      const d = dashboardData[rangeKey] || dashboardData.this_month, c = d.current, p = d.previous, label = d.label;
       setText("kpi_students_year", formatNumber(c.studentsYear));
       setText("kpi_lessons_month", formatNumber(c.lessonsMonth));
       setText("kpi_lessons_week", formatNumber(c.lessonsWeek));
       setText("kpi_avg_daily", formatNumber(c.avgDaily));
       setText("kpi_avg_slots_week", formatNumber(c.avgSlotsWeek));
       setText("kpi_new_lessons_month", formatNumber(c.newLessonsMonth));
-
       setHTML("cmp_students_year", comparisonText(c.studentsYear, p.studentsYear, label, true));
       setHTML("cmp_lessons_month", comparisonText(c.lessonsMonth, p.lessonsMonth, label, true));
       setHTML("cmp_lessons_week", comparisonText(c.lessonsWeek, p.lessonsWeek, label, true));
@@ -299,25 +261,20 @@
       setHTML("cmp_avg_slots_week", comparisonText(c.avgSlotsWeek, p.avgSlotsWeek, label, false));
       setHTML("cmp_new_lessons_month", comparisonText(c.newLessonsMonth, p.newLessonsMonth, label, true));
     }
-
     document.getElementById("dateRange").addEventListener("change", e => renderDashboard(e.target.value));
     renderDashboard("this_month");
 
-    // =========================
     // Section routing
-    // =========================
     const sections = {
       dashboard: document.getElementById("dashboardSection"),
       calendar: document.getElementById("calendarSection"),
       notes: document.getElementById("notesSection"),
       students: document.getElementById("studentsSection")
     };
-
     function showSection(sectionName){
       Object.values(sections).forEach(el => el.classList.add("hidden-section"));
       if (sections[sectionName]) sections[sectionName].classList.remove("hidden-section");
     }
-
     document.getElementById("quickMenu").addEventListener("change", (e) => {
       const value = e.target.value;
       if (value === "calendar") showSection("calendar");
@@ -326,36 +283,51 @@
       else showSection("dashboard");
     });
 
-    // =========================
-    // Calendar logic
-    // =========================
+    // Calendar + Availability
     const monthLabel = document.getElementById("monthLabel");
     const calendarGrid = document.getElementById("calendarGrid");
     const selectedDateLabel = document.getElementById("selectedDateLabel");
     const selectedDayEvents = document.getElementById("selectedDayEvents");
+
+    const blockType = document.getElementById("blockType");
+    const blockStartDate = document.getElementById("blockStartDate");
+    const blockEndDate = document.getElementById("blockEndDate");
+    const blockStartTime = document.getElementById("blockStartTime");
+    const blockEndTime = document.getElementById("blockEndTime");
+    const timeInputs = document.getElementById("timeInputs");
+    const addBlockBtn = document.getElementById("addBlockBtn");
+    const blocksList = document.getElementById("blocksList");
+    const blockMsg = document.getElementById("blockMsg");
+    const clearBlocksBtn = document.getElementById("clearBlocksBtn");
 
     const today = new Date();
     let viewYear = today.getFullYear();
     let viewMonth = today.getMonth();
     let selectedDateKey = null;
 
-    // Sample events (YYYY-MM-DD)
+    // 30-minute slot model
+    const SLOT_START_HOUR = 7;    // 7:00
+    const SLOT_END_HOUR = 14;     // 2:00 PM end boundary
+    const SLOT_MINUTES = 30;
+    const TOTAL_SLOTS_PER_OPEN_DAY = ((SLOT_END_HOUR - SLOT_START_HOUR) * 60) / SLOT_MINUTES; // 14
+
+    // Sample booked lessons
     const lessonEvents = {
-      "2026-07-29": [
-        { time: "3:00 PM", title: "Piano - Ava M." },
-        { time: "5:30 PM", title: "Voice - Liam R." }
-      ],
-      "2026-07-31": [
-        { time: "4:00 PM", title: "Guitar - Noah K." }
-      ],
-      "2026-08-02": [
-        { time: "11:00 AM", title: "Drums - Emma T." },
-        { time: "1:00 PM", title: "Piano - Sophia L." }
-      ],
+      "2026-07-29": [{ time: "7:00 AM", title: "Piano - Ava M." }, { time: "7:30 AM", title: "Voice - Liam R." }, { time: "9:00 AM", title: "Piano - Nora C." }],
+      "2026-07-31": [{ time: "8:00 AM", title: "Guitar - Noah K." }],
+      "2026-08-02": [{ time: "11:00 AM", title: "Drums - Emma T." }, { time: "1:00 PM", title: "Piano - Sophia L." }],
       "2026-08-05": [
-        { time: "6:00 PM", title: "Voice - Mason B." }
+        { time: "7:00 AM", title: "Voice - Mason B." }, { time: "7:30 AM", title: "Piano - Isla V." }, { time: "8:00 AM", title: "Guitar - Eli J." },
+        { time: "8:30 AM", title: "Voice - Mia P." }, { time: "9:00 AM", title: "Drums - Leo H." }, { time: "9:30 AM", title: "Piano - Nora C." },
+        { time: "10:00 AM", title: "Guitar - Owen D." }, { time: "10:30 AM", title: "Voice - Ava M." }, { time: "11:00 AM", title: "Piano - Liam R." },
+        { time: "11:30 AM", title: "Drums - Emma T." }, { time: "12:00 PM", title: "Guitar - Noah K." }, { time: "12:30 PM", title: "Voice - Sophia L." },
+        { time: "1:00 PM", title: "Piano - Mason B." }, { time: "1:30 PM", title: "Guitar - Isla V." }
       ]
     };
+
+    // User blocks
+    // item: { id, type: "time_range"|"full_day", startDate, endDate, startTime?, endTime? }
+    let availabilityBlocks = [];
 
     function ymd(date){
       const y = date.getFullYear();
@@ -363,9 +335,101 @@
       const d = String(date.getDate()).padStart(2,"0");
       return `${y}-${m}-${d}`;
     }
+    function fromYmd(ymdStr){ return new Date(ymdStr + "T00:00:00"); }
+    function monthName(year, month){ return new Date(year, month, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" }); }
+    function isSaturday(date){ return date.getDay() === 6; }
 
-    function monthName(year, month){
-      return new Date(year, month, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    function getBookedCountForDate(dateKey){
+      return Math.min((lessonEvents[dateKey] || []).length, TOTAL_SLOTS_PER_OPEN_DAY);
+    }
+
+    function timeToMinutes(t){
+      const [hh, mm] = t.split(":").map(Number);
+      return hh * 60 + mm;
+    }
+
+    function clampToBusinessMinutes(mins){
+      const start = SLOT_START_HOUR * 60;
+      const end = SLOT_END_HOUR * 60;
+      return Math.max(start, Math.min(end, mins));
+    }
+
+    function overlapMinutes(aStart, aEnd, bStart, bEnd){
+      const start = Math.max(aStart, bStart);
+      const end = Math.min(aEnd, bEnd);
+      return Math.max(0, end - start);
+    }
+
+    function getBlockedSlotsForDate(date){
+      if (isSaturday(date)) return TOTAL_SLOTS_PER_OPEN_DAY; // treated as fully unavailable
+      const dateKey = ymd(date);
+
+      let blockedMinutes = 0;
+
+      for (const b of availabilityBlocks){
+        if (dateKey < b.startDate || dateKey > b.endDate) continue;
+
+        if (b.type === "full_day"){
+          blockedMinutes += (SLOT_END_HOUR - SLOT_START_HOUR) * 60;
+        } else {
+          const businessStart = SLOT_START_HOUR * 60;
+          const businessEnd = SLOT_END_HOUR * 60;
+          const blockStart = clampToBusinessMinutes(timeToMinutes(b.startTime));
+          const blockEnd = clampToBusinessMinutes(timeToMinutes(b.endTime));
+          blockedMinutes += overlapMinutes(businessStart, businessEnd, blockStart, blockEnd);
+        }
+      }
+
+      // convert to 30-min slots
+      let blockedSlots = Math.ceil(blockedMinutes / SLOT_MINUTES);
+      blockedSlots = Math.max(0, Math.min(TOTAL_SLOTS_PER_OPEN_DAY, blockedSlots));
+      return blockedSlots;
+    }
+
+    function getAvailabilityForDate(date){
+      if (isSaturday(date)){
+        return { totalSlots: 0, bookedSlots: 0, blockedSlots: 0, availableSlots: 0, isOpenDay: false };
+      }
+
+      const totalSlots = TOTAL_SLOTS_PER_OPEN_DAY;
+      const bookedSlots = getBookedCountForDate(ymd(date));
+      const blockedSlots = getBlockedSlotsForDate(date);
+
+      // any slot that is booked cannot be available; blocks remove remaining slots
+      // simple conservative model:
+      const availableSlots = Math.max(0, totalSlots - bookedSlots - blockedSlots);
+
+      return { totalSlots, bookedSlots, blockedSlots, availableSlots, isOpenDay: true };
+    }
+
+    function renderBlocksList(){
+      if (!availabilityBlocks.length){
+        blocksList.innerHTML = `<p class="muted">No blocks added.</p>`;
+        return;
+      }
+
+      blocksList.innerHTML = availabilityBlocks.map((b) => {
+        const label = b.type === "full_day"
+          ? `Full day block: ${b.startDate} → ${b.endDate}`
+          : `Time block: ${b.startDate} ${b.startTime} → ${b.endDate} ${b.endTime}`;
+
+        return `
+          <div class="border border-gray-200 rounded-lg px-3 py-2 flex items-start justify-between gap-2">
+            <p>${label}</p>
+            <button data-id="${b.id}" class="delete-block-btn text-xs text-red-600 hover:text-red-700 font-semibold">Delete</button>
+          </div>
+        `;
+      }).join("");
+
+      document.querySelectorAll(".delete-block-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          availabilityBlocks = availabilityBlocks.filter(b => b.id !== id);
+          renderBlocksList();
+          renderCalendar();
+          renderSelectedDay();
+        });
+      });
     }
 
     function renderSelectedDay(){
@@ -375,102 +439,95 @@
         return;
       }
 
-      const d = new Date(selectedDateKey + "T00:00:00");
-      selectedDateLabel.textContent = d.toLocaleDateString(undefined, {
-        weekday: "long", month: "long", day: "numeric", year: "numeric"
-      });
+      const d = fromYmd(selectedDateKey);
+      const avail = getAvailabilityForDate(d);
+      selectedDateLabel.textContent = d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
 
       const items = lessonEvents[selectedDateKey] || [];
-      if (!items.length){
-        selectedDayEvents.innerHTML = `<p class="muted">No lessons scheduled.</p>`;
-        return;
-      }
-
-      selectedDayEvents.innerHTML = items.map(ev => `
-        <div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between">
-          <span class="font-medium">${ev.title}</span>
-          <span class="text-blue-700 font-semibold">${ev.time}</span>
+      const availabilityLine = `
+        <div class="border rounded-lg px-3 py-2 ${avail.availableSlots > 0 ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}">
+          <p class="font-semibold ${avail.availableSlots > 0 ? 'text-green-800' : 'text-red-800'}">
+            ${avail.isOpenDay ? `Available: ${avail.availableSlots} / ${avail.totalSlots} slots` : 'Closed: Saturday (Off Day)'}
+          </p>
+          ${avail.isOpenDay ? `<p class="text-xs ${avail.availableSlots > 0 ? 'text-green-700' : 'text-red-700'}">Booked: ${avail.bookedSlots} · Blocked: ${avail.blockedSlots}</p>` : ''}
         </div>
-      `).join("");
+      `;
+
+      const eventsBlock = items.length
+        ? items.map(ev => `<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${ev.title}</span><span class="text-blue-700 font-semibold">${ev.time}</span></div>`).join("")
+        : `<p class="muted">No lessons scheduled.</p>`;
+
+      selectedDayEvents.innerHTML = availabilityLine + `<div class="space-y-2 mt-2">${eventsBlock}</div>`;
     }
 
     function renderCalendar(){
       monthLabel.textContent = monthName(viewYear, viewMonth);
       calendarGrid.innerHTML = "";
 
-      const firstOfMonth = new Date(viewYear, viewMonth, 1);
-      const startDay = firstOfMonth.getDay(); // 0=Sun
+      const first = new Date(viewYear, viewMonth, 1);
+      const startDay = first.getDay();
       const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-
       const prevMonthDays = new Date(viewYear, viewMonth, 0).getDate();
 
       const cells = [];
-
-      // Leading days from previous month
-      for (let i = startDay - 1; i >= 0; i--){
-        const dayNum = prevMonthDays - i;
-        const d = new Date(viewYear, viewMonth - 1, dayNum);
-        cells.push({ date: d, otherMonth: true });
-      }
-
-      // Current month days
-      for (let day = 1; day <= daysInMonth; day++){
-        const d = new Date(viewYear, viewMonth, day);
-        cells.push({ date: d, otherMonth: false });
-      }
-
-      // Trailing days to fill 6 rows x 7 = 42
+      for (let i = startDay - 1; i >= 0; i--) cells.push({ date: new Date(viewYear, viewMonth - 1, prevMonthDays - i), otherMonth: true });
+      for (let d = 1; d <= daysInMonth; d++) cells.push({ date: new Date(viewYear, viewMonth, d), otherMonth: false });
       while (cells.length < 42){
         const nextDay = cells.length - (startDay + daysInMonth) + 1;
-        const d = new Date(viewYear, viewMonth + 1, nextDay);
-        cells.push({ date: d, otherMonth: true });
+        cells.push({ date: new Date(viewYear, viewMonth + 1, nextDay), otherMonth: true });
       }
 
       const todayKey = ymd(today);
 
       cells.forEach(cell => {
         const key = ymd(cell.date);
-        const hasEvents = !!lessonEvents[key]?.length;
         const isToday = key === todayKey;
         const isSelected = key === selectedDateKey;
+        const avail = getAvailabilityForDate(cell.date);
+        const eventsCount = (lessonEvents[key] || []).length;
 
-        const div = document.createElement("button");
-        div.type = "button";
-        div.className = [
+        const availabilityClass = avail.availableSlots > 0 ? "available-day" : "unavailable-day";
+        const availabilityLabel = avail.availableSlots > 0
+          ? `<span class="availability-pill open">${avail.availableSlots} open</span>`
+          : `<span class="availability-pill closed">${avail.isOpenDay ? "0 open" : "Off day"}</span>`;
+
+        const dayBtn = document.createElement("button");
+        dayBtn.type = "button";
+        dayBtn.className = [
           "cal-day",
+          availabilityClass,
           cell.otherMonth ? "other-month" : "",
           isToday ? "today" : "",
           isSelected ? "selected" : ""
         ].join(" ").trim();
 
-        const dayNum = cell.date.getDate();
-        div.innerHTML = `
-          <div class="cal-daynum">${dayNum}</div>
-          ${hasEvents ? `<div class="event-dot"><span class="dot"></span>${lessonEvents[key].length} lesson${lessonEvents[key].length>1?"s":""}</div>` : ""}
+        dayBtn.innerHTML = `
+          <div class="cal-daynum">${cell.date.getDate()}</div>
+          ${availabilityLabel}
+          ${eventsCount ? `<div class="event-dot"><span class="dot"></span>${eventsCount} booked</div>` : ""}
         `;
 
-        div.addEventListener("click", () => {
+        dayBtn.addEventListener("click", () => {
           selectedDateKey = key;
           renderCalendar();
           renderSelectedDay();
         });
 
-        calendarGrid.appendChild(div);
+        calendarGrid.appendChild(dayBtn);
       });
     }
 
+    // Calendar controls
     document.getElementById("prevMonthBtn").addEventListener("click", () => {
       viewMonth--;
       if (viewMonth < 0){ viewMonth = 11; viewYear--; }
       renderCalendar();
     });
-
     document.getElementById("nextMonthBtn").addEventListener("click", () => {
       viewMonth++;
       if (viewMonth > 11){ viewMonth = 0; viewYear++; }
       renderCalendar();
     });
-
     document.getElementById("todayBtn").addEventListener("click", () => {
       viewYear = today.getFullYear();
       viewMonth = today.getMonth();
@@ -479,6 +536,72 @@
       renderSelectedDay();
     });
 
+    // Availability editor controls
+    function syncBlockInputs(){
+      const type = blockType.value;
+      timeInputs.style.display = type === "time_range" ? "grid" : "none";
+    }
+    blockType.addEventListener("change", syncBlockInputs);
+    syncBlockInputs();
+
+    // set default dates to today
+    const todayStr = ymd(today);
+    blockStartDate.value = todayStr;
+    blockEndDate.value = todayStr;
+
+    addBlockBtn.addEventListener("click", () => {
+      blockMsg.textContent = "";
+      const type = blockType.value;
+      const startDate = blockStartDate.value;
+      const endDate = blockEndDate.value;
+      const startTime = blockStartTime.value;
+      const endTime = blockEndTime.value;
+
+      if (!startDate || !endDate){
+        blockMsg.textContent = "Please select both start and end dates.";
+        return;
+      }
+      if (endDate < startDate){
+        blockMsg.textContent = "End date must be the same or after start date.";
+        return;
+      }
+
+      if (type === "time_range"){
+        if (!startTime || !endTime){
+          blockMsg.textContent = "Please select both start and end times.";
+          return;
+        }
+        if (endTime <= startTime){
+          blockMsg.textContent = "End time must be later than start time.";
+          return;
+        }
+      }
+
+      const newBlock = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        type,
+        startDate,
+        endDate,
+        startTime: type === "time_range" ? startTime : null,
+        endTime: type === "time_range" ? endTime : null
+      };
+
+      availabilityBlocks.push(newBlock);
+      renderBlocksList();
+      renderCalendar();
+      renderSelectedDay();
+      blockMsg.textContent = "Block added.";
+    });
+
+    clearBlocksBtn.addEventListener("click", () => {
+      availabilityBlocks = [];
+      renderBlocksList();
+      renderCalendar();
+      renderSelectedDay();
+      blockMsg.textContent = "All blocks cleared.";
+    });
+
+    renderBlocksList();
     renderCalendar();
     renderSelectedDay();
   </script>
