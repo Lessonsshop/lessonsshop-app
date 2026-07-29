@@ -114,6 +114,15 @@
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
+    .student-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid #d1d5db;
+      background: #f3f4f6;
+    }
+
     .hidden-section { display: none; }
     .hidden { display: none !important; }
   </style>
@@ -138,7 +147,6 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-6">
-      <!-- NEW TOP BUTTON NAV -->
       <section class="mb-4">
         <div class="flex flex-wrap gap-2">
           <button id="navDashboardBtn" class="top-nav-btn active">Dashboard</button>
@@ -148,7 +156,6 @@
         </div>
       </section>
 
-      <!-- DASHBOARD -->
       <section id="dashboardSection">
         <section class="mb-6">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -178,7 +185,6 @@
         </section>
       </section>
 
-      <!-- CALENDAR -->
       <section id="calendarSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
@@ -282,7 +288,6 @@
         </div>
       </section>
 
-      <!-- NOTES -->
       <section id="notesSection" class="hidden-section">
         <div class="card p-5">
           <h2 class="text-2xl font-bold mb-1">Notes</h2>
@@ -291,9 +296,9 @@
         </div>
       </section>
 
-      <!-- STUDENTS -->
       <section id="studentsSection" class="hidden-section">
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <!-- LEFT LIST -->
           <div class="xl:col-span-1">
             <div class="card p-5 mb-4">
               <h2 class="text-2xl font-bold mb-1">Students</h2>
@@ -306,9 +311,10 @@
             </div>
           </div>
 
+          <!-- RIGHT PROFILE -->
           <div class="xl:col-span-2 space-y-4">
             <div class="card p-5">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center justify-between mb-3">
                 <h3 class="text-xl font-bold">Student Profile</h3>
                 <span id="profileStatus" class="text-xs muted">Select a student</span>
               </div>
@@ -321,10 +327,11 @@
               <h3 class="text-xl font-bold mb-2">Add Student</h3>
               <p class="muted text-sm mb-4">Create a student record and send invite link.</p>
 
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
                 <input id="newStudentName" type="text" placeholder="Full name" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentEmail" type="email" placeholder="Email" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentPhone" type="text" placeholder="Phone" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <input id="newStudentPhoto" type="file" accept="image/*" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
               </div>
 
               <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">
@@ -388,18 +395,15 @@
       notes: document.getElementById("navNotesBtn"),
       students: document.getElementById("navStudentsBtn")
     };
-
     function setActiveTopNav(sectionName){
       Object.values(topNavButtons).forEach(btn => btn.classList.remove("active"));
       topNavButtons[sectionName]?.classList.add("active");
     }
-
     function showSection(sectionName){
       Object.values(sections).forEach(el => el.classList.add("hidden-section"));
-      if (sections[sectionName]) sections[sectionName].classList.remove("hidden-section");
+      sections[sectionName]?.classList.remove("hidden-section");
       setActiveTopNav(sectionName);
     }
-
     topNavButtons.dashboard.addEventListener("click", () => showSection("dashboard"));
     topNavButtons.calendar.addEventListener("click", () => showSection("calendar"));
     topNavButtons.notes.addEventListener("click", () => showSection("notes"));
@@ -447,7 +451,6 @@
       "2026-07-31": [{ time: "8:00 AM", title: "Guitar - Noah K." }],
       "2026-08-02": [{ time: "11:00 AM", title: "Drums - Emma T." }, { time: "1:00 PM", title: "Piano - Sophia L." }]
     };
-
     let availabilityBlocks = [];
 
     function ymd(date){ const y=date.getFullYear(), m=String(date.getMonth()+1).padStart(2,"0"), d=String(date.getDate()).padStart(2,"0"); return `${y}-${m}-${d}`; }
@@ -476,7 +479,6 @@
       return Math.max(start,Math.min(end,mins));
     }
     function overlapMinutes(aStart,aEnd,bStart,bEnd){ const s=Math.max(aStart,bStart), e=Math.min(aEnd,bEnd); return Math.max(0,e-s); }
-
     function getBookedCountForDate(dateKey){ return Math.min((lessonEvents[dateKey]||[]).length,TOTAL_SLOTS_PER_OPEN_DAY); }
 
     function getBlockedSlotsForDate(date){
@@ -720,9 +722,29 @@
 
     // Students
     let studentsData = [
-      { id:"stu_1", name:"Ava Martinez", phone:"(555) 210-8841", email:"ava.martinez@email.com", notes:["Prefers evening lessons after school.","Working on rhythm consistency."], videos:[{title:"Moonlight Sonata Practice",url:"#"}], questions:["Can we spend more time on left-hand independence?"] },
-      { id:"stu_2", name:"Liam Roberts", phone:"(555) 998-1123", email:"liam.roberts@email.com", notes:["Voice student; focus on breath control."], videos:[{title:"Breathing Drill Recording",url:"#"}], questions:["Is falsetto practice daily okay?"] },
-      { id:"stu_3", name:"Sophia Lee", phone:"(555) 441-7770", email:"sophia.lee@email.com", notes:[], videos:[], questions:[] }
+      {
+        id:"stu_1",
+        name:"Ava Martinez",
+        phone:"(555) 210-8841",
+        email:"ava.martinez@email.com",
+        photo:"",
+        notes:[{ text:"Prefers evening lessons after school.", createdAt:new Date().toISOString() }],
+        media:[
+          { type:"photo", name:"Recital Photo", url:"#", createdAt:new Date().toISOString() },
+          { type:"video", name:"Practice Clip", url:"#", createdAt:new Date().toISOString() }
+        ],
+        questions:[{ text:"Can we spend more time on left-hand independence?", createdAt:new Date().toISOString() }]
+      },
+      {
+        id:"stu_2",
+        name:"Liam Roberts",
+        phone:"(555) 998-1123",
+        email:"liam.roberts@email.com",
+        photo:"",
+        notes:[{ text:"Voice student; focus on breath control.", createdAt:new Date().toISOString() }],
+        media:[],
+        questions:[{ text:"Is falsetto practice daily okay?", createdAt:new Date().toISOString() }]
+      }
     ];
 
     let selectedStudentId = null;
@@ -734,6 +756,12 @@
     const addStudentMsgEl = document.getElementById("addStudentMsg");
 
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+    function fmtDateTime(iso){
+      const d = new Date(iso);
+      return d.toLocaleString(undefined, { month:"short", day:"numeric", year:"numeric", hour:"numeric", minute:"2-digit" });
+    }
+    function phoneDigits(phone){ return phone.replace(/[^\d+]/g, ""); }
+
     function getFilteredStudents(){
       const q=(studentSearchEl?.value||"").trim().toLowerCase();
       if(!q) return studentsData;
@@ -747,72 +775,229 @@
 
       studentsListEl.innerHTML=filtered.map(s=>`
         <button class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${s.id===selectedStudentId?'border-blue-300 bg-blue-50':'border-gray-200'}" data-student-id="${s.id}">
-          <p class="font-semibold text-sm">${escapeHtml(s.name)}</p>
-          <p class="text-xs muted">${escapeHtml(s.email)}</p>
-          <p class="text-xs muted">${escapeHtml(s.phone)}</p>
+          <div class="flex items-center gap-3">
+            <img src="${s.photo || 'https://via.placeholder.com/80x80.png?text=Photo'}" alt="Profile" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+            <div>
+              <p class="font-semibold text-sm">${escapeHtml(s.name)}</p>
+              <p class="text-xs muted">${escapeHtml(s.email)}</p>
+              <p class="text-xs muted">${escapeHtml(s.phone)}</p>
+            </div>
+          </div>
         </button>
       `).join("");
 
       studentsListEl.querySelectorAll("[data-student-id]").forEach(btn=>{
         btn.addEventListener("click",()=>{
           selectedStudentId=btn.getAttribute("data-student-id");
-          renderStudentsList(); renderStudentProfile();
+          renderStudentsList();
+          renderStudentProfile();
         });
       });
     }
 
     function renderStudentProfile(){
-      if(!studentProfileContentEl||!profileStatusEl) return;
+      if(!studentProfileContentEl || !profileStatusEl) return;
       const s=studentsData.find(x=>x.id===selectedStudentId);
-      if(!s){ profileStatusEl.textContent="Select a student"; studentProfileContentEl.innerHTML=`<p class="muted">Choose a student from the list to view full profile details.</p>`; return; }
+      if(!s){
+        profileStatusEl.textContent="Select a student";
+        studentProfileContentEl.innerHTML=`<p class="muted">Choose a student from the list to view full profile details.</p>`;
+        return;
+      }
 
       profileStatusEl.textContent=`Viewing: ${s.name}`;
-      const notesHtml=s.notes.length?`<ul class="list-disc ml-5 space-y-1">${s.notes.map(n=>`<li>${escapeHtml(n)}</li>`).join("")}</ul>`:`<p class="muted">No notes uploaded.</p>`;
-      const videosHtml=s.videos.length?`<ul class="list-disc ml-5 space-y-1">${s.videos.map(v=>`<li><a href="${v.url}" class="text-blue-600 hover:text-blue-700">${escapeHtml(v.title)}</a></li>`).join("")}</ul>`:`<p class="muted">No videos uploaded.</p>`;
-      const questionsHtml=s.questions.length?`<ul class="list-disc ml-5 space-y-1">${s.questions.map(q=>`<li>${escapeHtml(q)}</li>`).join("")}</ul>`:`<p class="muted">No student questions yet.</p>`;
 
-      studentProfileContentEl.innerHTML=`
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
-          <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</div>
-          <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone)}</div>
-          <div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2"><span class="font-semibold">Email:</span> ${escapeHtml(s.email)}</div>
+      const notesHtml = s.notes.length
+        ? s.notes.map(n => `
+            <div class="border border-gray-200 rounded-lg px-3 py-2">
+              <p>${escapeHtml(n.text)}</p>
+              <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
+            </div>
+          `).join("")
+        : `<p class="muted">No notes uploaded.</p>`;
+
+      const mediaHtml = s.media.length
+        ? s.media.map(m => `
+            <div class="border border-gray-200 rounded-lg px-3 py-2">
+              <p class="font-semibold">${m.type === "photo" ? "Photo" : "Video"}: ${escapeHtml(m.name)}</p>
+              <a href="${m.url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">Open file</a>
+              <p class="text-xs muted mt-1">${fmtDateTime(m.createdAt)}</p>
+            </div>
+          `).join("")
+        : `<p class="muted">No photos/videos uploaded.</p>`;
+
+      const questionsHtml = s.questions.length
+        ? s.questions.map(q => `
+            <div class="border border-gray-200 rounded-lg px-3 py-2">
+              <p>${escapeHtml(q.text)}</p>
+              <p class="text-xs muted mt-1">${fmtDateTime(q.createdAt)}</p>
+            </div>
+          `).join("")
+        : `<p class="muted">No student questions yet.</p>`;
+
+      studentProfileContentEl.innerHTML = `
+        <div class="flex flex-col md:flex-row md:items-start gap-4 mb-4">
+          <div>
+            <img src="${s.photo || 'https://via.placeholder.com/120x120.png?text=Photo'}" alt="Student photo" class="student-avatar w-28 h-28">
+            <label class="mt-2 inline-block text-xs font-semibold text-blue-700 cursor-pointer">
+              Upload Profile Photo
+              <input id="profilePhotoUpload" type="file" accept="image/*" class="hidden">
+            </label>
+          </div>
+          <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</div>
+            <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone)}</div>
+            <div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2">
+              <span class="font-semibold">Email:</span>
+              <a href="mailto:${encodeURIComponent(s.email)}" class="text-blue-600 hover:text-blue-700 ml-1">${escapeHtml(s.email)}</a>
+            </div>
+            <div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2 flex flex-wrap gap-2">
+              <a href="tel:${phoneDigits(s.phone)}" class="text-sm bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-lg">Call</a>
+              <a href="sms:${phoneDigits(s.phone)}" class="text-sm bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-lg">Text</a>
+              <a href="mailto:${encodeURIComponent(s.email)}" class="text-sm bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1 rounded-lg">Email</a>
+            </div>
+          </div>
         </div>
-        <div class="space-y-4">
-          <div><h4 class="font-semibold mb-1">Notes</h4>${notesHtml}</div>
-          <div><h4 class="font-semibold mb-1">Videos</h4>${videosHtml}</div>
-          <div><h4 class="font-semibold mb-1">Questions from Student Portal</h4>${questionsHtml}</div>
+
+        <div class="space-y-5">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold">Notes</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
+              <input id="newNoteText" type="text" placeholder="Add note..." class="md:col-span-3 border border-gray-300 rounded-lg px-3 py-2 text-sm">
+              <button id="addNoteBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Add Note</button>
+            </div>
+            <div class="space-y-2">${notesHtml}</div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold">Photos & Videos</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
+              <select id="newMediaType" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <option value="photo">Photo</option>
+                <option value="video">Video</option>
+              </select>
+              <input id="newMediaFile" type="file" accept="image/*,video/*" class="md:col-span-2 border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
+              <button id="addMediaBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Upload</button>
+            </div>
+            <div class="space-y-2">${mediaHtml}</div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-2">Questions from Student Portal</h4>
+            <div class="space-y-2">${questionsHtml}</div>
+          </div>
         </div>
       `;
+
+      // wire dynamic buttons for selected student profile
+      const profilePhotoUpload = document.getElementById("profilePhotoUpload");
+      profilePhotoUpload?.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          s.photo = reader.result;
+          renderStudentsList();
+          renderStudentProfile();
+        };
+        reader.readAsDataURL(file);
+      });
+
+      const addNoteBtn = document.getElementById("addNoteBtn");
+      addNoteBtn?.addEventListener("click", () => {
+        const noteInput = document.getElementById("newNoteText");
+        const text = (noteInput?.value || "").trim();
+        if (!text) return;
+        s.notes.unshift({ text, createdAt: new Date().toISOString() });
+        renderStudentProfile();
+      });
+
+      const addMediaBtn = document.getElementById("addMediaBtn");
+      addMediaBtn?.addEventListener("click", () => {
+        const typeEl = document.getElementById("newMediaType");
+        const fileEl = document.getElementById("newMediaFile");
+        const type = typeEl?.value || "photo";
+        const file = fileEl?.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          s.media.unshift({
+            type,
+            name: file.name,
+            url: reader.result,
+            createdAt: new Date().toISOString()
+          });
+          renderStudentProfile();
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
-    function wireStudentSearch(){ if(studentSearchEl) studentSearchEl.addEventListener("input",renderStudentsList); }
+    function wireStudentSearch(){
+      studentSearchEl?.addEventListener("input", renderStudentsList);
+    }
+
     function wireAddStudent(){
-      if(!addStudentBtnEl) return;
-      addStudentBtnEl.addEventListener("click",()=>{
+      addStudentBtnEl?.addEventListener("click",()=>{
         const nameEl=document.getElementById("newStudentName");
         const emailEl=document.getElementById("newStudentEmail");
         const phoneEl=document.getElementById("newStudentPhone");
+        const photoEl=document.getElementById("newStudentPhoto");
+
         const name=(nameEl?.value||"").trim();
         const email=(emailEl?.value||"").trim();
         const phone=(phoneEl?.value||"").trim();
 
         if(!name||!email||!phone){ addStudentMsgEl.textContent="Please enter name, email, and phone."; return; }
 
-        const newStudent={ id:`stu_${Date.now()}`, name, email, phone, notes:[], videos:[], questions:[] };
-        studentsData.unshift(newStudent);
-        selectedStudentId=newStudent.id;
+        const baseStudent = {
+          id:`stu_${Date.now()}`,
+          name,email,phone,
+          photo:"",
+          notes:[],
+          media:[],
+          questions:[]
+        };
 
-        if(nameEl) nameEl.value="";
-        if(emailEl) emailEl.value="";
-        if(phoneEl) phoneEl.value="";
+        const commitNewStudent = (studentObj) => {
+          studentsData.unshift(studentObj);
+          selectedStudentId=studentObj.id;
 
-        renderStudentsList(); renderStudentProfile();
-        const fakeInviteLink=`${window.location.origin}/student-invite.html?email=${encodeURIComponent(email)}`;
-        addStudentMsgEl.innerHTML=`Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.<br><span class="muted">Invite link (placeholder): ${escapeHtml(fakeInviteLink)}</span>`;
+          if(nameEl) nameEl.value="";
+          if(emailEl) emailEl.value="";
+          if(phoneEl) phoneEl.value="";
+          if(photoEl) photoEl.value="";
+
+          renderStudentsList(); renderStudentProfile();
+
+          const fakeInviteLink=`${window.location.origin}/student-invite.html?email=${encodeURIComponent(email)}`;
+          addStudentMsgEl.innerHTML=`Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.<br><span class="muted">Invite link (placeholder): ${escapeHtml(fakeInviteLink)}</span>`;
+        };
+
+        const photoFile = photoEl?.files?.[0];
+        if (photoFile){
+          const reader = new FileReader();
+          reader.onload = () => {
+            baseStudent.photo = reader.result;
+            commitNewStudent(baseStudent);
+          };
+          reader.readAsDataURL(photoFile);
+        } else {
+          commitNewStudent(baseStudent);
+        }
       });
     }
 
-    function initStudentsModule(){ renderStudentsList(); renderStudentProfile(); wireStudentSearch(); wireAddStudent(); }
+    function initStudentsModule(){
+      renderStudentsList();
+      renderStudentProfile();
+      wireStudentSearch();
+      wireAddStudent();
+    }
 
     // Init
     renderBlocksList();
