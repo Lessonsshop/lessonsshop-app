@@ -42,14 +42,26 @@
       color: #1d4ed8;
     }
 
+    .video-tab-btn{
+      border:1px solid #d1d5db;
+      background:#fff;
+      color:#374151;
+      border-radius:10px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:700;
+    }
+    .video-tab-btn.active{
+      border-color:#93c5fd;
+      background:#eff6ff;
+      color:#1d4ed8;
+    }
+
     .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .week-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .day-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 8px; }
 
-    .cal-dow {
-      font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase;
-      letter-spacing: .04em; text-align: center; padding: 6px 0;
-    }
+    .cal-dow { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 6px 0; }
     .cal-day {
       min-height: 118px; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px;
       cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease;
@@ -85,60 +97,24 @@
       font-size: 12px;
       font-weight: 700;
     }
-    .view-btn.active {
-      border-color: #93c5fd;
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
+    .view-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
     .timeline-row {
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      padding: 8px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
+      border: 1px solid #e5e7eb; border-radius: 10px; padding: 8px 10px; display: flex;
+      justify-content: space-between; align-items: center; gap: 10px;
     }
     .timeline-open { background: #ecfdf3; border-color: #86efac; cursor: pointer; }
     .timeline-booked { background: #eff6ff; border-color: #bfdbfe; }
     .timeline-blocked { background: #fef2f2; border-color: #fca5a5; }
     .timeline-time { font-weight: 700; min-width: 84px; display: inline-block; }
-    .timeline-status {
-      font-size: 12px;
-      font-weight: 700;
-      border-radius: 999px;
-      padding: 2px 8px;
-    }
+    .timeline-status { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
     .status-open { background:#dcfce7; color:#166534; border:1px solid #86efac; }
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
-    .student-avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 999px;
-      object-fit: cover;
-      border: 1px solid #d1d5db;
-      background: #f3f4f6;
-    }
-    .media-thumb {
-      width: 96px;
-      height: 72px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1px solid #d1d5db;
-      background: #f3f4f6;
-    }
-
-    .instr-thumb {
-      width: 84px;
-      height: 56px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1px solid #d1d5db;
-      background: #f3f4f6;
-    }
+    .student-avatar { width: 96px; height: 96px; border-radius: 999px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
+    .media-thumb { width: 96px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
+    .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
 
     .hidden-section { display: none; }
     .hidden { display: none !important; }
@@ -182,7 +158,7 @@
             </div>
             <div class="flex items-center gap-2">
               <label for="dateRange" class="text-sm font-medium text-gray-700">Date Range:</label>
-              <select id="dateRange" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select id="dateRange" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
                 <option value="this_month">This month</option>
                 <option value="last_month">Last month</option>
                 <option value="this_quarter">This quarter</option>
@@ -192,7 +168,7 @@
           </div>
         </section>
 
-        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8" id="kpiGrid">
+        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
           <article class="card p-5"><p class="text-sm muted mb-2">Total Students This Year</p><p class="kpi-value" id="kpi_students_year">0</p><p class="text-sm mt-2" id="cmp_students_year">-</p></article>
           <article class="card p-5"><p class="text-sm muted mb-2">Lessons This Month</p><p class="kpi-value" id="kpi_lessons_month">0</p><p class="text-sm mt-2" id="cmp_lessons_month">-</p></article>
           <article class="card p-5"><p class="text-sm muted mb-2">Lessons This Week</p><p class="kpi-value" id="kpi_lessons_week">0</p><p class="text-sm mt-2" id="cmp_lessons_week">-</p></article>
@@ -205,19 +181,15 @@
       <section id="calendarSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-            <div>
-              <h2 class="text-2xl font-bold">Calendar</h2>
-              <p class="muted text-sm">Green = availability, Red = no availability.</p>
-            </div>
-
+            <div><h2 class="text-2xl font-bold">Calendar</h2><p class="muted text-sm">Green = availability, Red = no availability.</p></div>
             <div class="flex flex-wrap items-center gap-2">
               <button id="dayViewBtn" class="view-btn">Today</button>
               <button id="weekViewBtn" class="view-btn">Week</button>
               <button id="monthViewBtn" class="view-btn active">Month</button>
               <div class="w-px h-7 bg-gray-300 mx-1"></div>
-              <button id="prevBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fa-solid fa-chevron-left"></i></button>
+              <button id="prevBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg"><i class="fa-solid fa-chevron-left"></i></button>
               <p id="rangeLabel" class="min-w-44 text-center font-semibold"></p>
-              <button id="nextBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"><i class="fa-solid fa-chevron-right"></i></button>
+              <button id="nextBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
           </div>
         </div>
@@ -237,9 +209,7 @@
           <div id="calendarMiddleCol" class="xl:col-span-1">
             <div class="card p-5 mb-4">
               <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day Appointments</h3>
-              <div id="selectedDayEvents" class="space-y-2 text-sm">
-                <p class="muted">No day selected.</p>
-              </div>
+              <div id="selectedDayEvents" class="space-y-2 text-sm"><p class="muted">No day selected.</p></div>
             </div>
           </div>
 
@@ -249,15 +219,12 @@
                 <h3 class="font-semibold">Day Timeline (7:00 AM - 2:00 PM)</h3>
                 <span class="text-xs muted">Click open slot to book lesson</span>
               </div>
-              <div id="dayTimeline" class="space-y-2 text-sm">
-                <p class="muted">Select a day to view timeline.</p>
-              </div>
+              <div id="dayTimeline" class="space-y-2 text-sm"><p class="muted">Select a day to view timeline.</p></div>
             </div>
 
             <div class="card p-5" id="editAvailabilityCard">
               <h3 class="text-lg font-bold mb-1">Edit Availability</h3>
               <p class="text-sm muted mb-4">Block time by hours or multiple days.</p>
-
               <div class="space-y-3">
                 <div>
                   <label class="text-sm font-medium">Block Type</label>
@@ -266,56 +233,35 @@
                     <option value="full_day">Full day(s)</option>
                   </select>
                 </div>
-
                 <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label class="text-sm font-medium">Start Date</label>
-                    <input id="blockStartDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-medium">End Date</label>
-                    <input id="blockEndDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                  </div>
+                  <div><label class="text-sm font-medium">Start Date</label><input id="blockStartDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
+                  <div><label class="text-sm font-medium">End Date</label><input id="blockEndDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
                 </div>
-
                 <div id="timeInputs" class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label class="text-sm font-medium">Start Time</label>
-                    <input id="blockStartTime" type="time" step="1800" value="07:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                  </div>
-                  <div>
-                    <label class="text-sm font-medium">End Time</label>
-                    <input id="blockEndTime" type="time" step="1800" value="14:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                  </div>
+                  <div><label class="text-sm font-medium">Start Time</label><input id="blockStartTime" type="time" step="1800" value="07:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
+                  <div><label class="text-sm font-medium">End Time</label><input id="blockEndTime" type="time" step="1800" value="14:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
                 </div>
-
-                <button id="addBlockBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-semibold">Add Block</button>
+                <button id="addBlockBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Block</button>
                 <p id="blockMsg" class="text-xs muted"></p>
               </div>
-
               <hr class="my-4" />
               <div class="flex items-center justify-between mb-2">
                 <h4 class="font-semibold">Current Blocks</h4>
-                <button id="clearBlocksBtn" class="text-xs text-red-600 hover:text-red-700 font-semibold">Clear All</button>
+                <button id="clearBlocksBtn" class="text-xs text-red-600 font-semibold">Clear All</button>
               </div>
-              <div id="blocksList" class="space-y-2 text-sm">
-                <p class="muted">No blocks added.</p>
-              </div>
+              <div id="blocksList" class="space-y-2 text-sm"><p class="muted">No blocks added.</p></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- INSTRUCTIONAL VIDEOS -->
       <section id="videosSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <h2 class="text-2xl font-bold">Instructional Videos</h2>
-          <p class="muted text-sm">Upload media and add notes for each training area. All items are timestamped.</p>
+          <p class="muted text-sm mb-3">Upload media and add notes for each training area. All items are timestamped.</p>
+          <div id="videoSectionTabs" class="flex flex-wrap gap-2"></div>
         </div>
-
-        <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <!-- rendered by JS -->
-        </div>
+        <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"></div>
       </section>
 
       <section id="studentsSection" class="hidden-section">
@@ -324,7 +270,7 @@
             <div class="card p-5 mb-4">
               <h2 class="text-2xl font-bold mb-1">Students</h2>
               <p class="muted text-sm mb-3">Search and open student profiles.</p>
-              <input id="studentSearch" type="text" placeholder="Search by name, email, or phone..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input id="studentSearch" type="text" placeholder="Search by name, email, or phone..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
             </div>
 
             <div class="card p-5 mb-4">
@@ -334,14 +280,12 @@
                 <label class="flex items-center gap-2"><input id="alertTextEnabled" type="checkbox" checked /><span>Text alerts</span></label>
                 <input id="alertEmailAddress" type="email" placeholder="Coach alert email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
                 <input id="alertPhoneNumber" type="text" placeholder="Coach alert phone" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <button id="saveAlertSettingsBtn" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Save Alert Settings</button>
+                <button id="saveAlertSettingsBtn" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold">Save Alert Settings</button>
                 <p id="alertSettingsMsg" class="text-xs muted"></p>
               </div>
             </div>
 
-            <div class="card p-3">
-              <div id="studentsList" class="space-y-2"></div>
-            </div>
+            <div class="card p-3"><div id="studentsList" class="space-y-2"></div></div>
           </div>
 
           <div class="xl:col-span-2 space-y-4">
@@ -350,23 +294,19 @@
                 <h3 class="text-xl font-bold">Student Profile</h3>
                 <span id="profileStatus" class="text-xs muted">Select a student</span>
               </div>
-              <div id="studentProfileContent" class="text-sm">
-                <p class="muted">Choose a student from the list to view full profile details.</p>
-              </div>
+              <div id="studentProfileContent" class="text-sm"><p class="muted">Choose a student from the list to view full profile details.</p></div>
             </div>
 
             <div class="card p-5">
               <h3 class="text-xl font-bold mb-2">Add Student</h3>
               <p class="muted text-sm mb-4">Create a student record and send invite link.</p>
-
               <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
                 <input id="newStudentName" type="text" placeholder="Full name" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentEmail" type="email" placeholder="Email" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentPhone" type="text" placeholder="Phone" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentPhoto" type="file" accept="image/*" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
               </div>
-
-              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Add Student + Send Invite</button>
+              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Student + Send Invite</button>
               <p id="addStudentMsg" class="text-xs muted mt-2"></p>
             </div>
           </div>
@@ -377,967 +317,220 @@
 
   <script>
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-    function fmtDateTime(iso){
-      const d = new Date(iso);
-      return d.toLocaleString(undefined, { month:"short", day:"numeric", year:"numeric", hour:"numeric", minute:"2-digit" });
-    }
+    function fmtDateTime(iso){ const d = new Date(iso); return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
     function phoneDigits(phone){ return phone.replace(/[^\d+]/g, ""); }
 
-    // ========= Dashboard =========
-    const dashboardData = {
-      this_month: { label: "previous month", current: { studentsYear: 124, lessonsMonth: 38, lessonsWeek: 11, avgDaily: 1.27, avgSlotsWeek: 22.5, newLessonsMonth: 5 }, previous:{ studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }},
-      last_month: { label: "month before last", current: { studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }, previous:{ studentsYear: 109, lessonsMonth: 27, lessonsWeek: 8, avgDaily: 0.90, avgSlotsWeek: 21.8, newLessonsMonth: 2 }},
-      this_quarter:{ label: "previous quarter", current: { studentsYear: 124, lessonsMonth: 102, lessonsWeek: 10, avgDaily: 1.13, avgSlotsWeek: 23.2, newLessonsMonth: 12 }, previous:{ studentsYear: 98, lessonsMonth: 88, lessonsWeek: 8, avgDaily: 0.98, avgSlotsWeek: 21.4, newLessonsMonth: 9 }},
-      this_year:   { label: "previous year", current: { studentsYear: 124, lessonsMonth: 426, lessonsWeek: 10, avgDaily: 1.17, avgSlotsWeek: 22.9, newLessonsMonth: 46 }, previous:{ studentsYear: 97, lessonsMonth: 371, lessonsWeek: 8, avgDaily: 1.02, avgSlotsWeek: 20.8, newLessonsMonth: 39 }}
-    };
-    function formatNumber(v){ return Number.isInteger(v) ? `${v}` : v.toFixed(2).replace(/\.00$/, ""); }
-    function pctChange(c,p){ if(p===0) return c===0 ? 0 : 100; return ((c-p)/Math.abs(p))*100; }
-    function comparisonText(current, previous, label, isInteger=true){
-      const delta = current - previous, pct = pctChange(current, previous), sign = delta > 0 ? "+" : "";
-      const cls = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
-      const deltaText = isInteger ? `${sign}${Math.round(delta)}` : `${sign}${delta.toFixed(2).replace(/\.00$/, "")}`;
-      const pctText = `${pct > 0 ? "+" : ""}${pct.toFixed(1)}%`;
-      return `<span class="${cls}">${deltaText} (${pctText})</span> <span class="muted">vs ${label}</span>`;
+    // Dashboard
+    const dashboardData = { this_month:{label:"previous month",current:{studentsYear:124,lessonsMonth:38,lessonsWeek:11,avgDaily:1.27,avgSlotsWeek:22.5,newLessonsMonth:5},previous:{studentsYear:116,lessonsMonth:31,lessonsWeek:9,avgDaily:1.03,avgSlotsWeek:24,newLessonsMonth:3}} };
+    function formatNumber(v){ return Number.isInteger(v)?`${v}`:v.toFixed(2).replace(/\.00$/,""); }
+    function pctChange(c,p){ if(p===0) return c===0?0:100; return ((c-p)/Math.abs(p))*100; }
+    function comparisonText(c,p,label,isInt=true){
+      const delta=c-p,pct=pctChange(c,p),sign=delta>0?"+":"",cls=delta>0?"up":delta<0?"down":"flat";
+      const dt=isInt?`${sign}${Math.round(delta)}`:`${sign}${delta.toFixed(2).replace(/\.00$/,"")}`;
+      return `<span class="${cls}">${dt} (${pct>0?"+":""}${pct.toFixed(1)}%)</span> <span class="muted">vs ${label}</span>`;
     }
-    function setText(id, val){ const el=document.getElementById(id); if(el) el.textContent = val; }
-    function setHTML(id, val){ const el=document.getElementById(id); if(el) el.innerHTML = val; }
-    function renderDashboard(rangeKey){
-      const d = dashboardData[rangeKey] || dashboardData.this_month, c = d.current, p = d.previous, label = d.label;
-      setText("kpi_students_year", formatNumber(c.studentsYear));
-      setText("kpi_lessons_month", formatNumber(c.lessonsMonth));
-      setText("kpi_lessons_week", formatNumber(c.lessonsWeek));
-      setText("kpi_avg_daily", formatNumber(c.avgDaily));
-      setText("kpi_avg_slots_week", formatNumber(c.avgSlotsWeek));
-      setText("kpi_new_lessons_month", formatNumber(c.newLessonsMonth));
-      setHTML("cmp_students_year", comparisonText(c.studentsYear, p.studentsYear, label, true));
-      setHTML("cmp_lessons_month", comparisonText(c.lessonsMonth, p.lessonsMonth, label, true));
-      setHTML("cmp_lessons_week", comparisonText(c.lessonsWeek, p.lessonsWeek, label, true));
-      setHTML("cmp_avg_daily", comparisonText(c.avgDaily, p.avgDaily, label, false));
-      setHTML("cmp_avg_slots_week", comparisonText(c.avgSlotsWeek, p.avgSlotsWeek, label, false));
-      setHTML("cmp_new_lessons_month", comparisonText(c.newLessonsMonth, p.newLessonsMonth, label, true));
+    function setText(id,val){ const el=document.getElementById(id); if(el) el.textContent=val; }
+    function setHTML(id,val){ const el=document.getElementById(id); if(el) el.innerHTML=val; }
+    function renderDashboard(){
+      const d=dashboardData.this_month,c=d.current,p=d.previous;
+      setText("kpi_students_year",formatNumber(c.studentsYear)); setText("kpi_lessons_month",formatNumber(c.lessonsMonth)); setText("kpi_lessons_week",formatNumber(c.lessonsWeek));
+      setText("kpi_avg_daily",formatNumber(c.avgDaily)); setText("kpi_avg_slots_week",formatNumber(c.avgSlotsWeek)); setText("kpi_new_lessons_month",formatNumber(c.newLessonsMonth));
+      setHTML("cmp_students_year",comparisonText(c.studentsYear,p.studentsYear,d.label,true));
+      setHTML("cmp_lessons_month",comparisonText(c.lessonsMonth,p.lessonsMonth,d.label,true));
+      setHTML("cmp_lessons_week",comparisonText(c.lessonsWeek,p.lessonsWeek,d.label,true));
+      setHTML("cmp_avg_daily",comparisonText(c.avgDaily,p.avgDaily,d.label,false));
+      setHTML("cmp_avg_slots_week",comparisonText(c.avgSlotsWeek,p.avgSlotsWeek,d.label,false));
+      setHTML("cmp_new_lessons_month",comparisonText(c.newLessonsMonth,p.newLessonsMonth,d.label,true));
     }
-    document.getElementById("dateRange").addEventListener("change", e => renderDashboard(e.target.value));
-    renderDashboard("this_month");
+    renderDashboard();
 
-    // ========= Global nav =========
-    const sections = {
-      dashboard: document.getElementById("dashboardSection"),
-      calendar: document.getElementById("calendarSection"),
-      videos: document.getElementById("videosSection"),
-      students: document.getElementById("studentsSection")
-    };
-    const topNavButtons = {
-      dashboard: document.getElementById("navDashboardBtn"),
-      calendar: document.getElementById("navCalendarBtn"),
-      videos: document.getElementById("navVideosBtn"),
-      students: document.getElementById("navStudentsBtn")
-    };
-    function setActiveTopNav(sectionName){
-      Object.values(topNavButtons).forEach(btn => btn.classList.remove("active"));
-      topNavButtons[sectionName]?.classList.add("active");
+    // Nav
+    const sections={dashboard:document.getElementById("dashboardSection"),calendar:document.getElementById("calendarSection"),videos:document.getElementById("videosSection"),students:document.getElementById("studentsSection")};
+    const navBtns={dashboard:document.getElementById("navDashboardBtn"),calendar:document.getElementById("navCalendarBtn"),videos:document.getElementById("navVideosBtn"),students:document.getElementById("navStudentsBtn")};
+    function showSection(name){
+      Object.values(sections).forEach(el=>el.classList.add("hidden-section"));
+      sections[name]?.classList.remove("hidden-section");
+      Object.values(navBtns).forEach(b=>b.classList.remove("active"));
+      navBtns[name]?.classList.add("active");
     }
-    function showSection(sectionName){
-      Object.values(sections).forEach(el => el.classList.add("hidden-section"));
-      sections[sectionName]?.classList.remove("hidden-section");
-      setActiveTopNav(sectionName);
-    }
-    topNavButtons.dashboard.addEventListener("click", () => showSection("dashboard"));
-    topNavButtons.calendar.addEventListener("click", () => showSection("calendar"));
-    topNavButtons.videos.addEventListener("click", () => showSection("videos"));
-    topNavButtons.students.addEventListener("click", () => showSection("students"));
+    navBtns.dashboard.onclick=()=>showSection("dashboard");
+    navBtns.calendar.onclick=()=>showSection("calendar");
+    navBtns.videos.onclick=()=>showSection("videos");
+    navBtns.students.onclick=()=>showSection("students");
 
-    // ========= Calendar =========
-    const calendarMainLayout = document.getElementById("calendarMainLayout");
-    const calendarLeftCol = document.getElementById("calendarLeftCol");
-    const calendarMiddleCol = document.getElementById("calendarMiddleCol");
-    const calendarRightCol = document.getElementById("calendarRightCol");
-    const dayTimelineCard = document.getElementById("dayTimelineCard");
-    const editAvailabilityCard = document.getElementById("editAvailabilityCard");
-
-    const calendarGrid = document.getElementById("calendarGrid");
-    const monthHeaders = document.getElementById("monthHeaders");
-    const weekHeaders = document.getElementById("weekHeaders");
-    const selectedDateLabel = document.getElementById("selectedDateLabel");
-    const selectedDayEvents = document.getElementById("selectedDayEvents");
-    const rangeLabel = document.getElementById("rangeLabel");
-    const dayTimeline = document.getElementById("dayTimeline");
-
-    const dayViewBtn = document.getElementById("dayViewBtn");
-    const weekViewBtn = document.getElementById("weekViewBtn");
-    const monthViewBtn = document.getElementById("monthViewBtn");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-
-    const blockType = document.getElementById("blockType");
-    const blockStartDate = document.getElementById("blockStartDate");
-    const blockEndDate = document.getElementById("blockEndDate");
-    const blockStartTime = document.getElementById("blockStartTime");
-    const blockEndTime = document.getElementById("blockEndTime");
-    const timeInputs = document.getElementById("timeInputs");
-    const addBlockBtn = document.getElementById("addBlockBtn");
-    const blocksList = document.getElementById("blocksList");
-    const blockMsg = document.getElementById("blockMsg");
-    const clearBlocksBtn = document.getElementById("clearBlocksBtn");
-
-    const today = new Date();
-    let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    let currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    let calendarView = "month";
-
-    const SLOT_START_HOUR = 7;
-    const SLOT_END_HOUR = 14;
-    const SLOT_MINUTES = 30;
-    const TOTAL_SLOTS_PER_OPEN_DAY = ((SLOT_END_HOUR - SLOT_START_HOUR) * 60) / SLOT_MINUTES;
-
-    const lessonEvents = {
-      "2026-07-29": [{ time: "7:00 AM", title: "Piano - Ava M." }, { time: "7:30 AM", title: "Voice - Liam R." }]
-    };
-    let availabilityBlocks = [];
-
-    function ymd(date){ const y=date.getFullYear(), m=String(date.getMonth()+1).padStart(2,"0"), d=String(date.getDate()).padStart(2,"0"); return `${y}-${m}-${d}`; }
-    function cloneDate(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
-    function isSameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
-    function isSaturday(date){ return date.getDay()===6; }
-    function shortDate(date){ return date.toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
-    function monthName(year,month){ return new Date(year,month,1).toLocaleDateString(undefined,{month:"long",year:"numeric"}); }
-    function getWeekStart(date){ const d=cloneDate(date); d.setDate(d.getDate()-d.getDay()); return d; }
-    function addDays(date,n){ const d=cloneDate(date); d.setDate(d.getDate()+n); return d; }
-    function timeToMinutes(t){ const [hh,mm]=t.split(":").map(Number); return hh*60+mm; }
-    function eventTimeToMinutes(label){
-      const [time,suffix]=label.split(" ");
-      const [hRaw,mRaw]=time.split(":").map(Number);
-      let h=hRaw%12; if(suffix==="PM") h+=12;
-      return h*60+mRaw;
-    }
-    function to12HourLabel(totalMinutes){
-      const h24=Math.floor(totalMinutes/60), mins=totalMinutes%60;
-      const suffix=h24>=12?"PM":"AM";
-      let h12=h24%12; if(h12===0) h12=12;
-      return `${h12}:${String(mins).padStart(2,"0")} ${suffix}`;
-    }
-    function clampToBusinessMinutes(mins){
-      const start=SLOT_START_HOUR*60,end=SLOT_END_HOUR*60;
-      return Math.max(start,Math.min(end,mins));
-    }
-    function overlapMinutes(aStart,aEnd,bStart,bEnd){ const s=Math.max(aStart,bStart), e=Math.min(aEnd,bEnd); return Math.max(0,e-s); }
-    function getBookedCountForDate(dateKey){ return Math.min((lessonEvents[dateKey]||[]).length,TOTAL_SLOTS_PER_OPEN_DAY); }
-
+    // Calendar (kept)
+    const calendarGrid=document.getElementById("calendarGrid"),monthHeaders=document.getElementById("monthHeaders"),weekHeaders=document.getElementById("weekHeaders"),selectedDateLabel=document.getElementById("selectedDateLabel"),selectedDayEvents=document.getElementById("selectedDayEvents"),rangeLabel=document.getElementById("rangeLabel"),dayTimeline=document.getElementById("dayTimeline");
+    const dayViewBtn=document.getElementById("dayViewBtn"),weekViewBtn=document.getElementById("weekViewBtn"),monthViewBtn=document.getElementById("monthViewBtn"),prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn");
+    const blockType=document.getElementById("blockType"),blockStartDate=document.getElementById("blockStartDate"),blockEndDate=document.getElementById("blockEndDate"),blockStartTime=document.getElementById("blockStartTime"),blockEndTime=document.getElementById("blockEndTime"),timeInputs=document.getElementById("timeInputs"),addBlockBtn=document.getElementById("addBlockBtn"),blocksList=document.getElementById("blocksList"),blockMsg=document.getElementById("blockMsg"),clearBlocksBtn=document.getElementById("clearBlocksBtn");
+    const today=new Date(); let selectedDate=new Date(today.getFullYear(),today.getMonth(),today.getDate()),currentDate=new Date(today.getFullYear(),today.getMonth(),today.getDate()),calendarView="month";
+    const SLOT_START_HOUR=7,SLOT_END_HOUR=14,SLOT_MINUTES=30,TOTAL_SLOTS_PER_OPEN_DAY=((SLOT_END_HOUR-SLOT_START_HOUR)*60)/SLOT_MINUTES;
+    const lessonEvents={"2026-07-29":[{time:"7:00 AM",title:"Piano - Ava M."},{time:"7:30 AM",title:"Voice - Liam R."}]}; let availabilityBlocks=[];
+    const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`, cloneDate=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate()), isSameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(), isSaturday=d=>d.getDay()===6;
+    const shortDate=d=>d.toLocaleDateString(undefined,{month:"short",day:"numeric"}), monthName=(y,m)=>new Date(y,m,1).toLocaleDateString(undefined,{month:"long",year:"numeric"}), getWeekStart=d=>{const x=cloneDate(d);x.setDate(x.getDate()-x.getDay());return x;}, addDays=(d,n)=>{const x=cloneDate(d);x.setDate(x.getDate()+n);return x;};
+    const timeToMinutes=t=>{const [h,m]=t.split(":").map(Number);return h*60+m;};
+    function eventTimeToMinutes(label){const [time,s]=label.split(" ");const [h0,m]=time.split(":").map(Number);let h=h0%12;if(s==="PM")h+=12;return h*60+m;}
+    function to12HourLabel(total){const h24=Math.floor(total/60),m=total%60,s=h24>=12?"PM":"AM";let h=h24%12;if(h===0)h=12;return `${h}:${String(m).padStart(2,"0")} ${s}`;}
+    function overlapMinutes(aS,aE,bS,bE){const s=Math.max(aS,bS),e=Math.min(aE,bE);return Math.max(0,e-s);}
     function addLessonAtSlot(dateObj, slotStartMin){
-      const student = prompt("Student name for this lesson:");
-      if (!student || !student.trim()) return;
-      const lessonType = prompt("Lesson title/type (optional):", "Lesson");
-      const title = `${(lessonType || "Lesson").trim()} - ${student.trim()}`;
-      const key = ymd(dateObj);
-      if (!lessonEvents[key]) lessonEvents[key] = [];
-      lessonEvents[key].push({ time: to12HourLabel(slotStartMin), title });
-      lessonEvents[key].sort((a,b)=>eventTimeToMinutes(a.time)-eventTimeToMinutes(b.time));
-      renderCalendar();
-      renderSelectedDay();
+      const student=prompt("Student name for this lesson:"); if(!student||!student.trim()) return;
+      const lessonType=prompt("Lesson title/type (optional):","Lesson"); const title=`${(lessonType||"Lesson").trim()} - ${student.trim()}`; const key=ymd(dateObj);
+      if(!lessonEvents[key]) lessonEvents[key]=[]; lessonEvents[key].push({time:to12HourLabel(slotStartMin),title}); lessonEvents[key].sort((a,b)=>eventTimeToMinutes(a.time)-eventTimeToMinutes(b.time));
+      renderCalendar(); renderSelectedDay();
     }
-
     function getBlockedSlotsForDate(date){
-      if (isSaturday(date)) return TOTAL_SLOTS_PER_OPEN_DAY;
-      const dateKey=ymd(date);
-      let blockedMinutes=0;
-      for (const b of availabilityBlocks){
-        if (dateKey < b.startDate || dateKey > b.endDate) continue;
-        if (b.type==="full_day"){
-          blockedMinutes += (SLOT_END_HOUR - SLOT_START_HOUR) * 60;
-        } else {
-          const businessStart=SLOT_START_HOUR*60, businessEnd=SLOT_END_HOUR*60;
-          const blockStart=clampToBusinessMinutes(timeToMinutes(b.startTime));
-          const blockEnd=clampToBusinessMinutes(timeToMinutes(b.endTime));
-          blockedMinutes += overlapMinutes(businessStart,businessEnd,blockStart,blockEnd);
-        }
-      }
-      let blockedSlots=Math.ceil(blockedMinutes/SLOT_MINUTES);
-      blockedSlots=Math.max(0,Math.min(TOTAL_SLOTS_PER_OPEN_DAY,blockedSlots));
-      return blockedSlots;
+      if(isSaturday(date)) return TOTAL_SLOTS_PER_OPEN_DAY; const k=ymd(date); let blocked=0;
+      for(const b of availabilityBlocks){ if(k<b.startDate||k>b.endDate) continue; if(b.type==="full_day"){blocked+=(SLOT_END_HOUR-SLOT_START_HOUR)*60;} else {blocked+=overlapMinutes(SLOT_START_HOUR*60,SLOT_END_HOUR*60,timeToMinutes(b.startTime),timeToMinutes(b.endTime));}}
+      return Math.max(0,Math.min(TOTAL_SLOTS_PER_OPEN_DAY,Math.ceil(blocked/SLOT_MINUTES)));
     }
-
     function isSlotBlocked(dateObj, slotStartMin, slotEndMin){
-      if (isSaturday(dateObj)) return true;
-      const key=ymd(dateObj);
-      for (const b of availabilityBlocks){
-        if (key < b.startDate || key > b.endDate) continue;
-        if (b.type==="full_day") return true;
-        const blockStart=clampToBusinessMinutes(timeToMinutes(b.startTime));
-        const blockEnd=clampToBusinessMinutes(timeToMinutes(b.endTime));
-        if (overlapMinutes(slotStartMin,slotEndMin,blockStart,blockEnd) > 0) return true;
-      }
+      if(isSaturday(dateObj)) return true; const k=ymd(dateObj);
+      for(const b of availabilityBlocks){ if(k<b.startDate||k>b.endDate) continue; if(b.type==="full_day") return true; if(overlapMinutes(slotStartMin,slotEndMin,timeToMinutes(b.startTime),timeToMinutes(b.endTime))>0) return true;}
       return false;
     }
-
     function getAvailabilityForDate(date){
-      if (isSaturday(date)) return { totalSlots:0, bookedSlots:0, blockedSlots:0, availableSlots:0, isOpenDay:false };
-      const totalSlots=TOTAL_SLOTS_PER_OPEN_DAY;
-      const bookedSlots=getBookedCountForDate(ymd(date));
-      const blockedSlots=getBlockedSlotsForDate(date);
-      const availableSlots=Math.max(0,totalSlots-bookedSlots-blockedSlots);
-      return { totalSlots, bookedSlots, blockedSlots, availableSlots, isOpenDay:true };
+      if(isSaturday(date)) return {totalSlots:0,bookedSlots:0,blockedSlots:0,availableSlots:0,isOpenDay:false};
+      const total=TOTAL_SLOTS_PER_OPEN_DAY, booked=Math.min((lessonEvents[ymd(date)]||[]).length,total), blocked=getBlockedSlotsForDate(date), available=Math.max(0,total-booked-blocked);
+      return {totalSlots:total,bookedSlots:booked,blockedSlots:blocked,availableSlots:available,isOpenDay:true};
     }
-
     function renderBlocksList(){
-      if (!availabilityBlocks.length){ blocksList.innerHTML=`<p class="muted">No blocks added.</p>`; return; }
-      blocksList.innerHTML=availabilityBlocks.map((b)=>{
-        const label=b.type==="full_day"
-          ? `Full day block: ${b.startDate} → ${b.endDate}`
-          : `Time block: ${b.startDate} ${b.startTime} → ${b.endDate} ${b.endTime}`;
-        return `<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-start justify-between gap-2">
-          <p>${label}</p>
-          <button data-id="${b.id}" class="delete-block-btn text-xs text-red-600 hover:text-red-700 font-semibold">Delete</button>
-        </div>`;
-      }).join("");
-
-      document.querySelectorAll(".delete-block-btn").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          const id=btn.getAttribute("data-id");
-          availabilityBlocks=availabilityBlocks.filter(b=>b.id!==id);
-          renderBlocksList(); renderCalendar(); renderSelectedDay();
-        });
-      });
+      if(!availabilityBlocks.length){blocksList.innerHTML=`<p class="muted">No blocks added.</p>`;return;}
+      blocksList.innerHTML=availabilityBlocks.map(b=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-start justify-between gap-2"><p>${b.type==="full_day"?`Full day block: ${b.startDate} → ${b.endDate}`:`Time block: ${b.startDate} ${b.startTime} → ${b.endDate} ${b.endTime}`}</p><button data-id="${b.id}" class="delete-block-btn text-xs text-red-600 font-semibold">Delete</button></div>`).join("");
+      document.querySelectorAll(".delete-block-btn").forEach(btn=>btn.onclick=()=>{availabilityBlocks=availabilityBlocks.filter(b=>b.id!==btn.dataset.id);renderBlocksList();renderCalendar();renderSelectedDay();});
     }
-
     function renderDayCard(date,{otherMonth=false}={}){
-      const key=ymd(date), avail=getAvailabilityForDate(date), eventsCount=(lessonEvents[key]||[]).length;
-      const availabilityClass=avail.availableSlots>0?"available-day":"unavailable-day";
-      const availabilityLabel=avail.availableSlots>0
-        ? `<span class="availability-pill open">${avail.availableSlots} open</span>`
-        : `<span class="availability-pill closed">${avail.isOpenDay ? "0 open" : "Off day"}</span>`;
-
+      const key=ymd(date),avail=getAvailabilityForDate(date),count=(lessonEvents[key]||[]).length;
       const btn=document.createElement("button");
-      btn.type="button";
-      btn.className=["cal-day",availabilityClass,otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ").trim();
-      btn.innerHTML=`<div class="cal-daynum">${date.getDate()}</div>${availabilityLabel}${eventsCount?`<div class="event-dot"><span class="dot"></span>${eventsCount} booked</div>`:""}`;
-
-      btn.addEventListener("click",()=>{
-        selectedDate=cloneDate(date);
-        if (calendarView === "month"){
-          calendarView = "day";
-          currentDate = cloneDate(date);
-        } else if (calendarView === "day"){
-          currentDate = cloneDate(date);
-        }
-        renderCalendar();
-        renderSelectedDay();
-      });
-
+      btn.className=["cal-day",avail.availableSlots>0?"available-day":"unavailable-day",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
+      btn.innerHTML=`<div class="cal-daynum">${date.getDate()}</div>${avail.availableSlots>0?`<span class="availability-pill open">${avail.availableSlots} open</span>`:`<span class="availability-pill closed">${avail.isOpenDay?"0 open":"Off day"}</span>`}${count?`<div class="event-dot"><span class="dot"></span>${count} booked</div>`:""}`;
+      btn.onclick=()=>{selectedDate=cloneDate(date); if(calendarView==="month"){calendarView="day"; currentDate=cloneDate(date);} else if(calendarView==="day"){currentDate=cloneDate(date);} renderCalendar(); renderSelectedDay();};
       return btn;
     }
-
-    function setActiveViewBtn(){
-      [dayViewBtn,weekViewBtn,monthViewBtn].forEach(b=>b.classList.remove("active"));
-      if(calendarView==="day") dayViewBtn.classList.add("active");
-      if(calendarView==="week") weekViewBtn.classList.add("active");
-      if(calendarView==="month") monthViewBtn.classList.add("active");
-    }
-
-    function renderRangeLabel(){
-      if(calendarView==="month") rangeLabel.textContent=monthName(currentDate.getFullYear(),currentDate.getMonth());
-      else if(calendarView==="week"){
-        const start=getWeekStart(currentDate), end=addDays(start,6);
-        rangeLabel.textContent=`${shortDate(start)} - ${shortDate(end)}`;
-      } else {
-        rangeLabel.textContent=currentDate.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
-      }
-    }
-
+    function setActiveViewBtn(){ [dayViewBtn,weekViewBtn,monthViewBtn].forEach(b=>b.classList.remove("active")); if(calendarView==="day")dayViewBtn.classList.add("active"); if(calendarView==="week")weekViewBtn.classList.add("active"); if(calendarView==="month")monthViewBtn.classList.add("active"); }
+    function renderRangeLabel(){ if(calendarView==="month")rangeLabel.textContent=monthName(currentDate.getFullYear(),currentDate.getMonth()); else if(calendarView==="week"){const s=getWeekStart(currentDate),e=addDays(s,6); rangeLabel.textContent=`${shortDate(s)} - ${shortDate(e)}`;} else rangeLabel.textContent=currentDate.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"}); }
     function renderHeaders(){
-      if(calendarView==="month"){ monthHeaders.classList.remove("hidden"); weekHeaders.classList.add("hidden"); }
-      else if(calendarView==="week"){
-        monthHeaders.classList.add("hidden");
-        weekHeaders.classList.remove("hidden");
-        const start=getWeekStart(currentDate);
-        weekHeaders.innerHTML="";
-        for(let i=0;i<7;i++){
-          const d=addDays(start,i), el=document.createElement("div");
-          el.className="cal-dow";
-          el.textContent=d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
-          weekHeaders.appendChild(el);
-        }
-      } else { monthHeaders.classList.add("hidden"); weekHeaders.classList.add("hidden"); }
+      if(calendarView==="month"){monthHeaders.classList.remove("hidden");weekHeaders.classList.add("hidden");}
+      else if(calendarView==="week"){monthHeaders.classList.add("hidden");weekHeaders.classList.remove("hidden");const s=getWeekStart(currentDate);weekHeaders.innerHTML="";for(let i=0;i<7;i++){const d=addDays(s,i),el=document.createElement("div");el.className="cal-dow";el.textContent=d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});weekHeaders.appendChild(el);}}
+      else {monthHeaders.classList.add("hidden");weekHeaders.classList.add("hidden");}
     }
-
     function applyCalendarLayoutByView(){
-      calendarMainLayout.className = "grid grid-cols-1 xl:grid-cols-3 gap-4";
-      calendarLeftCol.className = "xl:col-span-1";
-      calendarMiddleCol.className = "xl:col-span-1";
-      calendarRightCol.className = "xl:col-span-1";
-
-      if (calendarView === "week"){
-        dayTimelineCard.classList.remove("hidden");
-        editAvailabilityCard.classList.remove("hidden");
-
-        if (!document.getElementById("weekEditWrap")){
-          const wrap = document.createElement("div");
-          wrap.id = "weekEditWrap";
-          wrap.className = "xl:col-span-3";
-          calendarMainLayout.appendChild(wrap);
-        }
-        document.getElementById("weekEditWrap").appendChild(editAvailabilityCard);
-      } else {
-        calendarRightCol.appendChild(dayTimelineCard);
-        calendarRightCol.appendChild(editAvailabilityCard);
-        const weekWrap = document.getElementById("weekEditWrap");
-        if (weekWrap) weekWrap.remove();
-
-        if (calendarView !== "day") dayTimelineCard.classList.add("hidden");
-        else dayTimelineCard.classList.remove("hidden");
-      }
+      const layout=document.getElementById("calendarMainLayout"),right=document.getElementById("calendarRightCol"),edit=document.getElementById("editAvailabilityCard"),timeline=document.getElementById("dayTimelineCard");
+      if(calendarView==="week"){ if(!document.getElementById("weekEditWrap")){const w=document.createElement("div");w.id="weekEditWrap";w.className="xl:col-span-3";layout.appendChild(w);} document.getElementById("weekEditWrap").appendChild(edit); timeline.classList.remove("hidden");}
+      else { right.appendChild(timeline); right.appendChild(edit); const w=document.getElementById("weekEditWrap"); if(w)w.remove(); if(calendarView!=="day")timeline.classList.add("hidden"); else timeline.classList.remove("hidden"); }
     }
-
     function renderCalendar(){
-      calendarGrid.innerHTML="";
-      renderRangeLabel(); renderHeaders(); setActiveViewBtn();
-      applyCalendarLayoutByView();
-
-      if(calendarView==="month"){
-        calendarGrid.className="calendar-grid";
-        const year=currentDate.getFullYear(), month=currentDate.getMonth();
-        const first=new Date(year,month,1), startDay=first.getDay(), daysInMonth=new Date(year,month+1,0).getDate(), prevMonthDays=new Date(year,month,0).getDate();
-        const cells=[];
-        for(let i=startDay-1;i>=0;i--) cells.push({date:new Date(year,month-1,prevMonthDays-i),otherMonth:true});
-        for(let d=1;d<=daysInMonth;d++) cells.push({date:new Date(year,month,d),otherMonth:false});
-        while(cells.length<42){ const nextDay=cells.length-(startDay+daysInMonth)+1; cells.push({date:new Date(year,month+1,nextDay),otherMonth:true}); }
-        cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth})));
-      }
-
-      if(calendarView==="week"){
-        calendarGrid.className="week-grid";
-        const start=getWeekStart(currentDate);
-        for(let i=0;i<7;i++) calendarGrid.appendChild(renderDayCard(addDays(start,i)));
-      }
-
-      if(calendarView==="day"){
-        calendarGrid.className="day-grid";
-        calendarGrid.appendChild(renderDayCard(currentDate));
-      }
+      calendarGrid.innerHTML=""; renderRangeLabel(); renderHeaders(); setActiveViewBtn(); applyCalendarLayoutByView();
+      if(calendarView==="month"){calendarGrid.className="calendar-grid"; const y=currentDate.getFullYear(),m=currentDate.getMonth(),f=new Date(y,m,1),start=f.getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate(); const cells=[]; for(let i=start-1;i>=0;i--)cells.push({date:new Date(y,m-1,prevDays-i),otherMonth:true}); for(let d=1;d<=days;d++)cells.push({date:new Date(y,m,d),otherMonth:false}); while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});} cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth}))); }
+      if(calendarView==="week"){calendarGrid.className="week-grid"; const s=getWeekStart(currentDate); for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i))); }
+      if(calendarView==="day"){calendarGrid.className="day-grid"; calendarGrid.appendChild(renderDayCard(currentDate)); }
     }
-
     function renderDayTimeline(){
-      if(calendarView!=="day" && calendarView!=="week"){
-        dayTimeline.innerHTML=`<p class="muted">Switch to Day or Week view to see timeline.</p>`;
-        return;
+      if(calendarView!=="day"&&calendarView!=="week"){dayTimeline.innerHTML=`<p class="muted">Switch to Day or Week view to see timeline.</p>`;return;}
+      const day=calendarView==="week"?selectedDate:currentDate; if(isSaturday(day)){dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;return;}
+      const key=ymd(day),events=(lessonEvents[key]||[]).map(e=>({...e,startMin:eventTimeToMinutes(e.time)})); const rows=[];
+      for(let t=SLOT_START_HOUR*60;t<SLOT_END_HOUR*60;t+=SLOT_MINUTES){ const label=to12HourLabel(t),booked=events.find(e=>e.startMin===t),blocked=isSlotBlocked(day,t,t+SLOT_MINUTES);
+        if(booked) rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${booked.title}</span></div><span class="timeline-status status-booked">Booked</span></div>`);
+        else if(blocked) rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
+        else rows.push(`<button data-open-slot="${t}" class="timeline-row timeline-open w-full text-left"><div><span class="timeline-time">${label}</span><span class="ml-2">Open slot</span></div><span class="timeline-status status-open">Book</span></button>`);
       }
-      const day = calendarView === "week" ? selectedDate : currentDate;
-      if(isSaturday(day)){
-        dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;
-        return;
-      }
-
-      const key=ymd(day);
-      const events=(lessonEvents[key]||[]).map(e=>({...e,startMin:eventTimeToMinutes(e.time)}));
-      const startMin=SLOT_START_HOUR*60,endMin=SLOT_END_HOUR*60,step=SLOT_MINUTES;
-      const rows=[];
-
-      for(let t=startMin;t<endMin;t+=step){
-        const slotStart=t, slotEnd=t+step, label=to12HourLabel(slotStart);
-        const bookedEvent=events.find(e=>e.startMin===slotStart);
-        const blocked=isSlotBlocked(day,slotStart,slotEnd);
-
-        if(bookedEvent){
-          rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${bookedEvent.title}</span></div><span class="timeline-status status-booked">Booked</span></div>`);
-        } else if(blocked){
-          rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
-        } else {
-          rows.push(`<button data-open-slot="${slotStart}" class="timeline-row timeline-open w-full text-left">
-              <div><span class="timeline-time">${label}</span><span class="ml-2">Open slot</span></div>
-              <span class="timeline-status status-open">Book</span>
-            </button>`);
-        }
-      }
-
       dayTimeline.innerHTML=rows.join("");
-
-      dayTimeline.querySelectorAll("[data-open-slot]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const slot = Number(btn.getAttribute("data-open-slot"));
-          addLessonAtSlot(day, slot);
-        });
-      });
+      dayTimeline.querySelectorAll("[data-open-slot]").forEach(btn=>btn.onclick=()=>addLessonAtSlot(day,Number(btn.dataset.openSlot)));
     }
-
     function renderSelectedDay(){
-      const day = calendarView === "day" ? currentDate : selectedDate;
-      const key=ymd(day), avail=getAvailabilityForDate(day);
-
-      selectedDateLabel.textContent = day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"}) + " - Appointments";
-      const items=lessonEvents[key]||[];
-
-      const availabilityLine=`<div class="border rounded-lg px-3 py-2 ${avail.availableSlots>0?'border-green-200 bg-green-50':'border-red-200 bg-red-50'}">
-        <p class="font-semibold ${avail.availableSlots>0?'text-green-800':'text-red-800'}">
-          ${avail.isOpenDay?`Available: ${avail.availableSlots} / ${avail.totalSlots} slots`:'Closed: Saturday (Off Day)'}
-        </p>
-        ${avail.isOpenDay?`<p class="text-xs ${avail.availableSlots>0?'text-green-700':'text-red-700'}">Booked: ${avail.bookedSlots} · Blocked: ${avail.blockedSlots}</p>`:''}
-      </div>`;
-
-      const eventsBlock=items.length
-        ? items.map((ev, idx)=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between">
-            <span class="font-medium">${ev.title}</span>
-            <div class="flex items-center gap-2">
-              <span class="text-blue-700 font-semibold">${ev.time}</span>
-              <button data-del-event="${idx}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
-            </div>
-          </div>`).join("")
-        : `<p class="muted">No lessons scheduled.</p>`;
-
-      selectedDayEvents.innerHTML=availabilityLine + `<div class="space-y-2 mt-2">${eventsBlock}</div>`;
-
-      selectedDayEvents.querySelectorAll("[data-del-event]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const idx = Number(btn.getAttribute("data-del-event"));
-          lessonEvents[key].splice(idx, 1);
-          if (!lessonEvents[key].length) delete lessonEvents[key];
-          renderCalendar();
-          renderSelectedDay();
-        });
-      });
-
+      const day=calendarView==="day"?currentDate:selectedDate,key=ymd(day),avail=getAvailabilityForDate(day),items=lessonEvents[key]||[];
+      selectedDateLabel.textContent=day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"})+" - Appointments";
+      selectedDayEvents.innerHTML=`<div class="border rounded-lg px-3 py-2 ${avail.availableSlots>0?'border-green-200 bg-green-50':'border-red-200 bg-red-50'}"><p class="font-semibold ${avail.availableSlots>0?'text-green-800':'text-red-800'}">${avail.isOpenDay?`Available: ${avail.availableSlots} / ${avail.totalSlots} slots`:'Closed: Saturday (Off Day)'}</p>${avail.isOpenDay?`<p class="text-xs ${avail.availableSlots>0?'text-green-700':'text-red-700'}">Booked: ${avail.bookedSlots} · Blocked: ${avail.blockedSlots}</p>`:''}</div>` + (items.length?`<div class="space-y-2 mt-2">${items.map((ev,idx)=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${ev.title}</span><div class="flex items-center gap-2"><span class="text-blue-700 font-semibold">${ev.time}</span><button data-del-event="${idx}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div></div>`).join("")}</div>`:`<p class="muted mt-2">No lessons scheduled.</p>`);
+      selectedDayEvents.querySelectorAll("[data-del-event]").forEach(btn=>btn.onclick=()=>{lessonEvents[key].splice(Number(btn.dataset.delEvent),1);if(!lessonEvents[key].length)delete lessonEvents[key];renderCalendar();renderSelectedDay();});
       renderDayTimeline();
     }
+    dayViewBtn.onclick=()=>{calendarView="day";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
+    weekViewBtn.onclick=()=>{calendarView="week";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
+    monthViewBtn.onclick=()=>{calendarView="month";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
+    prevBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);else if(calendarView==="week")currentDate=addDays(currentDate,-7);else{currentDate=addDays(currentDate,-1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
+    nextBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);else if(calendarView==="week")currentDate=addDays(currentDate,7);else{currentDate=addDays(currentDate,1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
+    function syncBlockInputs(){ timeInputs.style.display=blockType.value==="time_range"?"grid":"none"; } blockType.onchange=syncBlockInputs; syncBlockInputs();
+    blockStartDate.value=ymd(today); blockEndDate.value=ymd(today);
+    addBlockBtn.onclick=()=>{const type=blockType.value,sD=blockStartDate.value,eD=blockEndDate.value,sT=blockStartTime.value,eT=blockEndTime.value; if(!sD||!eD)return blockMsg.textContent="Please select both start and end dates."; if(eD<sD)return blockMsg.textContent="End date must be the same or after start date."; if(type==="time_range"&&(!sT||!eT||eT<=sT))return blockMsg.textContent="Invalid time range."; availabilityBlocks.push({id:crypto.randomUUID(),type,startDate:sD,endDate:eD,startTime:type==="time_range"?sT:null,endTime:type==="time_range"?eT:null}); blockMsg.textContent="Block added."; renderBlocksList(); renderCalendar(); renderSelectedDay();};
+    clearBlocksBtn.onclick=()=>{availabilityBlocks=[];renderBlocksList();renderCalendar();renderSelectedDay();blockMsg.textContent="All blocks cleared.";};
 
-    dayViewBtn.addEventListener("click",()=>{ calendarView="day"; currentDate=cloneDate(selectedDate); renderCalendar(); renderSelectedDay(); });
-    weekViewBtn.addEventListener("click",()=>{ calendarView="week"; currentDate=cloneDate(selectedDate); renderCalendar(); renderSelectedDay(); });
-    monthViewBtn.addEventListener("click",()=>{ calendarView="month"; currentDate=cloneDate(selectedDate); renderCalendar(); renderSelectedDay(); });
+    // Instructional Videos
+    const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
+    let instructionalData={}; videoSections.forEach(n=>instructionalData[n]={media:[],notes:[]});
+    const videosGridEl=document.getElementById("videosGrid"),videoSectionTabsEl=document.getElementById("videoSectionTabs");
 
-    prevBtn.addEventListener("click",()=>{
-      if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);
-      else if(calendarView==="week") currentDate=addDays(currentDate,-7);
-      else { currentDate=addDays(currentDate,-1); selectedDate=cloneDate(currentDate); }
-      renderCalendar(); renderSelectedDay();
-    });
-
-    nextBtn.addEventListener("click",()=>{
-      if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);
-      else if(calendarView==="week") currentDate=addDays(currentDate,7);
-      else { currentDate=addDays(currentDate,1); selectedDate=cloneDate(currentDate); }
-      renderCalendar(); renderSelectedDay();
-    });
-
-    function syncBlockInputs(){ timeInputs.style.display = blockType.value === "time_range" ? "grid" : "none"; }
-    blockType.addEventListener("change",syncBlockInputs); syncBlockInputs();
-
-    const todayStr=ymd(today);
-    blockStartDate.value=todayStr;
-    blockEndDate.value=todayStr;
-
-    addBlockBtn.addEventListener("click",()=>{
-      blockMsg.textContent="";
-      const type=blockType.value,startDate=blockStartDate.value,endDate=blockEndDate.value,startTime=blockStartTime.value,endTime=blockEndTime.value;
-      if(!startDate||!endDate){ blockMsg.textContent="Please select both start and end dates."; return; }
-      if(endDate<startDate){ blockMsg.textContent="End date must be the same or after start date."; return; }
-      if(type==="time_range"){
-        if(!startTime||!endTime){ blockMsg.textContent="Please select both start and end times."; return; }
-        if(endTime<=startTime){ blockMsg.textContent="End time must be later than start time."; return; }
-      }
-      availabilityBlocks.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random()),
-        type,startDate,endDate,
-        startTime:type==="time_range"?startTime:null,
-        endTime:type==="time_range"?endTime:null
+    function renderVideoSectionTabs(activeName=""){
+      videoSectionTabsEl.innerHTML=videoSections.map(name=>`<button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>`).join("");
+      videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>{
+        btn.onclick=()=>{const section=btn.dataset.videoTab,target=document.getElementById(`video-card-${section}`); if(target)target.scrollIntoView({behavior:"smooth",block:"start"}); renderVideoSectionTabs(section);};
       });
-      renderBlocksList(); renderCalendar(); renderSelectedDay();
-      blockMsg.textContent="Block added.";
-    });
-    clearBlocksBtn.addEventListener("click",()=>{
-      availabilityBlocks=[];
-      renderBlocksList(); renderCalendar(); renderSelectedDay();
-      blockMsg.textContent="All blocks cleared.";
-    });
-
-    // ========= Instructional Videos =========
-    const videoSections = [
-      "Scoring",
-      "Fundamentals",
-      "Strategy",
-      "Theory",
-      "Putting",
-      "Chipping & Bunkers",
-      "Irons",
-      "Woods"
-    ];
-
-    let instructionalData = {};
-    videoSections.forEach(name => {
-      instructionalData[name] = { media: [], notes: [] };
-    });
-
-    const videosGridEl = document.getElementById("videosGrid");
+    }
 
     function renderInstructionalVideos(){
-      videosGridEl.innerHTML = videoSections.map(sectionName => {
-        const sec = instructionalData[sectionName];
-        const mediaList = sec.media.length
-          ? sec.media.map((m, idx) => `
-              <div class="border border-gray-200 rounded-lg p-2">
-                <div class="flex gap-2">
-                  <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name)}" />
-                  <div class="min-w-0">
-                    <p class="text-sm font-semibold truncate">${escapeHtml(m.name)}</p>
-                    <p class="text-xs muted">${m.type}</p>
-                    <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
-                  </div>
-                </div>
-                <button data-del-media="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
-              </div>
-            `).join("")
-          : `<p class="text-xs muted">No media uploaded.</p>`;
-
-        const notesList = sec.notes.length
-          ? sec.notes.map((n, idx) => `
-              <div class="border border-gray-200 rounded-lg p-2">
-                <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
-                <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
-                <button data-del-note="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
-              </div>
-            `).join("")
-          : `<p class="text-xs muted">No notes yet.</p>`;
-
-        return `
-          <div class="card p-4">
-            <h3 class="text-lg font-bold mb-3">${escapeHtml(sectionName)}</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <h4 class="text-sm font-semibold mb-2">Uploads</h4>
-                <div class="space-y-2">
-                  <input type="file" accept="image/*,video/*" id="upload-${sectionName}" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white" />
-                  <button data-upload="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold hover:bg-blue-700">Upload</button>
-                  <div class="space-y-2 max-h-48 overflow-auto">${mediaList}</div>
-                </div>
-              </div>
-              <div>
-                <h4 class="text-sm font-semibold mb-2">Notes / Description</h4>
-                <div class="space-y-2">
-                  <textarea id="note-${sectionName}" placeholder="Add note/description..." class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs min-h-16"></textarea>
-                  <button data-add-note="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold hover:bg-blue-700">Add Note</button>
-                  <div class="space-y-2 max-h-48 overflow-auto">${notesList}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
+      renderVideoSectionTabs(videoSections[0]);
+      videosGridEl.innerHTML=videoSections.map(sectionName=>{
+        const sec=instructionalData[sectionName];
+        const mediaList=sec.media.length?sec.media.map((m,idx)=>`<div class="border border-gray-200 rounded-lg p-2"><div class="flex gap-2"><img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name)}"><div class="min-w-0"><p class="text-sm font-semibold truncate">${escapeHtml(m.name)}</p><p class="text-xs muted">${m.type}</p><p class="text-xs muted">${fmtDateTime(m.createdAt)}</p></div></div><button data-del-media="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div>`).join(""):`<p class="text-xs muted">No media uploaded.</p>`;
+        const notesList=sec.notes.length?sec.notes.map((n,idx)=>`<div class="border border-gray-200 rounded-lg p-2"><p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p><p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p><button data-del-note="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div>`).join(""):`<p class="text-xs muted">No notes yet.</p>`;
+        return `<div id="video-card-${sectionName}" class="card p-4"><h3 class="text-lg font-bold mb-3">${escapeHtml(sectionName)}</h3><div class="grid grid-cols-2 gap-3"><div><h4 class="text-sm font-semibold mb-2">Uploads</h4><div class="space-y-2"><input type="file" accept="image/*,video/*" id="upload-${sectionName}" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white"><button data-upload="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Upload</button><div class="space-y-2 max-h-48 overflow-auto">${mediaList}</div></div></div><div><h4 class="text-sm font-semibold mb-2">Notes / Description</h4><div class="space-y-2"><textarea id="note-${sectionName}" placeholder="Add note/description..." class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs min-h-16"></textarea><button data-add-note="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Add Note</button><div class="space-y-2 max-h-48 overflow-auto">${notesList}</div></div></div></div></div>`;
       }).join("");
 
-      // wire upload
-      videosGridEl.querySelectorAll("[data-upload]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const section = btn.getAttribute("data-upload");
-          const input = document.getElementById(`upload-${section}`);
-          const file = input?.files?.[0];
-          if (!file) return;
-
-          const type = file.type.startsWith("video") ? "Video" : "Photo";
-          const reader = new FileReader();
-          reader.onload = () => {
-            instructionalData[section].media.unshift({
-              type,
-              name: file.name,
-              url: reader.result,
-              createdAt: new Date().toISOString()
-            });
-            renderInstructionalVideos();
-          };
-          reader.readAsDataURL(file);
-        });
-      });
-
-      // wire add note
-      videosGridEl.querySelectorAll("[data-add-note]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const section = btn.getAttribute("data-add-note");
-          const noteEl = document.getElementById(`note-${section}`);
-          const text = (noteEl?.value || "").trim();
-          if (!text) return;
-          instructionalData[section].notes.unshift({
-            text,
-            createdAt: new Date().toISOString()
-          });
-          renderInstructionalVideos();
-        });
-      });
-
-      // delete media
-      videosGridEl.querySelectorAll("[data-del-media]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const [section, idx] = btn.getAttribute("data-del-media").split("|");
-          instructionalData[section].media.splice(Number(idx), 1);
-          renderInstructionalVideos();
-        });
-      });
-
-      // delete note
-      videosGridEl.querySelectorAll("[data-del-note]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const [section, idx] = btn.getAttribute("data-del-note").split("|");
-          instructionalData[section].notes.splice(Number(idx), 1);
-          renderInstructionalVideos();
-        });
-      });
+      videosGridEl.querySelectorAll("[data-upload]").forEach(btn=>btn.onclick=()=>{const section=btn.dataset.upload,input=document.getElementById(`upload-${section}`),file=input?.files?.[0]; if(!file)return; const type=file.type.startsWith("video")?"Video":"Photo"; const r=new FileReader(); r.onload=()=>{instructionalData[section].media.unshift({type,name:file.name,url:r.result,createdAt:new Date().toISOString()}); renderInstructionalVideos(); renderVideoSectionTabs(section);}; r.readAsDataURL(file);});
+      videosGridEl.querySelectorAll("[data-add-note]").forEach(btn=>btn.onclick=()=>{const section=btn.dataset.addNote,nEl=document.getElementById(`note-${section}`),text=(nEl?.value||"").trim(); if(!text)return; instructionalData[section].notes.unshift({text,createdAt:new Date().toISOString()}); renderInstructionalVideos(); renderVideoSectionTabs(section);});
+      videosGridEl.querySelectorAll("[data-del-media]").forEach(btn=>btn.onclick=()=>{const [s,i]=btn.dataset.delMedia.split("|"); instructionalData[s].media.splice(Number(i),1); renderInstructionalVideos(); renderVideoSectionTabs(s);});
+      videosGridEl.querySelectorAll("[data-del-note]").forEach(btn=>btn.onclick=()=>{const [s,i]=btn.dataset.delNote.split("|"); instructionalData[s].notes.splice(Number(i),1); renderInstructionalVideos(); renderVideoSectionTabs(s);});
     }
 
-    // ========= Students =========
-    let alertSettings = { emailEnabled:true, textEnabled:true, emailAddress:"", phoneNumber:"" };
-    const alertEmailEnabledEl = document.getElementById("alertEmailEnabled");
-    const alertTextEnabledEl = document.getElementById("alertTextEnabled");
-    const alertEmailAddressEl = document.getElementById("alertEmailAddress");
-    const alertPhoneNumberEl = document.getElementById("alertPhoneNumber");
-    const saveAlertSettingsBtnEl = document.getElementById("saveAlertSettingsBtn");
-    const alertSettingsMsgEl = document.getElementById("alertSettingsMsg");
-
-    let studentsData = [{
-      id:"stu_1",
-      name:"Ava Martinez",
-      phone:"(555) 210-8841",
-      email:"ava.martinez@email.com",
-      photo:"",
-      notes:[{ id:crypto.randomUUID(), text:"Prefers evening lessons after school.", createdAt:new Date().toISOString() }],
-      media:[
-        { id:crypto.randomUUID(), type:"photo", name:"Recital Photo", url:"https://via.placeholder.com/300x200.png?text=Recital+Photo", createdAt:new Date().toISOString() },
-        { id:crypto.randomUUID(), type:"video", name:"Practice Clip", url:"https://via.placeholder.com/300x200.png?text=Video+Preview", createdAt:new Date().toISOString() }
-      ],
-      questions:[{ id:crypto.randomUUID(), text:"Can we spend more time on left-hand independence?", createdAt:new Date().toISOString(), replies:[] }]
-    }];
-
-    let selectedStudentId = null;
-    const studentsListEl = document.getElementById("studentsList");
-    const studentSearchEl = document.getElementById("studentSearch");
-    const studentProfileContentEl = document.getElementById("studentProfileContent");
-    const profileStatusEl = document.getElementById("profileStatus");
-    const addStudentBtnEl = document.getElementById("addStudentBtn");
-    const addStudentMsgEl = document.getElementById("addStudentMsg");
-
-    function sendCoachAlert(studentName, messageText){
-      if (alertSettings.emailEnabled && alertSettings.emailAddress){
-        console.log(`EMAIL ALERT to ${alertSettings.emailAddress}: ${studentName} messaged you - ${messageText}`);
-      }
-      if (alertSettings.textEnabled && alertSettings.phoneNumber){
-        console.log(`TEXT ALERT to ${alertSettings.phoneNumber}: ${studentName} messaged you - ${messageText}`);
-      }
-    }
-
-    function getFilteredStudents(){
-      const q=(studentSearchEl?.value||"").trim().toLowerCase();
-      if(!q) return studentsData;
-      return studentsData.filter(s=>s.name.toLowerCase().includes(q)||s.email.toLowerCase().includes(q)||s.phone.toLowerCase().includes(q));
-    }
-
+    // Students
+    let alertSettings={emailEnabled:true,textEnabled:true,emailAddress:"",phoneNumber:""};
+    const alertEmailEnabledEl=document.getElementById("alertEmailEnabled"),alertTextEnabledEl=document.getElementById("alertTextEnabled"),alertEmailAddressEl=document.getElementById("alertEmailAddress"),alertPhoneNumberEl=document.getElementById("alertPhoneNumber"),saveAlertSettingsBtnEl=document.getElementById("saveAlertSettingsBtn"),alertSettingsMsgEl=document.getElementById("alertSettingsMsg");
+    let studentsData=[{id:"stu_1",name:"Ava Martinez",phone:"(555) 210-8841",email:"ava.martinez@email.com",photo:"",notes:[{id:crypto.randomUUID(),text:"Prefers evening lessons after school.",createdAt:new Date().toISOString()}],media:[{id:crypto.randomUUID(),type:"photo",name:"Recital Photo",url:"https://via.placeholder.com/300x200.png?text=Recital+Photo",createdAt:new Date().toISOString()}],questions:[{id:crypto.randomUUID(),text:"Can we spend more time on left-hand independence?",createdAt:new Date().toISOString(),replies:[]}]}];
+    let selectedStudentId=null;
+    const studentsListEl=document.getElementById("studentsList"),studentSearchEl=document.getElementById("studentSearch"),studentProfileContentEl=document.getElementById("studentProfileContent"),profileStatusEl=document.getElementById("profileStatus"),addStudentBtnEl=document.getElementById("addStudentBtn"),addStudentMsgEl=document.getElementById("addStudentMsg");
+    function sendCoachAlert(studentName,messageText){ if(alertSettings.emailEnabled&&alertSettings.emailAddress)console.log(`EMAIL ALERT to ${alertSettings.emailAddress}: ${studentName} - ${messageText}`); if(alertSettings.textEnabled&&alertSettings.phoneNumber)console.log(`TEXT ALERT to ${alertSettings.phoneNumber}: ${studentName} - ${messageText}`); }
+    function getFilteredStudents(){const q=(studentSearchEl?.value||"").trim().toLowerCase(); if(!q)return studentsData; return studentsData.filter(s=>s.name.toLowerCase().includes(q)||s.email.toLowerCase().includes(q)||s.phone.toLowerCase().includes(q));}
     function renderStudentsList(){
-      if(!studentsListEl) return;
-      const filtered=getFilteredStudents();
-      if(!filtered.length){ studentsListEl.innerHTML=`<p class="muted text-sm px-2 py-2">No students found.</p>`; return; }
-
-      studentsListEl.innerHTML=filtered.map(s=>`
-        <button class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${s.id===selectedStudentId?'border-blue-300 bg-blue-50':'border-gray-200'}" data-student-id="${s.id}">
-          <div class="flex items-center gap-3">
-            <img src="${s.photo || 'https://via.placeholder.com/80x80.png?text=Photo'}" alt="Profile" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-            <div>
-              <p class="font-semibold text-sm">${escapeHtml(s.name)}</p>
-              <p class="text-xs muted">${escapeHtml(s.email)}</p>
-              <p class="text-xs muted">${escapeHtml(s.phone)}</p>
-            </div>
-          </div>
-        </button>
-      `).join("");
-
-      studentsListEl.querySelectorAll("[data-student-id]").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          selectedStudentId=btn.getAttribute("data-student-id");
-          renderStudentsList();
-          renderStudentProfile();
-        });
-      });
+      const filtered=getFilteredStudents(); if(!filtered.length){studentsListEl.innerHTML=`<p class="muted text-sm px-2 py-2">No students found.</p>`;return;}
+      studentsListEl.innerHTML=filtered.map(s=>`<button class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${s.id===selectedStudentId?'border-blue-300 bg-blue-50':'border-gray-200'}" data-student-id="${s.id}"><div class="flex items-center gap-3"><img src="${s.photo||'https://via.placeholder.com/80x80.png?text=Photo'}" class="w-10 h-10 rounded-full object-cover border border-gray-200"><div><p class="font-semibold text-sm">${escapeHtml(s.name)}</p><p class="text-xs muted">${escapeHtml(s.email)}</p><p class="text-xs muted">${escapeHtml(s.phone)}</p></div></div></button>`).join("");
+      studentsListEl.querySelectorAll("[data-student-id]").forEach(btn=>btn.onclick=()=>{selectedStudentId=btn.dataset.studentId;renderStudentsList();renderStudentProfile();});
     }
-
     function renderStudentProfile(){
-      if(!studentProfileContentEl || !profileStatusEl) return;
-      const s=studentsData.find(x=>x.id===selectedStudentId);
-      if(!s){
-        profileStatusEl.textContent="Select a student";
-        studentProfileContentEl.innerHTML=`<p class="muted">Choose a student from the list to view full profile details.</p>`;
-        return;
-      }
-
+      const s=studentsData.find(x=>x.id===selectedStudentId); if(!s){profileStatusEl.textContent="Select a student";studentProfileContentEl.innerHTML=`<p class="muted">Choose a student from the list to view full profile details.</p>`;return;}
       profileStatusEl.textContent=`Viewing: ${s.name}`;
+      const notesHtml=s.notes.length?s.notes.map(n=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><div class="flex items-start justify-between gap-2"><div><p>${escapeHtml(n.text)}</p><p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p></div><div class="flex gap-1"><button data-note-edit="${n.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button><button data-note-delete="${n.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button></div></div></div>`).join(""):`<p class="muted">No notes uploaded.</p>`;
+      const mediaHtml=s.media.length?s.media.map(m=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><div class="flex items-start justify-between gap-2"><div class="flex gap-3"><img src="${m.url}" class="media-thumb"><div><p class="font-semibold">${m.type==="photo"?"Photo":"Video"}: ${escapeHtml(m.name)}</p><a href="${m.url}" target="_blank" class="text-blue-600 text-sm">Open file</a><p class="text-xs muted mt-1">${fmtDateTime(m.createdAt)}</p></div></div><div class="flex gap-1"><button data-media-edit="${m.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button><button data-media-delete="${m.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button></div></div></div>`).join(""):`<p class="muted">No photos/videos uploaded.</p>`;
+      const questionsHtml=s.questions.length?s.questions.map(q=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><p>${escapeHtml(q.text)}</p><p class="text-xs muted mt-1">Asked: ${fmtDateTime(q.createdAt)}</p><div class="mt-2 space-y-1">${q.replies.length?q.replies.map(r=>`<div class="text-xs bg-blue-50 border border-blue-200 rounded px-2 py-1"><strong>Reply:</strong> ${escapeHtml(r.text)} <span class="muted">(${fmtDateTime(r.createdAt)})</span></div>`).join(""):`<p class="text-xs muted">No reply yet.</p>`}</div><div class="mt-2 flex gap-2"><input data-reply-input="${q.id}" type="text" placeholder="Reply to student..." class="flex-1 border border-gray-300 rounded px-2 py-1 text-xs"><button data-reply-send="${q.id}" class="text-xs bg-blue-600 text-white px-2 py-1 rounded">Reply</button><button data-question-delete="${q.id}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div></div>`).join(""):`<p class="muted">No student questions yet.</p>`;
 
-      const notesHtml = s.notes.length
-        ? s.notes.map(n => `
-            <div class="border border-gray-200 rounded-lg px-3 py-2">
-              <div class="flex items-start justify-between gap-2">
-                <div><p>${escapeHtml(n.text)}</p><p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p></div>
-                <div class="flex gap-1">
-                  <button data-note-edit="${n.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button>
-                  <button data-note-delete="${n.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button>
-                </div>
-              </div>
-            </div>
-          `).join("")
-        : `<p class="muted">No notes uploaded.</p>`;
+      studentProfileContentEl.innerHTML=`<div class="flex flex-col md:flex-row md:items-start gap-4 mb-4"><div><img src="${s.photo||'https://via.placeholder.com/120x120.png?text=Photo'}" class="student-avatar"><label class="mt-2 inline-block text-xs font-semibold text-blue-700 cursor-pointer">Upload Profile Photo<input id="profilePhotoUpload" type="file" accept="image/*" class="hidden"></label></div><div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2"><div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</div><div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone)}</div><div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2"><span class="font-semibold">Email:</span> <a href="mailto:${encodeURIComponent(s.email)}" class="text-blue-600">${escapeHtml(s.email)}</a></div><div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2 flex flex-wrap gap-2"><a href="tel:${phoneDigits(s.phone)}" class="text-sm bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-lg">Call</a><a href="sms:${phoneDigits(s.phone)}" class="text-sm bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-lg">Text</a><a href="mailto:${encodeURIComponent(s.email)}" class="text-sm bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1 rounded-lg">Email</a></div></div></div><div class="space-y-5"><div><h4 class="font-semibold mb-2">Notes</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2"><input id="newNoteText" type="text" placeholder="Add note..." class="md:col-span-3 border border-gray-300 rounded-lg px-3 py-2 text-sm"><button id="addNoteBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold">Add Note</button></div><div class="space-y-2">${notesHtml}</div></div><div><h4 class="font-semibold mb-2">Photos & Videos</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2"><select id="newMediaType" class="border border-gray-300 rounded-lg px-3 py-2 text-sm"><option value="photo">Photo</option><option value="video">Video</option></select><input id="newMediaFile" type="file" accept="image/*,video/*" class="md:col-span-2 border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"><button id="addMediaBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold">Upload</button></div><div class="space-y-2">${mediaHtml}</div></div><div><div class="flex items-center justify-between mb-2"><h4 class="font-semibold">Questions from Student Portal</h4><button id="simulateMessageBtn" class="text-xs bg-amber-100 border border-amber-300 text-amber-800 px-2 py-1 rounded">Simulate Incoming Message</button></div><div class="space-y-2">${questionsHtml}</div></div></div>`;
 
-      const mediaHtml = s.media.length
-        ? s.media.map(m => `
-            <div class="border border-gray-200 rounded-lg px-3 py-2">
-              <div class="flex items-start justify-between gap-2">
-                <div class="flex gap-3">
-                  <img src="${m.url}" class="media-thumb" alt="${escapeHtml(m.name)}">
-                  <div>
-                    <p class="font-semibold">${m.type === "photo" ? "Photo" : "Video"}: ${escapeHtml(m.name)}</p>
-                    <a href="${m.url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">Open file</a>
-                    <p class="text-xs muted mt-1">${fmtDateTime(m.createdAt)}</p>
-                  </div>
-                </div>
-                <div class="flex gap-1">
-                  <button data-media-edit="${m.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button>
-                  <button data-media-delete="${m.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button>
-                </div>
-              </div>
-            </div>
-          `).join("")
-        : `<p class="muted">No photos/videos uploaded.</p>`;
-
-      const questionsHtml = s.questions.length
-        ? s.questions.map(q => `
-            <div class="border border-gray-200 rounded-lg px-3 py-2">
-              <p>${escapeHtml(q.text)}</p>
-              <p class="text-xs muted mt-1">Asked: ${fmtDateTime(q.createdAt)}</p>
-              <div class="mt-2 space-y-1">
-                ${q.replies.length
-                  ? q.replies.map(r => `<div class="text-xs bg-blue-50 border border-blue-200 rounded px-2 py-1"><strong>Reply:</strong> ${escapeHtml(r.text)} <span class="muted">(${fmtDateTime(r.createdAt)})</span></div>`).join("")
-                  : `<p class="text-xs muted">No reply yet.</p>`
-                }
-              </div>
-              <div class="mt-2 flex gap-2">
-                <input data-reply-input="${q.id}" type="text" placeholder="Reply to student..." class="flex-1 border border-gray-300 rounded px-2 py-1 text-xs">
-                <button data-reply-send="${q.id}" class="text-xs bg-blue-600 text-white px-2 py-1 rounded">Reply</button>
-                <button data-question-delete="${q.id}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
-              </div>
-            </div>
-          `).join("")
-        : `<p class="muted">No student questions yet.</p>`;
-
-      studentProfileContentEl.innerHTML = `
-        <div class="flex flex-col md:flex-row md:items-start gap-4 mb-4">
-          <div>
-            <img src="${s.photo || 'https://via.placeholder.com/120x120.png?text=Photo'}" alt="Student photo" class="student-avatar">
-            <label class="mt-2 inline-block text-xs font-semibold text-blue-700 cursor-pointer">
-              Upload Profile Photo
-              <input id="profilePhotoUpload" type="file" accept="image/*" class="hidden">
-            </label>
-          </div>
-          <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</div>
-            <div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone)}</div>
-            <div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2">
-              <span class="font-semibold">Email:</span>
-              <a href="mailto:${encodeURIComponent(s.email)}" class="text-blue-600 hover:text-blue-700 ml-1">${escapeHtml(s.email)}</a>
-            </div>
-            <div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2 flex flex-wrap gap-2">
-              <a href="tel:${phoneDigits(s.phone)}" class="text-sm bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-lg">Call</a>
-              <a href="sms:${phoneDigits(s.phone)}" class="text-sm bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-lg">Text</a>
-              <a href="mailto:${encodeURIComponent(s.email)}" class="text-sm bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1 rounded-lg">Email</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-5">
-          <div>
-            <h4 class="font-semibold mb-2">Notes</h4>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
-              <input id="newNoteText" type="text" placeholder="Add note..." class="md:col-span-3 border border-gray-300 rounded-lg px-3 py-2 text-sm">
-              <button id="addNoteBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Add Note</button>
-            </div>
-            <div class="space-y-2">${notesHtml}</div>
-          </div>
-
-          <div>
-            <h4 class="font-semibold mb-2">Photos & Videos</h4>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
-              <select id="newMediaType" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
-                <option value="photo">Photo</option>
-                <option value="video">Video</option>
-              </select>
-              <input id="newMediaFile" type="file" accept="image/*,video/*" class="md:col-span-2 border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
-              <button id="addMediaBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Upload</button>
-            </div>
-            <div class="space-y-2">${mediaHtml}</div>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold">Questions from Student Portal</h4>
-              <button id="simulateMessageBtn" class="text-xs bg-amber-100 border border-amber-300 text-amber-800 px-2 py-1 rounded">Simulate Incoming Message</button>
-            </div>
-            <div class="space-y-2">${questionsHtml}</div>
-          </div>
-        </div>
-      `;
-
-      document.getElementById("profilePhotoUpload")?.addEventListener("change", (e) => {
-        const file = e.target.files?.[0]; if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => { s.photo = reader.result; renderStudentsList(); renderStudentProfile(); };
-        reader.readAsDataURL(file);
-      });
-
-      document.getElementById("addNoteBtn")?.addEventListener("click", () => {
-        const noteInput = document.getElementById("newNoteText");
-        const text = (noteInput?.value || "").trim();
-        if (!text) return;
-        s.notes.unshift({ id: crypto.randomUUID(), text, createdAt: new Date().toISOString() });
-        renderStudentProfile();
-      });
-
-      document.querySelectorAll("[data-note-edit]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-note-edit");
-          const note = s.notes.find(n => n.id === id);
-          if (!note) return;
-          const next = prompt("Edit note:", note.text);
-          if (next === null) return;
-          note.text = next.trim() || note.text;
-          renderStudentProfile();
-        });
-      });
-      document.querySelectorAll("[data-note-delete]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-note-delete");
-          s.notes = s.notes.filter(n => n.id !== id);
-          renderStudentProfile();
-        });
-      });
-
-      document.getElementById("addMediaBtn")?.addEventListener("click", () => {
-        const typeEl = document.getElementById("newMediaType");
-        const fileEl = document.getElementById("newMediaFile");
-        const type = typeEl?.value || "photo";
-        const file = fileEl?.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = () => {
-          s.media.unshift({ id: crypto.randomUUID(), type, name: file.name, url: reader.result, createdAt: new Date().toISOString() });
-          renderStudentProfile();
-        };
-        reader.readAsDataURL(file);
-      });
-
-      document.querySelectorAll("[data-media-edit]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-media-edit");
-          const item = s.media.find(m => m.id === id);
-          if (!item) return;
-          const next = prompt("Edit media title:", item.name);
-          if (next === null) return;
-          item.name = next.trim() || item.name;
-          renderStudentProfile();
-        });
-      });
-      document.querySelectorAll("[data-media-delete]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-media-delete");
-          s.media = s.media.filter(m => m.id !== id);
-          renderStudentProfile();
-        });
-      });
-
-      document.querySelectorAll("[data-reply-send]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const qid = btn.getAttribute("data-reply-send");
-          const input = document.querySelector(`[data-reply-input="${qid}"]`);
-          const text = (input?.value || "").trim();
-          if (!text) return;
-          const q = s.questions.find(x => x.id === qid);
-          if (!q) return;
-          q.replies.push({ text, createdAt: new Date().toISOString() });
-          renderStudentProfile();
-        });
-      });
-      document.querySelectorAll("[data-question-delete]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const qid = btn.getAttribute("data-question-delete");
-          s.questions = s.questions.filter(q => q.id !== qid);
-          renderStudentProfile();
-        });
-      });
-
-      document.getElementById("simulateMessageBtn")?.addEventListener("click", () => {
-        const sample = prompt("Simulate student message:", "Can we reschedule this week?");
-        if (!sample) return;
-        s.questions.unshift({ id: crypto.randomUUID(), text: sample, createdAt: new Date().toISOString(), replies:[] });
-        sendCoachAlert(s.name, sample);
-        renderStudentProfile();
-      });
+      document.getElementById("profilePhotoUpload")?.addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{s.photo=r.result;renderStudentsList();renderStudentProfile();};r.readAsDataURL(f);});
+      document.getElementById("addNoteBtn")?.addEventListener("click",()=>{const el=document.getElementById("newNoteText"),text=(el?.value||"").trim();if(!text)return;s.notes.unshift({id:crypto.randomUUID(),text,createdAt:new Date().toISOString()});renderStudentProfile();});
+      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.onclick=()=>{const n=s.notes.find(x=>x.id===btn.dataset.noteEdit);if(!n)return;const x=prompt("Edit note:",n.text);if(x===null)return;n.text=x.trim()||n.text;renderStudentProfile();});
+      document.querySelectorAll("[data-note-delete]").forEach(btn=>btn.onclick=()=>{s.notes=s.notes.filter(x=>x.id!==btn.dataset.noteDelete);renderStudentProfile();});
+      document.getElementById("addMediaBtn")?.addEventListener("click",()=>{const type=document.getElementById("newMediaType").value,file=document.getElementById("newMediaFile").files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{s.media.unshift({id:crypto.randomUUID(),type,name:file.name,url:r.result,createdAt:new Date().toISOString()});renderStudentProfile();};r.readAsDataURL(file);});
+      document.querySelectorAll("[data-media-edit]").forEach(btn=>btn.onclick=()=>{const m=s.media.find(x=>x.id===btn.dataset.mediaEdit);if(!m)return;const x=prompt("Edit media title:",m.name);if(x===null)return;m.name=x.trim()||m.name;renderStudentProfile();});
+      document.querySelectorAll("[data-media-delete]").forEach(btn=>btn.onclick=()=>{s.media=s.media.filter(x=>x.id!==btn.dataset.mediaDelete);renderStudentProfile();});
+      document.querySelectorAll("[data-reply-send]").forEach(btn=>btn.onclick=()=>{const q=s.questions.find(x=>x.id===btn.dataset.replySend),input=document.querySelector(`[data-reply-input="${btn.dataset.replySend}"]`),text=(input?.value||"").trim();if(!q||!text)return;q.replies.push({text,createdAt:new Date().toISOString()});renderStudentProfile();});
+      document.querySelectorAll("[data-question-delete]").forEach(btn=>btn.onclick=()=>{s.questions=s.questions.filter(x=>x.id!==btn.dataset.questionDelete);renderStudentProfile();});
+      document.getElementById("simulateMessageBtn")?.addEventListener("click",()=>{const sample=prompt("Simulate student message:","Can we reschedule this week?");if(!sample)return;s.questions.unshift({id:crypto.randomUUID(),text:sample,createdAt:new Date().toISOString(),replies:[]});sendCoachAlert(s.name,sample);renderStudentProfile();});
     }
-
-    function wireStudentSearch(){ studentSearchEl?.addEventListener("input", renderStudentsList); }
-
+    function wireStudentSearch(){ studentSearchEl?.addEventListener("input",renderStudentsList); }
     function wireAddStudent(){
       addStudentBtnEl?.addEventListener("click",()=>{
-        const nameEl=document.getElementById("newStudentName");
-        const emailEl=document.getElementById("newStudentEmail");
-        const phoneEl=document.getElementById("newStudentPhone");
-        const photoEl=document.getElementById("newStudentPhoto");
-
-        const name=(nameEl?.value||"").trim();
-        const email=(emailEl?.value||"").trim();
-        const phone=(phoneEl?.value||"").trim();
-
-        if(!name||!email||!phone){ addStudentMsgEl.textContent="Please enter name, email, and phone."; return; }
-
-        const baseStudent = { id:`stu_${Date.now()}`, name,email,phone, photo:"", notes:[], media:[], questions:[] };
-
-        const commitNewStudent = (studentObj) => {
-          studentsData.unshift(studentObj);
-          selectedStudentId=studentObj.id;
-          if(nameEl) nameEl.value="";
-          if(emailEl) emailEl.value="";
-          if(phoneEl) phoneEl.value="";
-          if(photoEl) photoEl.value="";
-          renderStudentsList(); renderStudentProfile();
-          const fakeInviteLink=`${window.location.origin}/student-invite.html?email=${encodeURIComponent(email)}`;
-          addStudentMsgEl.innerHTML=`Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.<br><span class="muted">Invite link (placeholder): ${escapeHtml(fakeInviteLink)}</span>`;
-        };
-
-        const photoFile = photoEl?.files?.[0];
-        if (photoFile){
-          const reader = new FileReader();
-          reader.onload = () => { baseStudent.photo = reader.result; commitNewStudent(baseStudent); };
-          reader.readAsDataURL(photoFile);
-        } else {
-          commitNewStudent(baseStudent);
-        }
+        const name=(document.getElementById("newStudentName").value||"").trim(),email=(document.getElementById("newStudentEmail").value||"").trim(),phone=(document.getElementById("newStudentPhone").value||"").trim(),photoEl=document.getElementById("newStudentPhoto");
+        if(!name||!email||!phone){addStudentMsgEl.textContent="Please enter name, email, and phone.";return;}
+        const base={id:`stu_${Date.now()}`,name,email,phone,photo:"",notes:[],media:[],questions:[]};
+        const commit=sObj=>{studentsData.unshift(sObj);selectedStudentId=sObj.id;document.getElementById("newStudentName").value="";document.getElementById("newStudentEmail").value="";document.getElementById("newStudentPhone").value="";if(photoEl)photoEl.value="";renderStudentsList();renderStudentProfile();addStudentMsgEl.innerHTML=`Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.`;};
+        const pf=photoEl?.files?.[0]; if(pf){const r=new FileReader();r.onload=()=>{base.photo=r.result;commit(base);};r.readAsDataURL(pf);} else commit(base);
       });
     }
-
     function wireAlertSettings(){
-      alertEmailAddressEl.value = alertSettings.emailAddress;
-      alertPhoneNumberEl.value = alertSettings.phoneNumber;
-      alertEmailEnabledEl.checked = alertSettings.emailEnabled;
-      alertTextEnabledEl.checked = alertSettings.textEnabled;
-      saveAlertSettingsBtnEl.addEventListener("click", () => {
-        alertSettings = {
-          emailEnabled: alertEmailEnabledEl.checked,
-          textEnabled: alertTextEnabledEl.checked,
-          emailAddress: (alertEmailAddressEl.value || "").trim(),
-          phoneNumber: (alertPhoneNumberEl.value || "").trim()
-        };
-        alertSettingsMsgEl.textContent = "Alert settings saved.";
-      });
+      alertEmailAddressEl.value=alertSettings.emailAddress;alertPhoneNumberEl.value=alertSettings.phoneNumber;alertEmailEnabledEl.checked=alertSettings.emailEnabled;alertTextEnabledEl.checked=alertSettings.textEnabled;
+      saveAlertSettingsBtnEl.onclick=()=>{alertSettings={emailEnabled:alertEmailEnabledEl.checked,textEnabled:alertTextEnabledEl.checked,emailAddress:(alertEmailAddressEl.value||"").trim(),phoneNumber:(alertPhoneNumberEl.value||"").trim()};alertSettingsMsgEl.textContent="Alert settings saved.";};
     }
 
-    function initStudentsModule(){
-      renderStudentsList();
-      renderStudentProfile();
-      wireStudentSearch();
-      wireAddStudent();
-      wireAlertSettings();
-    }
-
-    // init
-    renderBlocksList();
-    renderCalendar();
-    renderSelectedDay();
+    // Init
+    renderBlocksList(); renderCalendar(); renderSelectedDay();
     renderInstructionalVideos();
-    initStudentsModule();
+    renderStudentsList(); renderStudentProfile(); wireStudentSearch(); wireAddStudent(); wireAlertSettings();
     showSection("dashboard");
   </script>
 </body>
