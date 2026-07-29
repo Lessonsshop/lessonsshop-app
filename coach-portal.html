@@ -131,15 +131,13 @@
       background: #f3f4f6;
     }
 
-    .note-tag {
-      display: inline-block;
-      border: 1px solid #dbeafe;
-      background: #eff6ff;
-      color: #1d4ed8;
-      border-radius: 999px;
-      padding: 2px 8px;
-      font-size: 11px;
-      font-weight: 700;
+    .instr-thumb {
+      width: 84px;
+      height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid #d1d5db;
+      background: #f3f4f6;
     }
 
     .hidden-section { display: none; }
@@ -170,7 +168,7 @@
         <div class="flex flex-wrap gap-2">
           <button id="navDashboardBtn" class="top-nav-btn active">Dashboard</button>
           <button id="navCalendarBtn" class="top-nav-btn">Calendar</button>
-          <button id="navNotesBtn" class="top-nav-btn">Notes</button>
+          <button id="navVideosBtn" class="top-nav-btn">Instructional Videos</button>
           <button id="navStudentsBtn" class="top-nav-btn">Students</button>
         </div>
       </section>
@@ -308,52 +306,15 @@
         </div>
       </section>
 
-      <!-- NOTES V1 -->
-      <section id="notesSection" class="hidden-section">
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
-          <div class="xl:col-span-1">
-            <div class="card p-5 mb-4">
-              <h2 class="text-2xl font-bold mb-2">Notes</h2>
-              <p class="muted text-sm mb-3">Create and organize coaching notes.</p>
+      <!-- INSTRUCTIONAL VIDEOS -->
+      <section id="videosSection" class="hidden-section">
+        <div class="card p-5 mb-4">
+          <h2 class="text-2xl font-bold">Instructional Videos</h2>
+          <p class="muted text-sm">Upload media and add notes for each training area. All items are timestamped.</p>
+        </div>
 
-              <div class="space-y-2">
-                <input id="notesSearch" type="text" placeholder="Search title, body, tags, student..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <select id="notesFilterStudent" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
-                  <option value="">All students</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="card p-5">
-              <h3 class="text-lg font-bold mb-2">Create Note</h3>
-              <div class="space-y-2">
-                <input id="newNoteTitle" type="text" placeholder="Title" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <select id="newNoteStudent" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
-                  <option value="">No student linked</option>
-                </select>
-                <input id="newNoteTags" type="text" placeholder="Tags (comma separated)" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <textarea id="newNoteBody" placeholder="Write your note..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm min-h-28"></textarea>
-                <label class="flex items-center gap-2 text-sm">
-                  <input id="newNotePinned" type="checkbox" />
-                  <span>Pin note</span>
-                </label>
-                <button id="createNoteBtn" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Create Note</button>
-                <p id="createNoteMsg" class="text-xs muted"></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="xl:col-span-2">
-            <div class="card p-5">
-              <div class="flex items-center justify-between mb-3">
-                <h3 class="text-xl font-bold">Saved Notes</h3>
-                <span id="notesCount" class="text-xs muted">0 notes</span>
-              </div>
-              <div id="notesList" class="space-y-3">
-                <p class="muted">No notes yet.</p>
-              </div>
-            </div>
-          </div>
+        <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <!-- rendered by JS -->
         </div>
       </section>
 
@@ -415,7 +376,6 @@
   </div>
 
   <script>
-    // Utility
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
     function fmtDateTime(iso){
       const d = new Date(iso);
@@ -463,13 +423,13 @@
     const sections = {
       dashboard: document.getElementById("dashboardSection"),
       calendar: document.getElementById("calendarSection"),
-      notes: document.getElementById("notesSection"),
+      videos: document.getElementById("videosSection"),
       students: document.getElementById("studentsSection")
     };
     const topNavButtons = {
       dashboard: document.getElementById("navDashboardBtn"),
       calendar: document.getElementById("navCalendarBtn"),
-      notes: document.getElementById("navNotesBtn"),
+      videos: document.getElementById("navVideosBtn"),
       students: document.getElementById("navStudentsBtn")
     };
     function setActiveTopNav(sectionName){
@@ -480,11 +440,10 @@
       Object.values(sections).forEach(el => el.classList.add("hidden-section"));
       sections[sectionName]?.classList.remove("hidden-section");
       setActiveTopNav(sectionName);
-      if (sectionName === "notes") renderNotes();
     }
     topNavButtons.dashboard.addEventListener("click", () => showSection("dashboard"));
     topNavButtons.calendar.addEventListener("click", () => showSection("calendar"));
-    topNavButtons.notes.addEventListener("click", () => showSection("notes"));
+    topNavButtons.videos.addEventListener("click", () => showSection("videos"));
     topNavButtons.students.addEventListener("click", () => showSection("students"));
 
     // ========= Calendar =========
@@ -886,6 +845,136 @@
       blockMsg.textContent="All blocks cleared.";
     });
 
+    // ========= Instructional Videos =========
+    const videoSections = [
+      "Scoring",
+      "Fundamentals",
+      "Strategy",
+      "Theory",
+      "Putting",
+      "Chipping & Bunkers",
+      "Irons",
+      "Woods"
+    ];
+
+    let instructionalData = {};
+    videoSections.forEach(name => {
+      instructionalData[name] = { media: [], notes: [] };
+    });
+
+    const videosGridEl = document.getElementById("videosGrid");
+
+    function renderInstructionalVideos(){
+      videosGridEl.innerHTML = videoSections.map(sectionName => {
+        const sec = instructionalData[sectionName];
+        const mediaList = sec.media.length
+          ? sec.media.map((m, idx) => `
+              <div class="border border-gray-200 rounded-lg p-2">
+                <div class="flex gap-2">
+                  <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name)}" />
+                  <div class="min-w-0">
+                    <p class="text-sm font-semibold truncate">${escapeHtml(m.name)}</p>
+                    <p class="text-xs muted">${m.type}</p>
+                    <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
+                  </div>
+                </div>
+                <button data-del-media="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
+              </div>
+            `).join("")
+          : `<p class="text-xs muted">No media uploaded.</p>`;
+
+        const notesList = sec.notes.length
+          ? sec.notes.map((n, idx) => `
+              <div class="border border-gray-200 rounded-lg p-2">
+                <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
+                <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
+                <button data-del-note="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
+              </div>
+            `).join("")
+          : `<p class="text-xs muted">No notes yet.</p>`;
+
+        return `
+          <div class="card p-4">
+            <h3 class="text-lg font-bold mb-3">${escapeHtml(sectionName)}</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <h4 class="text-sm font-semibold mb-2">Uploads</h4>
+                <div class="space-y-2">
+                  <input type="file" accept="image/*,video/*" id="upload-${sectionName}" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white" />
+                  <button data-upload="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold hover:bg-blue-700">Upload</button>
+                  <div class="space-y-2 max-h-48 overflow-auto">${mediaList}</div>
+                </div>
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold mb-2">Notes / Description</h4>
+                <div class="space-y-2">
+                  <textarea id="note-${sectionName}" placeholder="Add note/description..." class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs min-h-16"></textarea>
+                  <button data-add-note="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold hover:bg-blue-700">Add Note</button>
+                  <div class="space-y-2 max-h-48 overflow-auto">${notesList}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // wire upload
+      videosGridEl.querySelectorAll("[data-upload]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const section = btn.getAttribute("data-upload");
+          const input = document.getElementById(`upload-${section}`);
+          const file = input?.files?.[0];
+          if (!file) return;
+
+          const type = file.type.startsWith("video") ? "Video" : "Photo";
+          const reader = new FileReader();
+          reader.onload = () => {
+            instructionalData[section].media.unshift({
+              type,
+              name: file.name,
+              url: reader.result,
+              createdAt: new Date().toISOString()
+            });
+            renderInstructionalVideos();
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      // wire add note
+      videosGridEl.querySelectorAll("[data-add-note]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const section = btn.getAttribute("data-add-note");
+          const noteEl = document.getElementById(`note-${section}`);
+          const text = (noteEl?.value || "").trim();
+          if (!text) return;
+          instructionalData[section].notes.unshift({
+            text,
+            createdAt: new Date().toISOString()
+          });
+          renderInstructionalVideos();
+        });
+      });
+
+      // delete media
+      videosGridEl.querySelectorAll("[data-del-media]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const [section, idx] = btn.getAttribute("data-del-media").split("|");
+          instructionalData[section].media.splice(Number(idx), 1);
+          renderInstructionalVideos();
+        });
+      });
+
+      // delete note
+      videosGridEl.querySelectorAll("[data-del-note]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const [section, idx] = btn.getAttribute("data-del-note").split("|");
+          instructionalData[section].notes.splice(Number(idx), 1);
+          renderInstructionalVideos();
+        });
+      });
+    }
+
     // ========= Students =========
     let alertSettings = { emailEnabled:true, textEnabled:true, emailAddress:"", phoneNumber:"" };
     const alertEmailEnabledEl = document.getElementById("alertEmailEnabled");
@@ -1206,7 +1295,6 @@
           renderStudentsList(); renderStudentProfile();
           const fakeInviteLink=`${window.location.origin}/student-invite.html?email=${encodeURIComponent(email)}`;
           addStudentMsgEl.innerHTML=`Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.<br><span class="muted">Invite link (placeholder): ${escapeHtml(fakeInviteLink)}</span>`;
-          refreshNotesStudentDropdowns();
         };
 
         const photoFile = photoEl?.files?.[0];
@@ -1244,193 +1332,12 @@
       wireAlertSettings();
     }
 
-    // ========= Notes V1 =========
-    let notesData = [
-      {
-        id: crypto.randomUUID(),
-        title: "Warm-up reminder",
-        body: "Focus on 5-minute finger warm-up before every lesson.",
-        studentId: "stu_1",
-        tags: ["technique", "piano"],
-        pinned: true,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }
-    ];
-
-    const notesSearchEl = document.getElementById("notesSearch");
-    const notesFilterStudentEl = document.getElementById("notesFilterStudent");
-    const newNoteTitleEl = document.getElementById("newNoteTitle");
-    const newNoteStudentEl = document.getElementById("newNoteStudent");
-    const newNoteTagsEl = document.getElementById("newNoteTags");
-    const newNoteBodyEl = document.getElementById("newNoteBody");
-    const newNotePinnedEl = document.getElementById("newNotePinned");
-    const createNoteBtnEl = document.getElementById("createNoteBtn");
-    const createNoteMsgEl = document.getElementById("createNoteMsg");
-    const notesListEl = document.getElementById("notesList");
-    const notesCountEl = document.getElementById("notesCount");
-
-    function getStudentNameById(id){
-      if (!id) return "General";
-      const s = studentsData.find(x => x.id === id);
-      return s ? s.name : "General";
-    }
-
-    function refreshNotesStudentDropdowns(){
-      const options = [`<option value="">No student linked</option>`]
-        .concat(studentsData.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`));
-      newNoteStudentEl.innerHTML = options.join("");
-
-      const filterOptions = [`<option value="">All students</option>`]
-        .concat(studentsData.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`));
-      notesFilterStudentEl.innerHTML = filterOptions.join("");
-    }
-
-    function parseTags(input){
-      return (input || "")
-        .split(",")
-        .map(t => t.trim().toLowerCase())
-        .filter(Boolean);
-    }
-
-    function getFilteredNotes(){
-      const q = (notesSearchEl.value || "").trim().toLowerCase();
-      const studentFilter = notesFilterStudentEl.value || "";
-
-      return notesData.filter(n => {
-        if (studentFilter && n.studentId !== studentFilter) return false;
-        if (!q) return true;
-        const studentName = getStudentNameById(n.studentId).toLowerCase();
-        const hay = `${n.title} ${n.body} ${n.tags.join(" ")} ${studentName}`.toLowerCase();
-        return hay.includes(q);
-      });
-    }
-
-    function renderNotes(){
-      if (!notesListEl) return;
-      const filtered = getFilteredNotes().sort((a,b)=>{
-        if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-        return new Date(b.updatedAt) - new Date(a.updatedAt);
-      });
-
-      notesCountEl.textContent = `${filtered.length} note${filtered.length === 1 ? "" : "s"}`;
-
-      if (!filtered.length){
-        notesListEl.innerHTML = `<p class="muted">No notes found.</p>`;
-        return;
-      }
-
-      notesListEl.innerHTML = filtered.map(n => `
-        <div class="border border-gray-200 rounded-lg p-3 ${n.pinned ? 'bg-amber-50 border-amber-200' : ''}">
-          <div class="flex items-start justify-between gap-2">
-            <div>
-              <div class="flex items-center gap-2">
-                <h4 class="font-semibold">${escapeHtml(n.title || "(Untitled Note)")}</h4>
-                ${n.pinned ? '<span class="text-xs font-semibold text-amber-700">Pinned</span>' : ''}
-              </div>
-              <p class="text-xs muted">Student: ${escapeHtml(getStudentNameById(n.studentId))}</p>
-              <p class="text-xs muted">Updated: ${fmtDateTime(n.updatedAt)}</p>
-            </div>
-            <div class="flex gap-1">
-              <button data-note-pin="${n.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">${n.pinned ? "Unpin" : "Pin"}</button>
-              <button data-note-edit="${n.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button>
-              <button data-note-delete="${n.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button>
-            </div>
-          </div>
-
-          <p class="mt-2 text-sm whitespace-pre-wrap">${escapeHtml(n.body)}</p>
-
-          <div class="mt-2 flex flex-wrap gap-1">
-            ${n.tags.length ? n.tags.map(t=>`<span class="note-tag">${escapeHtml(t)}</span>`).join("") : '<span class="text-xs muted">No tags</span>'}
-          </div>
-        </div>
-      `).join("");
-
-      notesListEl.querySelectorAll("[data-note-pin]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const id = btn.getAttribute("data-note-pin");
-          const note = notesData.find(x=>x.id===id);
-          if (!note) return;
-          note.pinned = !note.pinned;
-          note.updatedAt = new Date().toISOString();
-          renderNotes();
-        });
-      });
-
-      notesListEl.querySelectorAll("[data-note-edit]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const id = btn.getAttribute("data-note-edit");
-          const note = notesData.find(x=>x.id===id);
-          if (!note) return;
-          const title = prompt("Edit note title:", note.title);
-          if (title === null) return;
-          const body = prompt("Edit note body:", note.body);
-          if (body === null) return;
-          const tags = prompt("Edit tags (comma separated):", note.tags.join(", "));
-          if (tags === null) return;
-
-          note.title = title.trim();
-          note.body = body.trim();
-          note.tags = parseTags(tags);
-          note.updatedAt = new Date().toISOString();
-          renderNotes();
-        });
-      });
-
-      notesListEl.querySelectorAll("[data-note-delete]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const id = btn.getAttribute("data-note-delete");
-          notesData = notesData.filter(x=>x.id!==id);
-          renderNotes();
-        });
-      });
-    }
-
-    function wireNotesModule(){
-      notesSearchEl.addEventListener("input", renderNotes);
-      notesFilterStudentEl.addEventListener("change", renderNotes);
-
-      createNoteBtnEl.addEventListener("click", ()=>{
-        const title = (newNoteTitleEl.value || "").trim();
-        const body = (newNoteBodyEl.value || "").trim();
-        const studentId = newNoteStudentEl.value || "";
-        const tags = parseTags(newNoteTagsEl.value);
-        const pinned = !!newNotePinnedEl.checked;
-
-        if (!title && !body){
-          createNoteMsgEl.textContent = "Please enter a title or body.";
-          return;
-        }
-
-        notesData.unshift({
-          id: crypto.randomUUID(),
-          title: title || "(Untitled Note)",
-          body,
-          studentId,
-          tags,
-          pinned,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        });
-
-        newNoteTitleEl.value = "";
-        newNoteBodyEl.value = "";
-        newNoteTagsEl.value = "";
-        newNoteStudentEl.value = "";
-        newNotePinnedEl.checked = false;
-        createNoteMsgEl.textContent = "Note created.";
-        renderNotes();
-      });
-    }
-
     // init
     renderBlocksList();
     renderCalendar();
     renderSelectedDay();
+    renderInstructionalVideos();
     initStudentsModule();
-    refreshNotesStudentDropdowns();
-    wireNotesModule();
-    renderNotes();
     showSection("dashboard");
   </script>
 </body>
