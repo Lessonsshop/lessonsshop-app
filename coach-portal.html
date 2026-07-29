@@ -115,9 +115,18 @@
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
     .student-avatar {
-      width: 80px;
-      height: 80px;
+      width: 96px;
+      height: 96px;
       border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid #d1d5db;
+      background: #f3f4f6;
+    }
+
+    .media-thumb {
+      width: 96px;
+      height: 72px;
+      border-radius: 8px;
       object-fit: cover;
       border: 1px solid #d1d5db;
       background: #f3f4f6;
@@ -298,7 +307,6 @@
 
       <section id="studentsSection" class="hidden-section">
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
-          <!-- LEFT LIST -->
           <div class="xl:col-span-1">
             <div class="card p-5 mb-4">
               <h2 class="text-2xl font-bold mb-1">Students</h2>
@@ -306,12 +314,29 @@
               <input id="studentSearch" type="text" placeholder="Search by name, email, or phone..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
 
+            <div class="card p-5 mb-4">
+              <h3 class="text-sm font-semibold mb-2">Message Alerts</h3>
+              <div class="space-y-2 text-sm">
+                <label class="flex items-center gap-2">
+                  <input id="alertEmailEnabled" type="checkbox" checked />
+                  <span>Email alerts</span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input id="alertTextEnabled" type="checkbox" checked />
+                  <span>Text alerts</span>
+                </label>
+                <input id="alertEmailAddress" type="email" placeholder="Coach alert email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                <input id="alertPhoneNumber" type="text" placeholder="Coach alert phone" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                <button id="saveAlertSettingsBtn" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Save Alert Settings</button>
+                <p id="alertSettingsMsg" class="text-xs muted"></p>
+              </div>
+            </div>
+
             <div class="card p-3">
               <div id="studentsList" class="space-y-2"></div>
             </div>
           </div>
 
-          <!-- RIGHT PROFILE -->
           <div class="xl:col-span-2 space-y-4">
             <div class="card p-5">
               <div class="flex items-center justify-between mb-3">
@@ -346,7 +371,6 @@
   </div>
 
   <script>
-    // Dashboard
     const dashboardData = {
       this_month: { label: "previous month", current: { studentsYear: 124, lessonsMonth: 38, lessonsWeek: 11, avgDaily: 1.27, avgSlotsWeek: 22.5, newLessonsMonth: 5 }, previous:{ studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }},
       last_month: { label: "month before last", current: { studentsYear: 116, lessonsMonth: 31, lessonsWeek: 9, avgDaily: 1.03, avgSlotsWeek: 24.0, newLessonsMonth: 3 }, previous:{ studentsYear: 109, lessonsMonth: 27, lessonsWeek: 8, avgDaily: 0.90, avgSlotsWeek: 21.8, newLessonsMonth: 2 }},
@@ -382,7 +406,6 @@
     document.getElementById("dateRange").addEventListener("change", e => renderDashboard(e.target.value));
     renderDashboard("this_month");
 
-    // Section routing + top buttons
     const sections = {
       dashboard: document.getElementById("dashboardSection"),
       calendar: document.getElementById("calendarSection"),
@@ -409,7 +432,7 @@
     topNavButtons.notes.addEventListener("click", () => showSection("notes"));
     topNavButtons.students.addEventListener("click", () => showSection("students"));
 
-    // Calendar state
+    // Calendar
     const calendarGrid = document.getElementById("calendarGrid");
     const monthHeaders = document.getElementById("monthHeaders");
     const weekHeaders = document.getElementById("weekHeaders");
@@ -447,9 +470,7 @@
     const TOTAL_SLOTS_PER_OPEN_DAY = ((SLOT_END_HOUR - SLOT_START_HOUR) * 60) / SLOT_MINUTES;
 
     const lessonEvents = {
-      "2026-07-29": [{ time: "7:00 AM", title: "Piano - Ava M." }, { time: "7:30 AM", title: "Voice - Liam R." }, { time: "9:00 AM", title: "Piano - Nora C." }],
-      "2026-07-31": [{ time: "8:00 AM", title: "Guitar - Noah K." }],
-      "2026-08-02": [{ time: "11:00 AM", title: "Drums - Emma T." }, { time: "1:00 PM", title: "Piano - Sophia L." }]
+      "2026-07-29": [{ time: "7:00 AM", title: "Piano - Ava M." }, { time: "7:30 AM", title: "Voice - Liam R." }, { time: "9:00 AM", title: "Piano - Nora C." }]
     };
     let availabilityBlocks = [];
 
@@ -720,7 +741,21 @@
       blockMsg.textContent="All blocks cleared.";
     });
 
-    // Students
+    // Students + alerts
+    let alertSettings = {
+      emailEnabled: true,
+      textEnabled: true,
+      emailAddress: "",
+      phoneNumber: ""
+    };
+
+    const alertEmailEnabledEl = document.getElementById("alertEmailEnabled");
+    const alertTextEnabledEl = document.getElementById("alertTextEnabled");
+    const alertEmailAddressEl = document.getElementById("alertEmailAddress");
+    const alertPhoneNumberEl = document.getElementById("alertPhoneNumber");
+    const saveAlertSettingsBtnEl = document.getElementById("saveAlertSettingsBtn");
+    const alertSettingsMsgEl = document.getElementById("alertSettingsMsg");
+
     let studentsData = [
       {
         id:"stu_1",
@@ -728,22 +763,14 @@
         phone:"(555) 210-8841",
         email:"ava.martinez@email.com",
         photo:"",
-        notes:[{ text:"Prefers evening lessons after school.", createdAt:new Date().toISOString() }],
+        notes:[{ id:crypto.randomUUID(), text:"Prefers evening lessons after school.", createdAt:new Date().toISOString() }],
         media:[
-          { type:"photo", name:"Recital Photo", url:"#", createdAt:new Date().toISOString() },
-          { type:"video", name:"Practice Clip", url:"#", createdAt:new Date().toISOString() }
+          { id:crypto.randomUUID(), type:"photo", name:"Recital Photo", url:"https://via.placeholder.com/300x200.png?text=Recital+Photo", createdAt:new Date().toISOString() },
+          { id:crypto.randomUUID(), type:"video", name:"Practice Clip", url:"https://via.placeholder.com/300x200.png?text=Video+Preview", createdAt:new Date().toISOString() }
         ],
-        questions:[{ text:"Can we spend more time on left-hand independence?", createdAt:new Date().toISOString() }]
-      },
-      {
-        id:"stu_2",
-        name:"Liam Roberts",
-        phone:"(555) 998-1123",
-        email:"liam.roberts@email.com",
-        photo:"",
-        notes:[{ text:"Voice student; focus on breath control.", createdAt:new Date().toISOString() }],
-        media:[],
-        questions:[{ text:"Is falsetto practice daily okay?", createdAt:new Date().toISOString() }]
+        questions:[
+          { id:crypto.randomUUID(), text:"Can we spend more time on left-hand independence?", createdAt:new Date().toISOString(), replies:[] }
+        ]
       }
     ];
 
@@ -761,6 +788,15 @@
       return d.toLocaleString(undefined, { month:"short", day:"numeric", year:"numeric", hour:"numeric", minute:"2-digit" });
     }
     function phoneDigits(phone){ return phone.replace(/[^\d+]/g, ""); }
+
+    function sendCoachAlert(studentName, messageText){
+      if (alertSettings.emailEnabled && alertSettings.emailAddress){
+        console.log(`EMAIL ALERT to ${alertSettings.emailAddress}: ${studentName} messaged you - ${messageText}`);
+      }
+      if (alertSettings.textEnabled && alertSettings.phoneNumber){
+        console.log(`TEXT ALERT to ${alertSettings.phoneNumber}: ${studentName} messaged you - ${messageText}`);
+      }
+    }
 
     function getFilteredStudents(){
       const q=(studentSearchEl?.value||"").trim().toLowerCase();
@@ -809,8 +845,16 @@
       const notesHtml = s.notes.length
         ? s.notes.map(n => `
             <div class="border border-gray-200 rounded-lg px-3 py-2">
-              <p>${escapeHtml(n.text)}</p>
-              <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p>${escapeHtml(n.text)}</p>
+                  <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
+                </div>
+                <div class="flex gap-1">
+                  <button data-note-edit="${n.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button>
+                  <button data-note-delete="${n.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button>
+                </div>
+              </div>
             </div>
           `).join("")
         : `<p class="muted">No notes uploaded.</p>`;
@@ -818,9 +862,20 @@
       const mediaHtml = s.media.length
         ? s.media.map(m => `
             <div class="border border-gray-200 rounded-lg px-3 py-2">
-              <p class="font-semibold">${m.type === "photo" ? "Photo" : "Video"}: ${escapeHtml(m.name)}</p>
-              <a href="${m.url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">Open file</a>
-              <p class="text-xs muted mt-1">${fmtDateTime(m.createdAt)}</p>
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex gap-3">
+                  <img src="${m.url}" class="media-thumb" alt="${escapeHtml(m.name)}">
+                  <div>
+                    <p class="font-semibold">${m.type === "photo" ? "Photo" : "Video"}: ${escapeHtml(m.name)}</p>
+                    <a href="${m.url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">Open file</a>
+                    <p class="text-xs muted mt-1">${fmtDateTime(m.createdAt)}</p>
+                  </div>
+                </div>
+                <div class="flex gap-1">
+                  <button data-media-edit="${m.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button>
+                  <button data-media-delete="${m.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button>
+                </div>
+              </div>
             </div>
           `).join("")
         : `<p class="muted">No photos/videos uploaded.</p>`;
@@ -829,7 +884,18 @@
         ? s.questions.map(q => `
             <div class="border border-gray-200 rounded-lg px-3 py-2">
               <p>${escapeHtml(q.text)}</p>
-              <p class="text-xs muted mt-1">${fmtDateTime(q.createdAt)}</p>
+              <p class="text-xs muted mt-1">Asked: ${fmtDateTime(q.createdAt)}</p>
+              <div class="mt-2 space-y-1">
+                ${q.replies.length
+                  ? q.replies.map(r => `<div class="text-xs bg-blue-50 border border-blue-200 rounded px-2 py-1"><strong>Reply:</strong> ${escapeHtml(r.text)} <span class="muted">(${fmtDateTime(r.createdAt)})</span></div>`).join("")
+                  : `<p class="text-xs muted">No reply yet.</p>`
+                }
+              </div>
+              <div class="mt-2 flex gap-2">
+                <input data-reply-input="${q.id}" type="text" placeholder="Reply to student..." class="flex-1 border border-gray-300 rounded px-2 py-1 text-xs">
+                <button data-reply-send="${q.id}" class="text-xs bg-blue-600 text-white px-2 py-1 rounded">Reply</button>
+                <button data-question-delete="${q.id}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
+              </div>
             </div>
           `).join("")
         : `<p class="muted">No student questions yet.</p>`;
@@ -837,7 +903,7 @@
       studentProfileContentEl.innerHTML = `
         <div class="flex flex-col md:flex-row md:items-start gap-4 mb-4">
           <div>
-            <img src="${s.photo || 'https://via.placeholder.com/120x120.png?text=Photo'}" alt="Student photo" class="student-avatar w-28 h-28">
+            <img src="${s.photo || 'https://via.placeholder.com/120x120.png?text=Photo'}" alt="Student photo" class="student-avatar">
             <label class="mt-2 inline-block text-xs font-semibold text-blue-700 cursor-pointer">
               Upload Profile Photo
               <input id="profilePhotoUpload" type="file" accept="image/*" class="hidden">
@@ -860,9 +926,7 @@
 
         <div class="space-y-5">
           <div>
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold">Notes</h4>
-            </div>
+            <h4 class="font-semibold mb-2">Notes</h4>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
               <input id="newNoteText" type="text" placeholder="Add note..." class="md:col-span-3 border border-gray-300 rounded-lg px-3 py-2 text-sm">
               <button id="addNoteBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Add Note</button>
@@ -871,9 +935,7 @@
           </div>
 
           <div>
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold">Photos & Videos</h4>
-            </div>
+            <h4 class="font-semibold mb-2">Photos & Videos</h4>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
               <select id="newMediaType" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <option value="photo">Photo</option>
@@ -886,15 +948,17 @@
           </div>
 
           <div>
-            <h4 class="font-semibold mb-2">Questions from Student Portal</h4>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold">Questions from Student Portal</h4>
+              <button id="simulateMessageBtn" class="text-xs bg-amber-100 border border-amber-300 text-amber-800 px-2 py-1 rounded">Simulate Incoming Message</button>
+            </div>
             <div class="space-y-2">${questionsHtml}</div>
           </div>
         </div>
       `;
 
-      // wire dynamic buttons for selected student profile
-      const profilePhotoUpload = document.getElementById("profilePhotoUpload");
-      profilePhotoUpload?.addEventListener("change", (e) => {
+      // Profile photo upload
+      document.getElementById("profilePhotoUpload")?.addEventListener("change", (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
         const reader = new FileReader();
@@ -906,17 +970,37 @@
         reader.readAsDataURL(file);
       });
 
-      const addNoteBtn = document.getElementById("addNoteBtn");
-      addNoteBtn?.addEventListener("click", () => {
+      // Add note
+      document.getElementById("addNoteBtn")?.addEventListener("click", () => {
         const noteInput = document.getElementById("newNoteText");
         const text = (noteInput?.value || "").trim();
         if (!text) return;
-        s.notes.unshift({ text, createdAt: new Date().toISOString() });
+        s.notes.unshift({ id: crypto.randomUUID(), text, createdAt: new Date().toISOString() });
         renderStudentProfile();
       });
 
-      const addMediaBtn = document.getElementById("addMediaBtn");
-      addMediaBtn?.addEventListener("click", () => {
+      // Edit/Delete notes
+      document.querySelectorAll("[data-note-edit]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-note-edit");
+          const note = s.notes.find(n => n.id === id);
+          if (!note) return;
+          const next = prompt("Edit note:", note.text);
+          if (next === null) return;
+          note.text = next.trim() || note.text;
+          renderStudentProfile();
+        });
+      });
+      document.querySelectorAll("[data-note-delete]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-note-delete");
+          s.notes = s.notes.filter(n => n.id !== id);
+          renderStudentProfile();
+        });
+      });
+
+      // Add media
+      document.getElementById("addMediaBtn")?.addEventListener("click", () => {
         const typeEl = document.getElementById("newMediaType");
         const fileEl = document.getElementById("newMediaFile");
         const type = typeEl?.value || "photo";
@@ -926,6 +1010,7 @@
         const reader = new FileReader();
         reader.onload = () => {
           s.media.unshift({
+            id: crypto.randomUUID(),
             type,
             name: file.name,
             url: reader.result,
@@ -934,6 +1019,56 @@
           renderStudentProfile();
         };
         reader.readAsDataURL(file);
+      });
+
+      // Edit/Delete media
+      document.querySelectorAll("[data-media-edit]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-media-edit");
+          const item = s.media.find(m => m.id === id);
+          if (!item) return;
+          const next = prompt("Edit media title:", item.name);
+          if (next === null) return;
+          item.name = next.trim() || item.name;
+          renderStudentProfile();
+        });
+      });
+      document.querySelectorAll("[data-media-delete]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-media-delete");
+          s.media = s.media.filter(m => m.id !== id);
+          renderStudentProfile();
+        });
+      });
+
+      // Reply/Delete question
+      document.querySelectorAll("[data-reply-send]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qid = btn.getAttribute("data-reply-send");
+          const input = document.querySelector(`[data-reply-input="${qid}"]`);
+          const text = (input?.value || "").trim();
+          if (!text) return;
+          const q = s.questions.find(x => x.id === qid);
+          if (!q) return;
+          q.replies.push({ text, createdAt: new Date().toISOString() });
+          renderStudentProfile();
+        });
+      });
+      document.querySelectorAll("[data-question-delete]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qid = btn.getAttribute("data-question-delete");
+          s.questions = s.questions.filter(q => q.id !== qid);
+          renderStudentProfile();
+        });
+      });
+
+      // Simulate incoming message + alerts
+      document.getElementById("simulateMessageBtn")?.addEventListener("click", () => {
+        const sample = prompt("Simulate student message:", "Can we reschedule this week?");
+        if (!sample) return;
+        s.questions.unshift({ id: crypto.randomUUID(), text: sample, createdAt: new Date().toISOString(), replies:[] });
+        sendCoachAlert(s.name, sample);
+        renderStudentProfile();
       });
     }
 
@@ -992,11 +1127,29 @@
       });
     }
 
+    function wireAlertSettings(){
+      alertEmailAddressEl.value = alertSettings.emailAddress;
+      alertPhoneNumberEl.value = alertSettings.phoneNumber;
+      alertEmailEnabledEl.checked = alertSettings.emailEnabled;
+      alertTextEnabledEl.checked = alertSettings.textEnabled;
+
+      saveAlertSettingsBtnEl.addEventListener("click", () => {
+        alertSettings = {
+          emailEnabled: alertEmailEnabledEl.checked,
+          textEnabled: alertTextEnabledEl.checked,
+          emailAddress: (alertEmailAddressEl.value || "").trim(),
+          phoneNumber: (alertPhoneNumberEl.value || "").trim()
+        };
+        alertSettingsMsgEl.textContent = "Alert settings saved.";
+      });
+    }
+
     function initStudentsModule(){
       renderStudentsList();
       renderStudentProfile();
       wireStudentSearch();
       wireAddStudent();
+      wireAlertSettings();
     }
 
     // Init
