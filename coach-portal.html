@@ -453,31 +453,126 @@
     clearBlocksBtn.onclick=()=>{availabilityBlocks=[];renderBlocksList();renderCalendar();renderSelectedDay();blockMsg.textContent="All blocks cleared.";};
 
     // Instructional Videos
-    const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
-    let instructionalData={}; videoSections.forEach(n=>instructionalData[n]={media:[],notes:[]});
-    const videosGridEl=document.getElementById("videosGrid"),videoSectionTabsEl=document.getElementById("videoSectionTabs");
+const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
+let instructionalData={}; videoSections.forEach(n=>instructionalData[n]={media:[],notes:[]});
 
-    function renderVideoSectionTabs(activeName=""){
-      videoSectionTabsEl.innerHTML=videoSections.map(name=>`<button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>`).join("");
-      videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>{
-        btn.onclick=()=>{const section=btn.dataset.videoTab,target=document.getElementById(`video-card-${section}`); if(target)target.scrollIntoView({behavior:"smooth",block:"start"}); renderVideoSectionTabs(section);};
-      });
-    }
+const videosGridEl=document.getElementById("videosGrid");
+const videoSectionTabsEl=document.getElementById("videoSectionTabs");
+let activeVideoSection = "Scoring";
 
-    function renderInstructionalVideos(){
-      renderVideoSectionTabs(videoSections[0]);
-      videosGridEl.innerHTML=videoSections.map(sectionName=>{
-        const sec=instructionalData[sectionName];
-        const mediaList=sec.media.length?sec.media.map((m,idx)=>`<div class="border border-gray-200 rounded-lg p-2"><div class="flex gap-2"><img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name)}"><div class="min-w-0"><p class="text-sm font-semibold truncate">${escapeHtml(m.name)}</p><p class="text-xs muted">${m.type}</p><p class="text-xs muted">${fmtDateTime(m.createdAt)}</p></div></div><button data-del-media="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div>`).join(""):`<p class="text-xs muted">No media uploaded.</p>`;
-        const notesList=sec.notes.length?sec.notes.map((n,idx)=>`<div class="border border-gray-200 rounded-lg p-2"><p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p><p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p><button data-del-note="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div>`).join(""):`<p class="text-xs muted">No notes yet.</p>`;
-        return `<div id="video-card-${sectionName}" class="card p-4"><h3 class="text-lg font-bold mb-3">${escapeHtml(sectionName)}</h3><div class="grid grid-cols-2 gap-3"><div><h4 class="text-sm font-semibold mb-2">Uploads</h4><div class="space-y-2"><input type="file" accept="image/*,video/*" id="upload-${sectionName}" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white"><button data-upload="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Upload</button><div class="space-y-2 max-h-48 overflow-auto">${mediaList}</div></div></div><div><h4 class="text-sm font-semibold mb-2">Notes / Description</h4><div class="space-y-2"><textarea id="note-${sectionName}" placeholder="Add note/description..." class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs min-h-16"></textarea><button data-add-note="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Add Note</button><div class="space-y-2 max-h-48 overflow-auto">${notesList}</div></div></div></div></div>`;
-      }).join("");
+function renderVideoSectionTabs(activeName="Scoring"){
+  videoSectionTabsEl.innerHTML=videoSections.map(name=>`
+    <button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>
+  `).join("");
 
-      videosGridEl.querySelectorAll("[data-upload]").forEach(btn=>btn.onclick=()=>{const section=btn.dataset.upload,input=document.getElementById(`upload-${section}`),file=input?.files?.[0]; if(!file)return; const type=file.type.startsWith("video")?"Video":"Photo"; const r=new FileReader(); r.onload=()=>{instructionalData[section].media.unshift({type,name:file.name,url:r.result,createdAt:new Date().toISOString()}); renderInstructionalVideos(); renderVideoSectionTabs(section);}; r.readAsDataURL(file);});
-      videosGridEl.querySelectorAll("[data-add-note]").forEach(btn=>btn.onclick=()=>{const section=btn.dataset.addNote,nEl=document.getElementById(`note-${section}`),text=(nEl?.value||"").trim(); if(!text)return; instructionalData[section].notes.unshift({text,createdAt:new Date().toISOString()}); renderInstructionalVideos(); renderVideoSectionTabs(section);});
-      videosGridEl.querySelectorAll("[data-del-media]").forEach(btn=>btn.onclick=()=>{const [s,i]=btn.dataset.delMedia.split("|"); instructionalData[s].media.splice(Number(i),1); renderInstructionalVideos(); renderVideoSectionTabs(s);});
-      videosGridEl.querySelectorAll("[data-del-note]").forEach(btn=>btn.onclick=()=>{const [s,i]=btn.dataset.delNote.split("|"); instructionalData[s].notes.splice(Number(i),1); renderInstructionalVideos(); renderVideoSectionTabs(s);});
-    }
+  videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>{
+    btn.onclick=()=>{
+      activeVideoSection = btn.dataset.videoTab;
+      renderInstructionalVideos();
+    };
+  });
+}
+
+function renderInstructionalVideos(){
+  renderVideoSectionTabs(activeVideoSection);
+
+  const sectionName = activeVideoSection;
+  const sec=instructionalData[sectionName];
+
+  const mediaList=sec.media.length
+    ? sec.media.map((m,idx)=>`
+      <div class="border border-gray-200 rounded-lg p-2">
+        <div class="flex gap-2">
+          <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name)}">
+          <div class="min-w-0">
+            <p class="text-sm font-semibold truncate">${escapeHtml(m.name)}</p>
+            <p class="text-xs muted">${m.type}</p>
+            <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
+          </div>
+        </div>
+        <button data-del-media="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
+      </div>
+    `).join("")
+    : `<p class="text-xs muted">No media uploaded.</p>`;
+
+  const notesList=sec.notes.length
+    ? sec.notes.map((n,idx)=>`
+      <div class="border border-gray-200 rounded-lg p-2">
+        <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
+        <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
+        <button data-del-note="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
+      </div>
+    `).join("")
+    : `<p class="text-xs muted">No notes yet.</p>`;
+
+  videosGridEl.className = "grid grid-cols-1 gap-4";
+  videosGridEl.innerHTML = `
+    <div id="video-card-${sectionName}" class="card p-5">
+      <h3 class="text-2xl font-bold mb-4">${escapeHtml(sectionName)}</h3>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <h4 class="text-sm font-semibold mb-2">Uploads</h4>
+          <div class="space-y-2">
+            <input type="file" accept="image/*,video/*" id="upload-${sectionName}" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white">
+            <button data-upload="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold">Upload</button>
+            <div class="space-y-2 max-h-[420px] overflow-auto">${mediaList}</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-2">Notes / Description</h4>
+          <div class="space-y-2">
+            <textarea id="note-${sectionName}" placeholder="Add note/description..." class="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm min-h-24"></textarea>
+            <button data-add-note="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold">Add Note</button>
+            <div class="space-y-2 max-h-[420px] overflow-auto">${notesList}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  videosGridEl.querySelectorAll("[data-upload]").forEach(btn=>{
+    btn.onclick=()=>{
+      const section=btn.dataset.upload;
+      const input=document.getElementById(`upload-${section}`);
+      const file=input?.files?.[0];
+      if(!file) return;
+      const type=file.type.startsWith("video")?"Video":"Photo";
+      const r=new FileReader();
+      r.onload=()=>{
+        instructionalData[section].media.unshift({type,name:file.name,url:r.result,createdAt:new Date().toISOString()});
+        renderInstructionalVideos();
+      };
+      r.readAsDataURL(file);
+    };
+  });
+
+  videosGridEl.querySelectorAll("[data-add-note]").forEach(btn=>{
+    btn.onclick=()=>{
+      const section=btn.dataset.addNote;
+      const nEl=document.getElementById(`note-${section}`);
+      const text=(nEl?.value||"").trim();
+      if(!text) return;
+      instructionalData[section].notes.unshift({text,createdAt:new Date().toISOString()});
+      renderInstructionalVideos();
+    };
+  });
+
+  videosGridEl.querySelectorAll("[data-del-media]").forEach(btn=>{
+    btn.onclick=()=>{
+      const [s,i]=btn.dataset.delMedia.split("|");
+      instructionalData[s].media.splice(Number(i),1);
+      renderInstructionalVideos();
+    };
+  });
+
+  videosGridEl.querySelectorAll("[data-del-note]").forEach(btn=>{
+    btn.onclick=()=>{
+      const [s,i]=btn.dataset.delNote.split("|");
+      instructionalData[s].notes.splice(Number(i),1);
+      renderInstructionalVideos();
+    };
+  });
+}
 
     // Students
     let alertSettings={emailEnabled:true,textEnabled:true,emailAddress:"",phoneNumber:""};
