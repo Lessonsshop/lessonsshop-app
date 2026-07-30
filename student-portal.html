@@ -25,36 +25,15 @@
     .logo-wrap img { height: 42px; width: auto; object-fit: contain; display: block; }
 
     .top-nav-btn {
-      border: 1px solid #d1d5db;
-      background: #fff;
-      color: #374151;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      transition: all .15s ease;
+      border: 1px solid #d1d5db;background: #fff;color: #374151;border-radius: 10px;padding: 8px 12px;font-size: 13px;font-weight: 700;transition: all .15s ease;
     }
     .top-nav-btn:hover { background: #f9fafb; }
-    .top-nav-btn.active {
-      border-color: #93c5fd;
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
+    .top-nav-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
     .video-tab-btn{
-      border:1px solid #d1d5db;
-      background:#fff;
-      color:#374151;
-      border-radius:10px;
-      padding:6px 10px;
-      font-size:12px;
-      font-weight:700;
+      border:1px solid #d1d5db;background:#fff;color:#374151;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;
     }
-    .video-tab-btn.active{
-      border-color:#93c5fd;
-      background:#eff6ff;
-      color:#1d4ed8;
-    }
+    .video-tab-btn.active{ border-color:#93c5fd;background:#eff6ff;color:#1d4ed8; }
 
     .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .week-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
@@ -63,8 +42,7 @@
     .cal-dow { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 6px 0; }
     .cal-day {
       min-height: 118px; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px;
-      cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease;
-      background: white;
+      cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease; background: white;
     }
     .cal-day:hover { transform: translateY(-1px); }
     .cal-day.other-month { opacity: .55; }
@@ -73,7 +51,6 @@
     .cal-day.past-day { background: #d1d5db !important; border-color: #9ca3af !important; color: #374151; }
     .cal-day.today { box-shadow: 0 0 0 2px #93c5fd inset; }
     .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
-
     .cal-daynum { font-size: 13px; font-weight: 700; }
 
     .event-dot {
@@ -84,13 +61,7 @@
     .dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto; }
 
     .view-btn {
-      border: 1px solid #d1d5db;
-      background: white;
-      color: #374151;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
+      border: 1px solid #d1d5db;background: white;color: #374151;border-radius: 10px;padding: 8px 12px;font-size: 12px;font-weight: 700;
     }
     .view-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
@@ -111,13 +82,8 @@
     .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
 
     .hidden-section { display: none; }
-    .hidden { display: none !important; }
-
     .ring-wrap { width: 160px; height: 160px; position: relative; margin: 0 auto; }
-    .ring-label {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
-    }
+    .ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -125,16 +91,12 @@
     <header class="bg-white border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="logo-wrap">
-            <img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" />
-          </div>
+          <div class="logo-wrap"><img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" /></div>
           <h1 class="text-xl font-bold">Student Portal</h1>
         </div>
         <div class="flex items-center gap-4">
           <span class="pill">Student</span>
-          <a href="index.html" class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
-            <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
-          </a>
+          <a href="index.html" class="text-sm text-blue-600 font-semibold"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a>
         </div>
       </div>
     </header>
@@ -149,43 +111,32 @@
         </div>
       </section>
 
-      <!-- Dashboard -->
       <section id="dashboardSection">
         <section class="mb-6">
-          <div>
-            <h2 class="text-2xl font-bold">Dashboard</h2>
-            <p class="muted">Your lessons, booking, and progress summary.</p>
-          </div>
+          <h2 class="text-2xl font-bold">Dashboard</h2>
+          <p class="muted">Your lessons, booking, and progress summary.</p>
         </section>
 
-        <!-- 1 row / 3 columns -->
         <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-8">
-          <!-- Left -->
           <article class="card p-5">
             <p class="text-sm muted mb-2">Student</p>
             <p class="kpi-value" id="kpi_student_name">-</p>
-            <p class="text-sm mt-2 muted">Single-student view</p>
+            <p class="text-sm mt-2 muted">Invite-based simulation</p>
           </article>
 
-          <!-- Middle -->
           <article class="card p-5">
-            <p class="text-sm muted mb-2">Book Now</p>
+            <p class="text-sm muted mb-2">Lessons This Month</p>
             <p class="kpi-value" id="kpi_lessons_month">0</p>
             <p class="text-sm mt-2 muted" id="kpi_next_lesson">No upcoming lesson</p>
-            <button id="bookNowBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold mt-4">
-              Go to Calendar & Book
-            </button>
+            <button id="bookNowBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold mt-4">Go to Calendar & Book</button>
           </article>
 
-          <!-- Right -->
           <article class="card p-5">
             <h3 class="text-lg font-bold mb-3">Lesson Time Remaining</h3>
             <div class="ring-wrap">
               <svg width="160" height="160" viewBox="0 0 160 160">
                 <circle cx="80" cy="80" r="62" stroke="#e5e7eb" stroke-width="12" fill="none"></circle>
-                <circle id="timeRing" cx="80" cy="80" r="62" stroke="#2563eb" stroke-width="12" fill="none"
-                        stroke-linecap="round" transform="rotate(-90 80 80)"
-                        stroke-dasharray="389.56" stroke-dashoffset="0"></circle>
+                <circle id="timeRing" cx="80" cy="80" r="62" stroke="#2563eb" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="389.56" stroke-dashoffset="0"></circle>
               </svg>
               <div class="ring-label">
                 <p id="ringRemainingText" class="text-2xl font-bold">0h</p>
@@ -200,14 +151,10 @@
         </section>
       </section>
 
-      <!-- Calendar -->
       <section id="calendarSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-            <div>
-              <h2 class="text-2xl font-bold">Calendar</h2>
-              <p class="muted text-sm">Green = available day, Red = no availability, Gray = past day.</p>
-            </div>
+            <div><h2 class="text-2xl font-bold">Calendar</h2><p class="muted text-sm">Green = available day, Red = no availability, Gray = past day.</p></div>
             <div class="flex flex-wrap items-center gap-2">
               <button id="dayViewBtn" class="view-btn">Day</button>
               <button id="weekViewBtn" class="view-btn">Week</button>
@@ -230,9 +177,7 @@
           </div>
         </div>
 
-        <!-- Larger calendar + swapped middle/right columns -->
         <div id="calendarMainLayout" class="grid grid-cols-1 xl:grid-cols-12 gap-4">
-          <!-- Calendar (larger) -->
           <div class="xl:col-span-7">
             <div class="card p-4 mb-4">
               <div id="monthHeaders" class="calendar-grid mb-2">
@@ -244,12 +189,9 @@
             </div>
           </div>
 
-          <!-- Middle now = Book Lesson -->
           <div class="xl:col-span-3">
             <div class="card p-5 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="font-semibold">Book Lesson (7:00 AM - 2:00 PM)</h3>
-              </div>
+              <h3 class="font-semibold mb-2">Book Lesson (7:00 AM - 2:00 PM)</h3>
               <div class="mb-3">
                 <label class="text-sm font-medium">Duration</label>
                 <select id="lessonDuration" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
@@ -258,43 +200,39 @@
                   <option value="90">90 minutes</option>
                 </select>
               </div>
-              <div id="dayTimeline" class="space-y-2 text-sm"><p class="muted">Select a day to view timeline.</p></div>
+              <div id="dayTimeline" class="space-y-2 text-sm"></div>
             </div>
           </div>
 
-          <!-- Right now = Selected Day -->
           <div class="xl:col-span-2">
             <div class="card p-5 mb-4">
               <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
-              <div id="selectedDayEvents" class="space-y-2 text-sm"><p class="muted">No day selected.</p></div>
+              <div id="selectedDayEvents" class="space-y-2 text-sm"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Videos -->
       <section id="videosSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <h2 class="text-2xl font-bold">Instructional Videos</h2>
           <p class="muted text-sm mb-3">View coach uploads and add your own media and notes by section.</p>
           <div id="videoSectionTabs" class="flex flex-wrap gap-2"></div>
         </div>
-        <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4"></div>
+        <div id="videosGrid" class="grid grid-cols-1 gap-4"></div>
       </section>
 
-      <!-- My Lessons (renamed from Messages) -->
       <section id="lessonsSection" class="hidden-section">
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
           <div class="card p-5">
             <h2 class="text-2xl font-bold mb-2">My Lesson Timeline</h2>
             <p class="muted text-sm mb-4">All booked lessons for your account.</p>
-            <div id="lessonHistoryList" class="space-y-2 text-sm"><p class="muted">No lessons yet.</p></div>
+            <div id="lessonHistoryList" class="space-y-2 text-sm"></div>
           </div>
-
           <div class="card p-5">
             <h3 class="text-xl font-bold mb-2">Coach Uploads & Lesson Notes</h3>
-            <p class="muted text-sm mb-4">After each lesson, coach videos, photos, and refresher notes appear here automatically.</p>
-            <div id="coachResourcesList" class="space-y-3 text-sm max-h-[560px] overflow-auto"><p class="muted">No coach resources yet.</p></div>
+            <p class="muted text-sm mb-4">After each lesson, coach videos/photos and refresher notes appear here automatically.</p>
+            <div id="coachResourcesList" class="space-y-3 text-sm max-h-[560px] overflow-auto"></div>
           </div>
         </div>
       </section>
@@ -302,13 +240,14 @@
   </div>
 
   <script>
-    // Shared Store
+    // ===== Shared Store =====
     const STORE_KEY = "lessonsshop_shared_v1";
-    const STUDENT_ID = "stu_1";
     const COACH_ID = "coach_1";
 
     const defaultStore = {
-      students: { "stu_1": { id:"stu_1", name:"Robert Christenson", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 } },
+      students: {
+        "stu_1": { id:"stu_1", name:"Robert Christenson", email:"robert@example.com", phone:"(555) 111-2222", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 }
+      },
       lessons: [],
       coachBlocks: [],
       notes: [],
@@ -319,8 +258,7 @@
     function loadStore(){
       const raw = localStorage.getItem(STORE_KEY);
       if(!raw){ localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
-      try { return JSON.parse(raw); }
-      catch { localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
+      try { return JSON.parse(raw); } catch { localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
     }
     function saveStore(store){
       localStorage.setItem(STORE_KEY, JSON.stringify(store));
@@ -328,7 +266,11 @@
     }
     function uid(prefix="id"){ return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2,8)}`; }
 
-    // Helpers
+    // ===== Student from invite link =====
+    const params = new URLSearchParams(window.location.search);
+    const STUDENT_ID = params.get("student") || "stu_1";
+
+    // ===== Helpers =====
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
     function fmtDateTime(iso){ const d = new Date(iso); return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
     const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -339,36 +281,37 @@
     const getWeekStart=d=>{const x=cloneDate(d);x.setDate(x.getDate()-x.getDay());return x;};
     const addDays=(d,n)=>{const x=cloneDate(d);x.setDate(x.getDate()+n);return x;};
     const SLOT_START_MIN=7*60, SLOT_END_MIN=14*60, SLOT_MINUTES=30;
-
     function to12HourLabel(total){ const h24=Math.floor(total/60),m=total%60,s=h24>=12?"PM":"AM"; let h=h24%12; if(h===0)h=12; return `${h}:${String(m).padStart(2,"0")} ${s}`; }
     function hhmm(total){ return `${String(Math.floor(total/60)).padStart(2,"0")}:${String(total%60).padStart(2,"0")}`; }
     function timeToMinutes(t){
       if((t||"").includes("AM") || (t||"").includes("PM")){
         const [time,s]=t.split(" "); const [h0,m]=time.split(":").map(Number); let h=h0%12; if(s==="PM")h+=12; return h*60+m;
       }
-      const [h,m]=String(t||"00:00").split(":").map(Number);
-      return (h||0)*60+(m||0);
+      const [h,m]=String(t||"00:00").split(":").map(Number); return (h||0)*60+(m||0);
     }
     function overlaps(aS,aE,bS,bE){ return Math.max(aS,bS) < Math.min(aE,bE); }
-    function isPastDay(dateObj){
-      const t=new Date();
-      const today=new Date(t.getFullYear(),t.getMonth(),t.getDate());
-      return cloneDate(dateObj) < today;
-    }
+    function isPastDay(dateObj){ const t=new Date(); const today=new Date(t.getFullYear(),t.getMonth(),t.getDate()); return cloneDate(dateObj) < today; }
 
-    // Navigation
-    const sections={
-      dashboard:document.getElementById("dashboardSection"),
-      calendar:document.getElementById("calendarSection"),
-      videos:document.getElementById("videosSection"),
-      lessons:document.getElementById("lessonsSection")
-    };
-    const navBtns={
-      dashboard:document.getElementById("navDashboardBtn"),
-      calendar:document.getElementById("navCalendarBtn"),
-      videos:document.getElementById("navVideosBtn"),
-      lessons:document.getElementById("navLessonsBtn")
-    };
+    // ===== Guard =====
+    function ensureStudentExists(){
+      const store=loadStore();
+      if(!store.students?.[STUDENT_ID]){
+        const main=document.querySelector("main");
+        main.innerHTML=`
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold mb-2">Invalid Invite Link</h2>
+            <p class="muted">This student ID does not exist in shared test data.</p>
+            <p class="mt-2 text-sm">Expected URL format: <code>student-portal.html?student=stu_xxx</code></p>
+          </div>
+        `;
+        throw new Error("Student not found");
+      }
+    }
+    ensureStudentExists();
+
+    // ===== Navigation =====
+    const sections={dashboard:document.getElementById("dashboardSection"),calendar:document.getElementById("calendarSection"),videos:document.getElementById("videosSection"),lessons:document.getElementById("lessonsSection")};
+    const navBtns={dashboard:document.getElementById("navDashboardBtn"),calendar:document.getElementById("navCalendarBtn"),videos:document.getElementById("navVideosBtn"),lessons:document.getElementById("navLessonsBtn")};
     function showSection(name){
       Object.values(sections).forEach(el=>el.classList.add("hidden-section"));
       sections[name]?.classList.remove("hidden-section");
@@ -381,7 +324,7 @@
     navBtns.lessons.onclick=()=>showSection("lessons");
     document.getElementById("bookNowBtn").onclick=()=>showSection("calendar");
 
-    // Dashboard
+    // ===== Dashboard =====
     function getStudent(store){ return store.students?.[STUDENT_ID]; }
     function getMyLessons(store){ return (store.lessons||[]).filter(l=>l.studentId===STUDENT_ID); }
 
@@ -423,7 +366,7 @@
       renderRing();
     }
 
-    // Calendar + Booking
+    // ===== Calendar + Booking =====
     const calendarGrid=document.getElementById("calendarGrid"),monthHeaders=document.getElementById("monthHeaders"),weekHeaders=document.getElementById("weekHeaders"),selectedDateLabel=document.getElementById("selectedDateLabel"),selectedDayEvents=document.getElementById("selectedDayEvents"),rangeLabel=document.getElementById("rangeLabel"),dayTimeline=document.getElementById("dayTimeline");
     const dayViewBtn=document.getElementById("dayViewBtn"),weekViewBtn=document.getElementById("weekViewBtn"),monthViewBtn=document.getElementById("monthViewBtn");
     const prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn"),lessonDurationEl=document.getElementById("lessonDuration");
@@ -440,23 +383,15 @@
       if(isPastDay(dateObj) || dateObj.getDay()===6 || slotEnd>SLOT_END_MIN) return false;
       const key=ymd(dateObj);
 
-      for(const b of getCoachBlocksForDay(store,key)){
-        const bs=timeToMinutes(b.start), be=timeToMinutes(b.end);
-        if(overlaps(slotStart,slotEnd,bs,be)) return false;
-      }
-      for(const l of getLessonsForDay(store,key)){
-        const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30);
-        if(overlaps(slotStart,slotEnd,ls,le)) return false;
-      }
+      for(const b of getCoachBlocksForDay(store,key)){ if(overlaps(slotStart,slotEnd,timeToMinutes(b.start),timeToMinutes(b.end))) return false; }
+      for(const l of getLessonsForDay(store,key)){ const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30); if(overlaps(slotStart,slotEnd,ls,le)) return false; }
       return true;
     }
 
     function getDayStatus(store,date){
       if(isPastDay(date)) return "past";
       if(date.getDay()===6) return "unavailable";
-      for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
-        if(isSlotAvailable(store,date,t,t+SLOT_MINUTES)) return "available";
-      }
+      for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){ if(isSlotAvailable(store,date,t,t+SLOT_MINUTES)) return "available"; }
       return "unavailable";
     }
 
@@ -491,28 +426,18 @@
 
     function renderCalendar(){
       calendarGrid.innerHTML="";
-      renderRangeLabel();
-      renderHeaders();
-      setActiveViewBtn();
+      renderRangeLabel(); renderHeaders(); setActiveViewBtn();
 
       if(calendarView==="month"){
         calendarGrid.className="calendar-grid";
         const y=currentDate.getFullYear(),m=currentDate.getMonth(),f=new Date(y,m,1),start=f.getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();
-        const cells=[];
-        for(let i=start-1;i>=0;i--)cells.push({date:new Date(y,m-1,prevDays-i),otherMonth:true});
-        for(let d=1;d<=days;d++)cells.push({date:new Date(y,m,d),otherMonth:false});
+        const cells=[]; for(let i=start-1;i>=0;i--)cells.push({date:new Date(y,m-1,prevDays-i),otherMonth:true}); for(let d=1;d<=days;d++)cells.push({date:new Date(y,m,d),otherMonth:false});
         while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});}
         cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth})));
       }
-      if(calendarView==="week"){
-        calendarGrid.className="week-grid";
-        const s=getWeekStart(currentDate);
-        for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i)));
-      }
-      if(calendarView==="day"){
-        calendarGrid.className="day-grid";
-        calendarGrid.appendChild(renderDayCard(currentDate));
-      }
+      if(calendarView==="week"){calendarGrid.className="week-grid"; const s=getWeekStart(currentDate); for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i))); }
+      if(calendarView==="day"){calendarGrid.className="day-grid"; calendarGrid.appendChild(renderDayCard(currentDate)); }
+
       renderDayTimeline();
     }
 
@@ -526,44 +451,28 @@
       if(!isSlotAvailable(store,dateObj,slotStartMin,slotEnd)){ alert("That slot is no longer available."); return; }
 
       store.lessons.push({
-        id:uid("lesson"),
-        studentId:STUDENT_ID,
-        coachId:COACH_ID,
-        date:ymd(dateObj),
-        start:hhmm(slotStartMin),
-        duration:durationMin,
-        title:"Student Booked Lesson",
-        createdBy:"student",
-        createdAt:new Date().toISOString()
+        id:uid("lesson"), studentId:STUDENT_ID, coachId:COACH_ID,
+        date:ymd(dateObj), start:hhmm(slotStartMin), duration:durationMin,
+        title:"Student Booked Lesson", createdBy:"student", createdAt:new Date().toISOString()
       });
       if(store.students[STUDENT_ID]) store.students[STUDENT_ID].usedMinutes += durationMin;
-
       saveStore(store);
       rerenderAll();
-      alert("Lesson booked. Coach portal is updated too.");
+      alert("Lesson booked.");
     }
 
     function renderDayTimeline(){
-      const store=loadStore(), duration=Number(lessonDurationEl.value||30), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day);
+      const store=loadStore(), duration=Number(lessonDurationEl.value||30), day=(calendarView==="day")?currentDate:selectedDate;
       if(isPastDay(day)){ dayTimeline.innerHTML=`<p class="text-gray-700 font-semibold">This date is in the past. Booking is closed.</p>`; return; }
       if(day.getDay()===6){ dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`; return; }
 
-      const myLessons=getMyLessonsForDay(store,key).map(l=>({...l,startMin:timeToMinutes(l.start)}));
+      const key=ymd(day), myLessons=getMyLessonsForDay(store,key).map(l=>({...l,startMin:timeToMinutes(l.start)}));
       const rows=[];
-
       for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
-        const label=to12HourLabel(t);
-        const mine=myLessons.find(l=>l.startMin===t);
-        const slotEnd=t+duration;
-        const open=isSlotAvailable(store,day,t,slotEnd);
-
-        if(mine){
-          rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${escapeHtml(mine.title)}</span></div><span class="timeline-status status-booked">${mine.duration}m</span></div>`);
-        } else if(open){
-          rows.push(`<button data-open-slot="${t}" class="timeline-row timeline-open w-full text-left"><div><span class="timeline-time">${label}</span><span class="ml-2">Open slot (${duration}m)</span></div><span class="timeline-status status-open">Book</span></button>`);
-        } else {
-          rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
-        }
+        const label=to12HourLabel(t), mine=myLessons.find(l=>l.startMin===t), slotEnd=t+duration, open=isSlotAvailable(store,day,t,slotEnd);
+        if(mine) rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${escapeHtml(mine.title)}</span></div><span class="timeline-status status-booked">${mine.duration}m</span></div>`);
+        else if(open) rows.push(`<button data-open-slot="${t}" class="timeline-row timeline-open w-full text-left"><div><span class="timeline-time">${label}</span><span class="ml-2">Open slot (${duration}m)</span></div><span class="timeline-status status-open">Book</span></button>`);
+        else rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
       }
 
       dayTimeline.innerHTML=rows.join("");
@@ -578,11 +487,7 @@
       if(status==="unavailable"){ statusClass="border-red-200 bg-red-50 text-red-800"; statusText="No availability"; }
       if(status==="past"){ statusClass="border-gray-300 bg-gray-200 text-gray-700"; statusText="Past day"; }
 
-      selectedDayEvents.innerHTML=`
-        <div class="border rounded-lg px-3 py-2 ${statusClass}">
-          <p class="font-semibold">${statusText}</p>
-        </div>
-      ` + (items.length
+      selectedDayEvents.innerHTML=`<div class="border rounded-lg px-3 py-2 ${statusClass}"><p class="font-semibold">${statusText}</p></div>` + (items.length
         ? `<div class="space-y-2 mt-2">${items.map(ev=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${escapeHtml(ev.title)}</span><span class="text-blue-700 font-semibold">${escapeHtml(ev.start)} · ${ev.duration}m</span></div>`).join("")}</div>`
         : `<p class="muted mt-2">No lessons scheduled.</p>`);
     }
@@ -590,40 +495,29 @@
     dayViewBtn.onclick=()=>{calendarView="day";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
     weekViewBtn.onclick=()=>{calendarView="week";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
     monthViewBtn.onclick=()=>{calendarView="month";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
-
-    prevBtn.onclick=()=>{
-      if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);
-      else if(calendarView==="week") currentDate=addDays(currentDate,-7);
-      else { currentDate=addDays(currentDate,-1); selectedDate=cloneDate(currentDate); }
-      renderCalendar(); renderSelectedDay();
-    };
-    nextBtn.onclick=()=>{
-      if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);
-      else if(calendarView==="week") currentDate=addDays(currentDate,7);
-      else { currentDate=addDays(currentDate,1); selectedDate=cloneDate(currentDate); }
-      renderCalendar(); renderSelectedDay();
-    };
+    prevBtn.onclick=()=>{ if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1); else if(calendarView==="week") currentDate=addDays(currentDate,-7); else { currentDate=addDays(currentDate,-1); selectedDate=cloneDate(currentDate); } renderCalendar(); renderSelectedDay(); };
+    nextBtn.onclick=()=>{ if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1); else if(calendarView==="week") currentDate=addDays(currentDate,7); else { currentDate=addDays(currentDate,1); selectedDate=cloneDate(currentDate); } renderCalendar(); renderSelectedDay(); };
     lessonDurationEl.onchange=()=>renderDayTimeline();
 
-    // Videos
+    // ===== Videos =====
     const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
     const videosGridEl=document.getElementById("videosGrid");
     const videoSectionTabsEl=document.getElementById("videoSectionTabs");
     let activeVideoSection="Scoring";
 
-    function getSectionMedia(store,section){
-      return (store.media||[]).filter(m=>m.studentId===STUDENT_ID && m.section===section);
-    }
+    function getSectionMedia(store,section){ return (store.media||[]).filter(m=>m.studentId===STUDENT_ID && m.section===section); }
+
     function renderVideoSectionTabs(activeName="Scoring"){
       videoSectionTabsEl.innerHTML=videoSections.map(name=>`<button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>`).join("");
       videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>btn.onclick=()=>{activeVideoSection=btn.dataset.videoTab;renderInstructionalVideos();});
     }
+
     function renderInstructionalVideos(){
       const store=loadStore();
       renderVideoSectionTabs(activeVideoSection);
       const sectionName=activeVideoSection;
       const mediaList=getSectionMedia(store,sectionName);
-      const myNotes=(store.notes||[]).filter(n=>n.studentId===STUDENT_ID && n.section===sectionName);
+      const sectionNotes=(store.notes||[]).filter(n=>n.studentId===STUDENT_ID && n.section===sectionName);
 
       videosGridEl.innerHTML=`
         <div class="card p-5">
@@ -648,11 +542,11 @@
               </div>
             </div>
             <div>
-              <h4 class="text-sm font-semibold mb-2">My Section Notes</h4>
+              <h4 class="text-sm font-semibold mb-2">Section Notes</h4>
               <textarea id="sectionNoteText" placeholder="Add note..." class="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm min-h-24"></textarea>
               <button id="addSectionNoteBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mt-2">Add Note</button>
               <div class="space-y-2 max-h-[420px] overflow-auto mt-3">
-                ${myNotes.length ? myNotes.map(n=>`
+                ${sectionNotes.length ? sectionNotes.map(n=>`
                   <div class="border border-gray-200 rounded-lg p-2 ${n.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}">
                     <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
                     <p class="text-xs muted mt-1">${n.authorRole==="coach"?"Coach":"You"} · ${fmtDateTime(n.createdAt)}</p>
@@ -670,14 +564,8 @@
         reader.onload=()=>{
           const s=loadStore();
           s.media.unshift({
-            id:uid("media"),
-            studentId:STUDENT_ID,
-            section:sectionName,
-            name:file.name,
-            url:reader.result,
-            type:file.type.startsWith("video")?"video":"photo",
-            createdBy:"student",
-            createdAt:new Date().toISOString()
+            id:uid("media"), studentId:STUDENT_ID, section:sectionName, name:file.name, url:reader.result,
+            type:file.type.startsWith("video")?"video":"photo", createdBy:"student", createdAt:new Date().toISOString()
           });
           saveStore(s);
           renderInstructionalVideos();
@@ -691,12 +579,7 @@
         if(!text) return;
         const s=loadStore();
         s.notes.unshift({
-          id:uid("note"),
-          studentId:STUDENT_ID,
-          section:sectionName,
-          authorRole:"student",
-          text,
-          createdAt:new Date().toISOString()
+          id:uid("note"), studentId:STUDENT_ID, section:sectionName, authorRole:"student", text, createdAt:new Date().toISOString()
         });
         saveStore(s);
         renderInstructionalVideos();
@@ -704,57 +587,33 @@
       };
     }
 
-    // My Lessons section
+    // ===== My Lessons =====
     function renderMyLessonsSection(){
       const store=loadStore();
       const lessons=getMyLessons(store).sort((a,b)=>new Date(b.date+"T"+b.start)-new Date(a.date+"T"+a.start));
-
       const lessonHistoryList=document.getElementById("lessonHistoryList");
       lessonHistoryList.innerHTML=lessons.length
-        ? lessons.map(l=>`
-          <div class="border border-gray-200 rounded-lg px-3 py-2">
-            <p class="font-semibold">${escapeHtml(l.title||"Lesson")}</p>
-            <p class="text-xs muted">${escapeHtml(l.date)} ${escapeHtml(l.start)} · ${l.duration} min</p>
-          </div>
-        `).join("")
+        ? lessons.map(l=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><p class="font-semibold">${escapeHtml(l.title||"Lesson")}</p><p class="text-xs muted">${escapeHtml(l.date)} ${escapeHtml(l.start)} · ${l.duration} min</p></div>`).join("")
         : `<p class="muted">No lessons yet.</p>`;
 
-      // Coach resources: coach media + coach notes for this student
       const coachMedia=(store.media||[]).filter(m=>m.studentId===STUDENT_ID && m.createdBy==="coach");
       const coachNotes=(store.notes||[]).filter(n=>n.studentId===STUDENT_ID && n.authorRole==="coach");
-
-      const merged=[
-        ...coachMedia.map(m=>({type:"media",createdAt:m.createdAt,data:m})),
-        ...coachNotes.map(n=>({type:"note",createdAt:n.createdAt,data:n}))
-      ].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      const merged=[...coachMedia.map(m=>({type:"media",createdAt:m.createdAt,data:m})),...coachNotes.map(n=>({type:"note",createdAt:n.createdAt,data:n}))].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
 
       const coachResourcesList=document.getElementById("coachResourcesList");
       coachResourcesList.innerHTML=merged.length
         ? merged.map(item=>{
             if(item.type==="media"){
               const m=item.data;
-              return `
-                <div class="border border-gray-200 rounded-lg p-3 bg-amber-50">
-                  <p class="text-xs muted mb-1">Coach Upload · ${fmtDateTime(m.createdAt)}</p>
-                  <p class="font-semibold">${escapeHtml(m.name||"Media")}</p>
-                  <p class="text-xs muted mb-2">${escapeHtml(m.section||"General")} · ${escapeHtml(m.type||"file")}</p>
-                  <img src="${m.url}" class="media-thumb" alt="${escapeHtml(m.name||"Media")}">
-                </div>
-              `;
+              return `<div class="border border-gray-200 rounded-lg p-3 bg-amber-50"><p class="text-xs muted mb-1">Coach Upload · ${fmtDateTime(m.createdAt)}</p><p class="font-semibold">${escapeHtml(m.name||"Media")}</p><p class="text-xs muted mb-2">${escapeHtml(m.section||"General")} · ${escapeHtml(m.type||"file")}</p><img src="${m.url}" class="media-thumb" alt="${escapeHtml(m.name||"Media")}"></div>`;
             }
             const n=item.data;
-            return `
-              <div class="border border-gray-200 rounded-lg p-3 bg-blue-50">
-                <p class="text-xs muted mb-1">Coach Note · ${fmtDateTime(n.createdAt)}</p>
-                <p class="font-semibold mb-1">${escapeHtml(n.section||"Lesson Notes")}</p>
-                <p class="text-sm">${escapeHtml(n.text)}</p>
-              </div>
-            `;
+            return `<div class="border border-gray-200 rounded-lg p-3 bg-blue-50"><p class="text-xs muted mb-1">Coach Note · ${fmtDateTime(n.createdAt)}</p><p class="font-semibold mb-1">${escapeHtml(n.section||"Lesson Notes")}</p><p class="text-sm">${escapeHtml(n.text)}</p></div>`;
           }).join("")
         : `<p class="muted">No coach resources yet.</p>`;
     }
 
-    // Live sync + init
+    // ===== Init + Sync =====
     function rerenderAll(){
       renderDashboard();
       renderCalendar();
@@ -763,9 +622,7 @@
       renderMyLessonsSection();
     }
 
-    window.addEventListener("storage",(e)=>{
-      if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick") rerenderAll();
-    });
+    window.addEventListener("storage",(e)=>{ if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick") rerenderAll(); });
 
     rerenderAll();
     showSection("dashboard");
