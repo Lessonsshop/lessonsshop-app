@@ -71,6 +71,7 @@
     .cal-day.other-month { opacity: .55; }
     .cal-day.available-day { background: #ecfdf3; border-color: #86efac; }
     .cal-day.unavailable-day { background: #fef2f2; border-color: #fca5a5; }
+    .cal-day.past-day { background: #e5e7eb !important; border-color: #9ca3af !important; color: #4b5563; }
     .cal-day.today { box-shadow: 0 0 0 2px #93c5fd inset; }
     .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
 
@@ -82,12 +83,6 @@
       max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto; }
-
-    .availability-pill {
-      font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 8px; width: fit-content;
-    }
-    .availability-pill.open { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
-    .availability-pill.closed { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
 
     .view-btn {
       border: 1px solid #d1d5db;
@@ -107,11 +102,13 @@
     .timeline-open { background: #ecfdf3; border-color: #86efac; cursor: pointer; }
     .timeline-booked { background: #eff6ff; border-color: #bfdbfe; }
     .timeline-blocked { background: #fef2f2; border-color: #fca5a5; }
+    .timeline-past { background: #e5e7eb; border-color: #9ca3af; color: #4b5563; }
     .timeline-time { font-weight: 700; min-width: 84px; display: inline-block; }
     .timeline-status { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
     .status-open { background:#dcfce7; color:#166534; border:1px solid #86efac; }
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
+    .status-past { background:#d1d5db; color:#374151; border:1px solid #9ca3af; }
 
     .media-thumb { width: 96px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
     .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
@@ -158,14 +155,13 @@
       <!-- Dashboard -->
       <section id="dashboardSection">
         <section class="mb-6">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <h2 class="text-2xl font-bold">Dashboard</h2>
-              <p class="muted">Your lessons, time remaining, and latest activity.</p>
-            </div>
+          <div>
+            <h2 class="text-2xl font-bold">Dashboard</h2>
+            <p class="muted">Your lessons, time remaining, and latest activity.</p>
           </div>
         </section>
 
+        <!-- Top row -->
         <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-8">
           <article class="card p-5">
             <p class="text-sm muted mb-2">Student</p>
@@ -173,23 +169,11 @@
             <p class="text-sm mt-2 muted">Single-student view</p>
           </article>
           <article class="card p-5">
-            <p class="text-sm muted mb-2">Lessons This Month</p>
-            <p class="kpi-value" id="kpi_lessons_month">0</p>
-            <p class="text-sm mt-2 muted" id="kpi_next_lesson">No upcoming lesson</p>
-          </article>
-          <article class="card p-5">
             <p class="text-sm muted mb-2">Hours Remaining</p>
             <p class="kpi-value" id="kpi_hours_remaining">0.0h</p>
             <p class="text-sm mt-2 muted"><span id="kpi_hours_used">0.0h</span> used</p>
           </article>
-        </section>
-
-        <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
-          <div class="xl:col-span-2 card p-5">
-            <h3 class="text-lg font-bold mb-3">Recent Messages</h3>
-            <div id="dashboardMessages" class="space-y-2 text-sm"><p class="muted">No messages yet.</p></div>
-          </div>
-          <div class="card p-5">
+          <article class="card p-5">
             <h3 class="text-lg font-bold mb-3">Lesson Time Remaining</h3>
             <div class="ring-wrap">
               <svg width="160" height="160" viewBox="0 0 160 160">
@@ -207,7 +191,29 @@
               <p><span class="font-semibold">Package:</span> <span id="ringPackageText">0h</span></p>
               <p><span class="font-semibold">Used:</span> <span id="ringUsedText">0h</span></p>
             </div>
-          </div>
+          </article>
+        </section>
+
+        <!-- Lower row now 3 columns -->
+        <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-8">
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Lessons This Month</p>
+            <p class="kpi-value" id="kpi_lessons_month">0</p>
+            <p class="text-sm mt-2 muted" id="kpi_next_lesson">No upcoming lesson</p>
+          </article>
+
+          <article class="card p-5">
+            <p class="text-sm muted mb-3">Book Now</p>
+            <button id="bookNowBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+              Go to Calendar & Book
+            </button>
+            <p class="text-xs muted mt-3">Choose 30 / 60 / 90 min in Calendar.</p>
+          </article>
+
+          <article class="card p-5">
+            <h3 class="text-lg font-bold mb-3">Recent Messages</h3>
+            <div id="dashboardMessages" class="space-y-2 text-sm"><p class="muted">No messages yet.</p></div>
+          </article>
         </section>
       </section>
 
@@ -217,7 +223,7 @@
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
             <div>
               <h2 class="text-2xl font-bold">Calendar</h2>
-              <p class="muted text-sm">Green = time available, Red = no times available.</p>
+              <p class="muted text-sm">Green = available day, Red = no availability, Gray = past day.</p>
             </div>
             <div class="flex flex-wrap items-center gap-2">
               <button id="dayViewBtn" class="view-btn">Day</button>
@@ -236,6 +242,7 @@
             <span class="font-semibold mr-3">Legend:</span>
             <span class="inline-flex items-center mr-4"><span class="w-3 h-3 rounded-full bg-green-300 border border-green-500 mr-2"></span>Available day</span>
             <span class="inline-flex items-center mr-4"><span class="w-3 h-3 rounded-full bg-red-300 border border-red-500 mr-2"></span>No availability</span>
+            <span class="inline-flex items-center mr-4"><span class="w-3 h-3 rounded-full bg-gray-400 border border-gray-500 mr-2"></span>Past day</span>
             <span class="inline-flex items-center"><span class="w-3 h-3 rounded-full bg-blue-300 border border-blue-500 mr-2"></span>Your booked lesson</span>
           </div>
         </div>
@@ -373,6 +380,11 @@
       return (h||0)*60+(m||0);
     }
     function overlaps(aS,aE,bS,bE){ return Math.max(aS,bS) < Math.min(aE,bE); }
+    function isPastDay(dateObj){
+      const today = new Date();
+      const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      return cloneDate(dateObj) < todayOnly;
+    }
 
     // =============================
     // Navigation
@@ -399,6 +411,7 @@
     navBtns.calendar.onclick=()=>showSection("calendar");
     navBtns.videos.onclick=()=>showSection("videos");
     navBtns.messages.onclick=()=>showSection("messages");
+    document.getElementById("bookNowBtn").onclick=()=>showSection("calendar");
 
     // =============================
     // Dashboard
@@ -478,17 +491,16 @@
     }
 
     function isSlotAvailable(store,dateObj,slotStart,slotEnd){
-      if(dateObj.getDay()===6) return false; // Saturday off
+      if(isPastDay(dateObj)) return false;
+      if(dateObj.getDay()===6) return false;
       if(slotEnd>SLOT_END_MIN) return false;
       const key=ymd(dateObj);
 
-      // blocks
       for(const b of getCoachBlocksForDay(store,key)){
         const bs=timeToMinutes(b.start), be=timeToMinutes(b.end);
         if(overlaps(slotStart,slotEnd,bs,be)) return false;
       }
 
-      // existing lessons (any lesson with this coach at same time blocks slot)
       for(const l of getLessonsForDay(store,key)){
         const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30);
         if(overlaps(slotStart,slotEnd,ls,le)) return false;
@@ -496,26 +508,13 @@
       return true;
     }
 
-    function getAvailabilityForDate(store,date){
-      if(date.getDay()===6) return {totalSlots:0,bookedSlots:0,blockedSlots:0,availableSlots:0,isOpenDay:false};
-      const key=ymd(date), total=((SLOT_END_MIN-SLOT_START_MIN)/SLOT_MINUTES);
-      const lessons=getLessonsForDay(store,key);
-      let blockedSlots=0;
-
+    function getDayStatus(store,date){
+      if(isPastDay(date)) return "past";
+      if(date.getDay()===6) return "unavailable";
       for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
-        const open=isSlotAvailable(store,date,t,t+SLOT_MINUTES);
-        if(!open){
-          const booked=lessons.some(l=>{
-            const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30);
-            return overlaps(t,t+SLOT_MINUTES,ls,le);
-          });
-          if(!booked) blockedSlots++;
-        }
+        if(isSlotAvailable(store,date,t,t+SLOT_MINUTES)) return "available";
       }
-
-      const bookedSlots=Math.min(total,lessons.length);
-      const availableSlots=Math.max(0,total-bookedSlots-blockedSlots);
-      return {totalSlots:total,bookedSlots,blockedSlots,availableSlots,isOpenDay:true};
+      return "unavailable";
     }
 
     function setActiveViewBtn(){
@@ -539,20 +538,28 @@
     }
 
     function renderDayCard(date,{otherMonth=false}={}){
-      const store=loadStore(), key=ymd(date), avail=getAvailabilityForDate(store,date), myCount=getMyLessonsForDay(store,key).length;
+      const store=loadStore(), key=ymd(date), status=getDayStatus(store,date), myCount=getMyLessonsForDay(store,key).length;
       const btn=document.createElement("button");
-      btn.className=["cal-day",avail.availableSlots>0?"available-day":"unavailable-day",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
-      btn.innerHTML=`
-        <div class="cal-daynum">${date.getDate()}</div>
-        ${avail.availableSlots>0?`<span class="availability-pill open">${avail.availableSlots} open</span>`:`<span class="availability-pill closed">${avail.isOpenDay?"0 open":"Off day"}</span>`}
-        ${myCount?`<div class="event-dot"><span class="dot"></span>${myCount} booked</div>`:""}
-      `;
-      btn.onclick=()=>{selectedDate=cloneDate(date); if(calendarView==="day") currentDate=cloneDate(date); renderCalendar(); renderSelectedDay();};
+      btn.className=["cal-day",status==="available"?"available-day":"",status==="unavailable"?"unavailable-day":"",status==="past"?"past-day":"",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
+
+      btn.innerHTML=`<div class="cal-daynum">${date.getDate()}</div>${myCount?`<div class="event-dot"><span class="dot"></span>${myCount} booked</div>`:""}`;
+
+      // IMPORTANT CHANGE:
+      // clicking day in month now stays in month and shows right-side booking panel
+      btn.onclick=()=>{
+        selectedDate=cloneDate(date);
+        renderCalendar();
+        renderSelectedDay();
+        renderDayTimeline();
+      };
       return btn;
     }
 
     function renderCalendar(){
-      calendarGrid.innerHTML=""; renderRangeLabel(); renderHeaders(); setActiveViewBtn();
+      calendarGrid.innerHTML="";
+      renderRangeLabel();
+      renderHeaders();
+      setActiveViewBtn();
 
       if(calendarView==="month"){
         calendarGrid.className="calendar-grid";
@@ -563,11 +570,13 @@
         while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});}
         cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth})));
       }
+
       if(calendarView==="week"){
         calendarGrid.className="week-grid";
         const s=getWeekStart(currentDate);
         for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i)));
       }
+
       if(calendarView==="day"){
         calendarGrid.className="day-grid";
         calendarGrid.appendChild(renderDayCard(currentDate));
@@ -604,9 +613,16 @@
     }
 
     function renderDayTimeline(){
-      if(calendarView!=="day"&&calendarView!=="week"){dayTimeline.innerHTML=`<p class="muted">Switch to Day or Week view to see timeline.</p>`;return;}
-      const store=loadStore(), duration=Number(lessonDurationEl.value||30), day=calendarView==="week"?selectedDate:currentDate, key=ymd(day);
-      if(day.getDay()===6){dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;return;}
+      const store=loadStore(), duration=Number(lessonDurationEl.value||30), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day);
+
+      if(isPastDay(day)){
+        dayTimeline.innerHTML=`<p class="text-gray-700 font-semibold">This date is in the past. Booking is closed.</p>`;
+        return;
+      }
+      if(day.getDay()===6){
+        dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;
+        return;
+      }
 
       const myLessons=getMyLessonsForDay(store,key).map(l=>({...l,startMin:timeToMinutes(l.start)}));
       const rows=[];
@@ -614,7 +630,8 @@
       for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
         const label=to12HourLabel(t);
         const mine=myLessons.find(l=>l.startMin===t);
-        const open=isSlotAvailable(store,day,t,t+duration);
+        const slotEnd=t+duration;
+        const open=isSlotAvailable(store,day,t,slotEnd);
 
         if(mine){
           rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${escapeHtml(mine.title)}</span></div><span class="timeline-status status-booked">${mine.duration}m</span></div>`);
@@ -630,11 +647,17 @@
     }
 
     function renderSelectedDay(){
-      const store=loadStore(), day=calendarView==="day"?currentDate:selectedDate, key=ymd(day), avail=getAvailabilityForDate(store,day), items=getMyLessonsForDay(store,key);
+      const store=loadStore(), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day), status=getDayStatus(store,day), items=getMyLessonsForDay(store,key);
       selectedDateLabel.textContent=day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"})+" - Your Appointments";
+
+      let statusClass="border-green-200 bg-green-50 text-green-800";
+      let statusText="Available day";
+      if(status==="unavailable"){ statusClass="border-red-200 bg-red-50 text-red-800"; statusText="No availability"; }
+      if(status==="past"){ statusClass="border-gray-300 bg-gray-200 text-gray-700"; statusText="Past day"; }
+
       selectedDayEvents.innerHTML=`
-        <div class="border rounded-lg px-3 py-2 ${avail.availableSlots>0?'border-green-200 bg-green-50':'border-red-200 bg-red-50'}">
-          <p class="font-semibold ${avail.availableSlots>0?'text-green-800':'text-red-800'}">${avail.isOpenDay?`Available: ${avail.availableSlots} / ${avail.totalSlots} slots`:'Closed: Saturday (Off Day)'}</p>
+        <div class="border rounded-lg px-3 py-2 ${statusClass}">
+          <p class="font-semibold">${statusText}</p>
         </div>
       ` + (items.length
         ? `<div class="space-y-2 mt-2">${items.map(ev=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${escapeHtml(ev.title)}</span><span class="text-blue-700 font-semibold">${escapeHtml(ev.start)} · ${ev.duration}m</span></div>`).join("")}</div>`
@@ -646,8 +669,19 @@
     dayViewBtn.onclick=()=>{calendarView="day";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
     weekViewBtn.onclick=()=>{calendarView="week";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
     monthViewBtn.onclick=()=>{calendarView="month";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
-    prevBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);else if(calendarView==="week")currentDate=addDays(currentDate,-7);else{currentDate=addDays(currentDate,-1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
-    nextBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);else if(calendarView==="week")currentDate=addDays(currentDate,7);else{currentDate=addDays(currentDate,1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
+
+    prevBtn.onclick=()=>{
+      if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);
+      else if(calendarView==="week") currentDate=addDays(currentDate,-7);
+      else { currentDate=addDays(currentDate,-1); selectedDate=cloneDate(currentDate); }
+      renderCalendar(); renderSelectedDay();
+    };
+    nextBtn.onclick=()=>{
+      if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);
+      else if(calendarView==="week") currentDate=addDays(currentDate,7);
+      else { currentDate=addDays(currentDate,1); selectedDate=cloneDate(currentDate); }
+      renderCalendar(); renderSelectedDay();
+    };
     lessonDurationEl.onchange=()=>renderDayTimeline();
 
     // =============================
@@ -812,9 +846,7 @@
     }
 
     window.addEventListener("storage",(e)=>{
-      if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick"){
-        rerenderAll();
-      }
+      if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick") rerenderAll();
     });
 
     rerenderAll();
