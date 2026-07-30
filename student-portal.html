@@ -10,7 +10,6 @@
     body { font-family: system-ui, -apple-system, sans-serif; }
     .card { border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; }
     .muted { color: #6b7280; }
-
     .kpi-value { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
 
     .pill {
@@ -71,7 +70,7 @@
     .cal-day.other-month { opacity: .55; }
     .cal-day.available-day { background: #ecfdf3; border-color: #86efac; }
     .cal-day.unavailable-day { background: #fef2f2; border-color: #fca5a5; }
-    .cal-day.past-day { background: #e5e7eb !important; border-color: #9ca3af !important; color: #4b5563; }
+    .cal-day.past-day { background: #d1d5db !important; border-color: #9ca3af !important; color: #374151; }
     .cal-day.today { box-shadow: 0 0 0 2px #93c5fd inset; }
     .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
 
@@ -102,13 +101,11 @@
     .timeline-open { background: #ecfdf3; border-color: #86efac; cursor: pointer; }
     .timeline-booked { background: #eff6ff; border-color: #bfdbfe; }
     .timeline-blocked { background: #fef2f2; border-color: #fca5a5; }
-    .timeline-past { background: #e5e7eb; border-color: #9ca3af; color: #4b5563; }
     .timeline-time { font-weight: 700; min-width: 84px; display: inline-block; }
     .timeline-status { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
     .status-open { background:#dcfce7; color:#166534; border:1px solid #86efac; }
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
-    .status-past { background:#d1d5db; color:#374151; border:1px solid #9ca3af; }
 
     .media-thumb { width: 96px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
     .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
@@ -148,7 +145,7 @@
           <button id="navDashboardBtn" class="top-nav-btn active">Dashboard</button>
           <button id="navCalendarBtn" class="top-nav-btn">Calendar</button>
           <button id="navVideosBtn" class="top-nav-btn">Instructional Videos</button>
-          <button id="navMessagesBtn" class="top-nav-btn">Messages</button>
+          <button id="navLessonsBtn" class="top-nav-btn">My Lessons</button>
         </div>
       </section>
 
@@ -157,22 +154,30 @@
         <section class="mb-6">
           <div>
             <h2 class="text-2xl font-bold">Dashboard</h2>
-            <p class="muted">Your lessons, time remaining, and latest activity.</p>
+            <p class="muted">Your lessons, booking, and progress summary.</p>
           </div>
         </section>
 
-        <!-- Top row -->
+        <!-- 1 row / 3 columns -->
         <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-8">
+          <!-- Left -->
           <article class="card p-5">
             <p class="text-sm muted mb-2">Student</p>
             <p class="kpi-value" id="kpi_student_name">-</p>
             <p class="text-sm mt-2 muted">Single-student view</p>
           </article>
+
+          <!-- Middle -->
           <article class="card p-5">
-            <p class="text-sm muted mb-2">Hours Remaining</p>
-            <p class="kpi-value" id="kpi_hours_remaining">0.0h</p>
-            <p class="text-sm mt-2 muted"><span id="kpi_hours_used">0.0h</span> used</p>
+            <p class="text-sm muted mb-2">Book Now</p>
+            <p class="kpi-value" id="kpi_lessons_month">0</p>
+            <p class="text-sm mt-2 muted" id="kpi_next_lesson">No upcoming lesson</p>
+            <button id="bookNowBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold mt-4">
+              Go to Calendar & Book
+            </button>
           </article>
+
+          <!-- Right -->
           <article class="card p-5">
             <h3 class="text-lg font-bold mb-3">Lesson Time Remaining</h3>
             <div class="ring-wrap">
@@ -191,28 +196,6 @@
               <p><span class="font-semibold">Package:</span> <span id="ringPackageText">0h</span></p>
               <p><span class="font-semibold">Used:</span> <span id="ringUsedText">0h</span></p>
             </div>
-          </article>
-        </section>
-
-        <!-- Lower row now 3 columns -->
-        <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-8">
-          <article class="card p-5">
-            <p class="text-sm muted mb-2">Lessons This Month</p>
-            <p class="kpi-value" id="kpi_lessons_month">0</p>
-            <p class="text-sm mt-2 muted" id="kpi_next_lesson">No upcoming lesson</p>
-          </article>
-
-          <article class="card p-5">
-            <p class="text-sm muted mb-3">Book Now</p>
-            <button id="bookNowBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
-              Go to Calendar & Book
-            </button>
-            <p class="text-xs muted mt-3">Choose 30 / 60 / 90 min in Calendar.</p>
-          </article>
-
-          <article class="card p-5">
-            <h3 class="text-lg font-bold mb-3">Recent Messages</h3>
-            <div id="dashboardMessages" class="space-y-2 text-sm"><p class="muted">No messages yet.</p></div>
           </article>
         </section>
       </section>
@@ -247,8 +230,10 @@
           </div>
         </div>
 
-        <div id="calendarMainLayout" class="grid grid-cols-1 xl:grid-cols-3 gap-4">
-          <div class="xl:col-span-1">
+        <!-- Larger calendar + swapped middle/right columns -->
+        <div id="calendarMainLayout" class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <!-- Calendar (larger) -->
+          <div class="xl:col-span-7">
             <div class="card p-4 mb-4">
               <div id="monthHeaders" class="calendar-grid mb-2">
                 <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
@@ -259,14 +244,8 @@
             </div>
           </div>
 
-          <div class="xl:col-span-1">
-            <div class="card p-5 mb-4">
-              <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
-              <div id="selectedDayEvents" class="space-y-2 text-sm"><p class="muted">No day selected.</p></div>
-            </div>
-          </div>
-
-          <div class="xl:col-span-1">
+          <!-- Middle now = Book Lesson -->
+          <div class="xl:col-span-3">
             <div class="card p-5 mb-4">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-semibold">Book Lesson (7:00 AM - 2:00 PM)</h3>
@@ -282,6 +261,14 @@
               <div id="dayTimeline" class="space-y-2 text-sm"><p class="muted">Select a day to view timeline.</p></div>
             </div>
           </div>
+
+          <!-- Right now = Selected Day -->
+          <div class="xl:col-span-2">
+            <div class="card p-5 mb-4">
+              <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
+              <div id="selectedDayEvents" class="space-y-2 text-sm"><p class="muted">No day selected.</p></div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -295,24 +282,19 @@
         <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4"></div>
       </section>
 
-      <!-- Messages -->
-      <section id="messagesSection" class="hidden-section">
+      <!-- My Lessons (renamed from Messages) -->
+      <section id="lessonsSection" class="hidden-section">
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
           <div class="card p-5">
-            <h2 class="text-2xl font-bold mb-2">Message Coach</h2>
-            <p class="muted text-sm mb-4">Send a message and optional photo upload.</p>
-
-            <div class="space-y-3">
-              <textarea id="studentMessageText" placeholder="Type your message..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm min-h-28"></textarea>
-              <input id="studentMessagePhoto" type="file" accept="image/*" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white" />
-              <button id="sendMessageBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Send Message</button>
-              <p id="messageSendMsg" class="text-xs muted"></p>
-            </div>
+            <h2 class="text-2xl font-bold mb-2">My Lesson Timeline</h2>
+            <p class="muted text-sm mb-4">All booked lessons for your account.</p>
+            <div id="lessonHistoryList" class="space-y-2 text-sm"><p class="muted">No lessons yet.</p></div>
           </div>
 
           <div class="card p-5">
-            <h3 class="text-lg font-bold mb-2">Conversation</h3>
-            <div id="messageThread" class="space-y-2 text-sm max-h-[460px] overflow-auto"><p class="muted">No messages yet.</p></div>
+            <h3 class="text-xl font-bold mb-2">Coach Uploads & Lesson Notes</h3>
+            <p class="muted text-sm mb-4">After each lesson, coach videos, photos, and refresher notes appear here automatically.</p>
+            <div id="coachResourcesList" class="space-y-3 text-sm max-h-[560px] overflow-auto"><p class="muted">No coach resources yet.</p></div>
           </div>
         </div>
       </section>
@@ -320,17 +302,13 @@
   </div>
 
   <script>
-    // =============================
-    // Shared Store (must match coach portal)
-    // =============================
+    // Shared Store
     const STORE_KEY = "lessonsshop_shared_v1";
     const STUDENT_ID = "stu_1";
     const COACH_ID = "coach_1";
 
     const defaultStore = {
-      students: {
-        "stu_1": { id:"stu_1", name:"Robert Christenson", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 }
-      },
+      students: { "stu_1": { id:"stu_1", name:"Robert Christenson", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 } },
       lessons: [],
       coachBlocks: [],
       notes: [],
@@ -340,15 +318,9 @@
 
     function loadStore(){
       const raw = localStorage.getItem(STORE_KEY);
-      if(!raw){
-        localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore));
-        return structuredClone(defaultStore);
-      }
+      if(!raw){ localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
       try { return JSON.parse(raw); }
-      catch {
-        localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore));
-        return structuredClone(defaultStore);
-      }
+      catch { localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
     }
     function saveStore(store){
       localStorage.setItem(STORE_KEY, JSON.stringify(store));
@@ -356,9 +328,7 @@
     }
     function uid(prefix="id"){ return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2,8)}`; }
 
-    // =============================
     // Helpers
-    // =============================
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
     function fmtDateTime(iso){ const d = new Date(iso); return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
     const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -381,25 +351,23 @@
     }
     function overlaps(aS,aE,bS,bE){ return Math.max(aS,bS) < Math.min(aE,bE); }
     function isPastDay(dateObj){
-      const today = new Date();
-      const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      return cloneDate(dateObj) < todayOnly;
+      const t=new Date();
+      const today=new Date(t.getFullYear(),t.getMonth(),t.getDate());
+      return cloneDate(dateObj) < today;
     }
 
-    // =============================
     // Navigation
-    // =============================
     const sections={
       dashboard:document.getElementById("dashboardSection"),
       calendar:document.getElementById("calendarSection"),
       videos:document.getElementById("videosSection"),
-      messages:document.getElementById("messagesSection")
+      lessons:document.getElementById("lessonsSection")
     };
     const navBtns={
       dashboard:document.getElementById("navDashboardBtn"),
       calendar:document.getElementById("navCalendarBtn"),
       videos:document.getElementById("navVideosBtn"),
-      messages:document.getElementById("navMessagesBtn")
+      lessons:document.getElementById("navLessonsBtn")
     };
     function showSection(name){
       Object.values(sections).forEach(el=>el.classList.add("hidden-section"));
@@ -410,12 +378,10 @@
     navBtns.dashboard.onclick=()=>showSection("dashboard");
     navBtns.calendar.onclick=()=>showSection("calendar");
     navBtns.videos.onclick=()=>showSection("videos");
-    navBtns.messages.onclick=()=>showSection("messages");
+    navBtns.lessons.onclick=()=>showSection("lessons");
     document.getElementById("bookNowBtn").onclick=()=>showSection("calendar");
 
-    // =============================
     // Dashboard
-    // =============================
     function getStudent(store){ return store.students?.[STUDENT_ID]; }
     function getMyLessons(store){ return (store.lessons||[]).filter(l=>l.studentId===STUDENT_ID); }
 
@@ -424,12 +390,10 @@
       const packageMinutes=s?.packageMinutes||0, usedMinutes=s?.usedMinutes||0;
       const remaining=Math.max(0,packageMinutes-usedMinutes);
       const pct=packageMinutes?remaining/packageMinutes:0;
-
       const r=62, circ=2*Math.PI*r, offset=circ*(1-pct);
       const ring=document.getElementById("timeRing");
       ring.setAttribute("stroke-dasharray",circ.toFixed(2));
       ring.setAttribute("stroke-dashoffset",offset.toFixed(2));
-
       document.getElementById("ringRemainingText").textContent=`${(remaining/60).toFixed(1)}h`;
       document.getElementById("ringPackageText").textContent=`${(packageMinutes/60).toFixed(1)}h`;
       document.getElementById("ringUsedText").textContent=`${(usedMinutes/60).toFixed(1)}h`;
@@ -448,8 +412,7 @@
 
       const upcoming=lessons.map(l=>{
         const dt=new Date(l.date+"T00:00:00");
-        const m=timeToMinutes(l.start);
-        dt.setHours(Math.floor(m/60),m%60,0,0);
+        const m=timeToMinutes(l.start); dt.setHours(Math.floor(m/60),m%60,0,0);
         return {dt,l};
       }).filter(x=>x.dt>=now).sort((a,b)=>a.dt-b.dt);
 
@@ -457,21 +420,10 @@
         ? `Next: ${upcoming[0].dt.toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}`
         : "No upcoming lesson";
 
-      const remaining=Math.max(0,(s?.packageMinutes||0)-(s?.usedMinutes||0));
-      document.getElementById("kpi_hours_remaining").textContent=`${(remaining/60).toFixed(1)}h`;
-      document.getElementById("kpi_hours_used").textContent=`${((s?.usedMinutes||0)/60).toFixed(1)}h`;
-
-      const msgs=(store.messages||[]).filter(m=>m.studentId===STUDENT_ID).slice(0,4);
-      document.getElementById("dashboardMessages").innerHTML=msgs.length
-        ? msgs.map(m=>`<div class="border border-gray-200 rounded-lg px-3 py-2 ${m.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}"><p class="text-xs muted">${m.authorRole==="coach"?"Coach":"You"} · ${fmtDateTime(m.createdAt)}</p><p>${escapeHtml(m.text||"(photo)")}</p></div>`).join("")
-        : `<p class="muted">No messages yet.</p>`;
-
       renderRing();
     }
 
-    // =============================
     // Calendar + Booking
-    // =============================
     const calendarGrid=document.getElementById("calendarGrid"),monthHeaders=document.getElementById("monthHeaders"),weekHeaders=document.getElementById("weekHeaders"),selectedDateLabel=document.getElementById("selectedDateLabel"),selectedDayEvents=document.getElementById("selectedDayEvents"),rangeLabel=document.getElementById("rangeLabel"),dayTimeline=document.getElementById("dayTimeline");
     const dayViewBtn=document.getElementById("dayViewBtn"),weekViewBtn=document.getElementById("weekViewBtn"),monthViewBtn=document.getElementById("monthViewBtn");
     const prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn"),lessonDurationEl=document.getElementById("lessonDuration");
@@ -480,27 +432,18 @@
     let currentDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
     let calendarView="month";
 
-    function getCoachBlocksForDay(store,key){
-      return (store.coachBlocks||[]).filter(b=>b.coachId===COACH_ID && b.date===key);
-    }
-    function getLessonsForDay(store,key){
-      return (store.lessons||[]).filter(l=>l.date===key);
-    }
-    function getMyLessonsForDay(store,key){
-      return (store.lessons||[]).filter(l=>l.studentId===STUDENT_ID && l.date===key);
-    }
+    function getCoachBlocksForDay(store,key){ return (store.coachBlocks||[]).filter(b=>b.coachId===COACH_ID && b.date===key); }
+    function getLessonsForDay(store,key){ return (store.lessons||[]).filter(l=>l.date===key); }
+    function getMyLessonsForDay(store,key){ return (store.lessons||[]).filter(l=>l.studentId===STUDENT_ID && l.date===key); }
 
     function isSlotAvailable(store,dateObj,slotStart,slotEnd){
-      if(isPastDay(dateObj)) return false;
-      if(dateObj.getDay()===6) return false;
-      if(slotEnd>SLOT_END_MIN) return false;
+      if(isPastDay(dateObj) || dateObj.getDay()===6 || slotEnd>SLOT_END_MIN) return false;
       const key=ymd(dateObj);
 
       for(const b of getCoachBlocksForDay(store,key)){
         const bs=timeToMinutes(b.start), be=timeToMinutes(b.end);
         if(overlaps(slotStart,slotEnd,bs,be)) return false;
       }
-
       for(const l of getLessonsForDay(store,key)){
         const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30);
         if(overlaps(slotStart,slotEnd,ls,le)) return false;
@@ -541,17 +484,8 @@
       const store=loadStore(), key=ymd(date), status=getDayStatus(store,date), myCount=getMyLessonsForDay(store,key).length;
       const btn=document.createElement("button");
       btn.className=["cal-day",status==="available"?"available-day":"",status==="unavailable"?"unavailable-day":"",status==="past"?"past-day":"",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
-
       btn.innerHTML=`<div class="cal-daynum">${date.getDate()}</div>${myCount?`<div class="event-dot"><span class="dot"></span>${myCount} booked</div>`:""}`;
-
-      // IMPORTANT CHANGE:
-      // clicking day in month now stays in month and shows right-side booking panel
-      btn.onclick=()=>{
-        selectedDate=cloneDate(date);
-        renderCalendar();
-        renderSelectedDay();
-        renderDayTimeline();
-      };
+      btn.onclick=()=>{ selectedDate=cloneDate(date); renderCalendar(); renderSelectedDay(); renderDayTimeline(); };
       return btn;
     }
 
@@ -570,18 +504,15 @@
         while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});}
         cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth})));
       }
-
       if(calendarView==="week"){
         calendarGrid.className="week-grid";
         const s=getWeekStart(currentDate);
         for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i)));
       }
-
       if(calendarView==="day"){
         calendarGrid.className="day-grid";
         calendarGrid.appendChild(renderDayCard(currentDate));
       }
-
       renderDayTimeline();
     }
 
@@ -614,15 +545,8 @@
 
     function renderDayTimeline(){
       const store=loadStore(), duration=Number(lessonDurationEl.value||30), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day);
-
-      if(isPastDay(day)){
-        dayTimeline.innerHTML=`<p class="text-gray-700 font-semibold">This date is in the past. Booking is closed.</p>`;
-        return;
-      }
-      if(day.getDay()===6){
-        dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;
-        return;
-      }
+      if(isPastDay(day)){ dayTimeline.innerHTML=`<p class="text-gray-700 font-semibold">This date is in the past. Booking is closed.</p>`; return; }
+      if(day.getDay()===6){ dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`; return; }
 
       const myLessons=getMyLessonsForDay(store,key).map(l=>({...l,startMin:timeToMinutes(l.start)}));
       const rows=[];
@@ -650,8 +574,7 @@
       const store=loadStore(), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day), status=getDayStatus(store,day), items=getMyLessonsForDay(store,key);
       selectedDateLabel.textContent=day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"})+" - Your Appointments";
 
-      let statusClass="border-green-200 bg-green-50 text-green-800";
-      let statusText="Available day";
+      let statusClass="border-green-200 bg-green-50 text-green-800", statusText="Available day";
       if(status==="unavailable"){ statusClass="border-red-200 bg-red-50 text-red-800"; statusText="No availability"; }
       if(status==="past"){ statusClass="border-gray-300 bg-gray-200 text-gray-700"; statusText="Past day"; }
 
@@ -662,8 +585,6 @@
       ` + (items.length
         ? `<div class="space-y-2 mt-2">${items.map(ev=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${escapeHtml(ev.title)}</span><span class="text-blue-700 font-semibold">${escapeHtml(ev.start)} · ${ev.duration}m</span></div>`).join("")}</div>`
         : `<p class="muted mt-2">No lessons scheduled.</p>`);
-
-      renderDayTimeline();
     }
 
     dayViewBtn.onclick=()=>{calendarView="day";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
@@ -684,9 +605,7 @@
     };
     lessonDurationEl.onchange=()=>renderDayTimeline();
 
-    // =============================
     // Videos
-    // =============================
     const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
     const videosGridEl=document.getElementById("videosGrid");
     const videoSectionTabsEl=document.getElementById("videoSectionTabs");
@@ -762,6 +681,7 @@
           });
           saveStore(s);
           renderInstructionalVideos();
+          renderMyLessonsSection();
         };
         reader.readAsDataURL(file);
       };
@@ -780,69 +700,67 @@
         });
         saveStore(s);
         renderInstructionalVideos();
+        renderMyLessonsSection();
       };
     }
 
-    // =============================
-    // Messages
-    // =============================
-    const studentMessageTextEl=document.getElementById("studentMessageText");
-    const studentMessagePhotoEl=document.getElementById("studentMessagePhoto");
-    const sendMessageBtn=document.getElementById("sendMessageBtn");
-    const messageSendMsg=document.getElementById("messageSendMsg");
-    const messageThread=document.getElementById("messageThread");
+    // My Lessons section
+    function renderMyLessonsSection(){
+      const store=loadStore();
+      const lessons=getMyLessons(store).sort((a,b)=>new Date(b.date+"T"+b.start)-new Date(a.date+"T"+a.start));
 
-    function renderMessageThread(){
-      const msgs=(loadStore().messages||[]).filter(m=>m.studentId===STUDENT_ID).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-      messageThread.innerHTML=msgs.length
-        ? msgs.map(m=>`
-          <div class="border border-gray-200 rounded-lg p-3 ${m.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}">
-            <p class="text-xs muted mb-1">${m.authorRole==="coach"?"Coach":"You"} · ${fmtDateTime(m.createdAt)}</p>
-            <p class="text-sm">${escapeHtml(m.text||"")}</p>
-            ${m.imageDataUrl?`<img src="${m.imageDataUrl}" class="mt-2 media-thumb" alt="Message upload">`:""}
+      const lessonHistoryList=document.getElementById("lessonHistoryList");
+      lessonHistoryList.innerHTML=lessons.length
+        ? lessons.map(l=>`
+          <div class="border border-gray-200 rounded-lg px-3 py-2">
+            <p class="font-semibold">${escapeHtml(l.title||"Lesson")}</p>
+            <p class="text-xs muted">${escapeHtml(l.date)} ${escapeHtml(l.start)} · ${l.duration} min</p>
           </div>
         `).join("")
-        : `<p class="muted">No messages yet.</p>`;
+        : `<p class="muted">No lessons yet.</p>`;
+
+      // Coach resources: coach media + coach notes for this student
+      const coachMedia=(store.media||[]).filter(m=>m.studentId===STUDENT_ID && m.createdBy==="coach");
+      const coachNotes=(store.notes||[]).filter(n=>n.studentId===STUDENT_ID && n.authorRole==="coach");
+
+      const merged=[
+        ...coachMedia.map(m=>({type:"media",createdAt:m.createdAt,data:m})),
+        ...coachNotes.map(n=>({type:"note",createdAt:n.createdAt,data:n}))
+      ].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+      const coachResourcesList=document.getElementById("coachResourcesList");
+      coachResourcesList.innerHTML=merged.length
+        ? merged.map(item=>{
+            if(item.type==="media"){
+              const m=item.data;
+              return `
+                <div class="border border-gray-200 rounded-lg p-3 bg-amber-50">
+                  <p class="text-xs muted mb-1">Coach Upload · ${fmtDateTime(m.createdAt)}</p>
+                  <p class="font-semibold">${escapeHtml(m.name||"Media")}</p>
+                  <p class="text-xs muted mb-2">${escapeHtml(m.section||"General")} · ${escapeHtml(m.type||"file")}</p>
+                  <img src="${m.url}" class="media-thumb" alt="${escapeHtml(m.name||"Media")}">
+                </div>
+              `;
+            }
+            const n=item.data;
+            return `
+              <div class="border border-gray-200 rounded-lg p-3 bg-blue-50">
+                <p class="text-xs muted mb-1">Coach Note · ${fmtDateTime(n.createdAt)}</p>
+                <p class="font-semibold mb-1">${escapeHtml(n.section||"Lesson Notes")}</p>
+                <p class="text-sm">${escapeHtml(n.text)}</p>
+              </div>
+            `;
+          }).join("")
+        : `<p class="muted">No coach resources yet.</p>`;
     }
 
-    sendMessageBtn.onclick=()=>{
-      const text=(studentMessageTextEl.value||"").trim();
-      const file=studentMessagePhotoEl.files?.[0];
-      if(!text && !file){ messageSendMsg.textContent="Enter a message or attach a photo."; return; }
-
-      const commit=(imageDataUrl="")=>{
-        const s=loadStore();
-        s.messages.unshift({
-          id:uid("msg"),
-          studentId:STUDENT_ID,
-          authorRole:"student",
-          text,
-          imageDataUrl,
-          createdAt:new Date().toISOString()
-        });
-        saveStore(s);
-        studentMessageTextEl.value=""; studentMessagePhotoEl.value="";
-        messageSendMsg.textContent="Message sent.";
-        renderMessageThread();
-        renderDashboard();
-      };
-
-      if(file){
-        const r=new FileReader();
-        r.onload=()=>commit(r.result);
-        r.readAsDataURL(file);
-      } else commit("");
-    };
-
-    // =============================
-    // Live Sync + Init
-    // =============================
+    // Live sync + init
     function rerenderAll(){
       renderDashboard();
       renderCalendar();
       renderSelectedDay();
       renderInstructionalVideos();
-      renderMessageThread();
+      renderMyLessonsSection();
     }
 
     window.addEventListener("storage",(e)=>{
