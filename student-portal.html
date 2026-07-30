@@ -3,25 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Portal - Lessons Shop</title>
+  <title>Lessons Shop - Student Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
-    .transition-smooth { transition: all 0.25s ease; }
-    .sidebar-active { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #2563eb; }
-    .btn-primary { background: #2563eb; color: white; padding: 0.65rem 1rem; border-radius: 0.5rem; font-weight: 600; }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-secondary { background: #f3f4f6; color: #111827; padding: 0.65rem 1rem; border-radius: 0.5rem; font-weight: 600; }
-    .btn-secondary:hover { background: #e5e7eb; }
-    .stat-card { background: white; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.25rem; }
-    .logo-img { width: 36px; height: 36px; object-fit: contain; }
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .card { border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; }
+    .muted { color: #6b7280; }
 
-    .calendar-day { min-height: 95px; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 0.5rem; text-align: left; }
-    .calendar-day-num { font-size: 0.85rem; color: #6b7280; margin-bottom: 0.35rem; }
-    .event-pill { display:block; font-size: 0.72rem; border-radius: 9999px; padding: 0.2rem 0.5rem; margin-top: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .event-lesson { background:#dbeafe; color:#1e40af; }
-    .event-more { background:#fef3c7; color:#92400e; }
-    .dot { width:10px; height:10px; border-radius:9999px; display:inline-block; margin-right:0.4rem; }
+    .kpi-value { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+
+    .pill {
+      border: 1px solid #dbeafe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .logo-wrap img { height: 42px; width: auto; object-fit: contain; display: block; }
+
+    .top-nav-btn {
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #374151;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all .15s ease;
+    }
+    .top-nav-btn:hover { background: #f9fafb; }
+    .top-nav-btn.active {
+      border-color: #93c5fd;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .video-tab-btn{
+      border:1px solid #d1d5db;
+      background:#fff;
+      color:#374151;
+      border-radius:10px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:700;
+    }
+    .video-tab-btn.active{
+      border-color:#93c5fd;
+      background:#eff6ff;
+      color:#1d4ed8;
+    }
+
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+    .week-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+    .day-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 8px; }
+
+    .cal-dow { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 6px 0; }
+    .cal-day {
+      min-height: 118px; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px;
+      cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease;
+      background: white;
+    }
+    .cal-day:hover { transform: translateY(-1px); }
+    .cal-day.other-month { opacity: .55; }
+    .cal-day.available-day { background: #ecfdf3; border-color: #86efac; }
+    .cal-day.unavailable-day { background: #fef2f2; border-color: #fca5a5; }
+    .cal-day.today { box-shadow: 0 0 0 2px #93c5fd inset; }
+    .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
+
+    .cal-daynum { font-size: 13px; font-weight: 700; }
+
+    .event-dot {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #1e3a8a;
+      background: #eff6ff; border: 1px solid #dbeafe; border-radius: 999px; padding: 2px 8px; width: fit-content;
+      max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto; }
+
+    .availability-pill {
+      font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 8px; width: fit-content;
+    }
+    .availability-pill.open { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
+    .availability-pill.closed { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
+
+    .view-btn {
+      border: 1px solid #d1d5db;
+      background: white;
+      color: #374151;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .view-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
     .timeline-row {
       border: 1px solid #e5e7eb; border-radius: 10px; padding: 8px 10px; display: flex;
@@ -30,236 +107,223 @@
     .timeline-open { background: #ecfdf3; border-color: #86efac; cursor: pointer; }
     .timeline-booked { background: #eff6ff; border-color: #bfdbfe; }
     .timeline-blocked { background: #fef2f2; border-color: #fca5a5; }
+    .timeline-time { font-weight: 700; min-width: 84px; display: inline-block; }
+    .timeline-status { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
+    .status-open { background:#dcfce7; color:#166534; border:1px solid #86efac; }
+    .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
+    .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
-    .ring-wrap { width: 140px; height: 140px; position: relative; }
+    .media-thumb { width: 96px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
+    .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
+
+    .hidden-section { display: none; }
+    .hidden { display: none !important; }
+
+    .ring-wrap { width: 160px; height: 160px; position: relative; margin: 0 auto; }
     .ring-label {
       position: absolute; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; text-align: center;
     }
-
-    @media (max-width: 1023px) {
-      #sidebar {
-        position: fixed; inset: 0 auto 0 0; width: 280px; z-index: 40; transform: translateX(-100%);
-      }
-      #sidebar.open { transform: translateX(0); }
-      #sidebarOverlay {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 30; display: none;
-      }
-      #sidebarOverlay.show { display: block; }
-    }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-  <div class="flex min-h-screen">
-    <div id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-    <aside id="sidebar" class="w-72 bg-white border-r border-gray-200 p-6 transition-smooth lg:translate-x-0">
-      <div class="flex items-center justify-between mb-8">
+<body class="bg-gray-50 text-gray-900">
+  <div class="min-h-screen">
+    <header class="bg-white border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="Lessonsshop updated logo.jpg" alt="Lessons Shop Logo" class="logo-img">
-          <span class="text-xl font-bold text-gray-900">Lessons Shop</span>
+          <div class="logo-wrap">
+            <img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" />
+          </div>
+          <h1 class="text-xl font-bold">Student Portal</h1>
         </div>
-        <button class="lg:hidden text-gray-600" onclick="closeSidebar()"><i class="fas fa-xmark text-xl"></i></button>
-      </div>
-
-      <div class="mb-8 pb-6 border-b border-gray-200">
-        <p class="text-xs text-gray-500 mb-2">Logged in as</p>
-        <p id="studentNameSidebar" class="font-semibold text-gray-900">Student</p>
-      </div>
-
-      <nav class="space-y-2 mb-8">
-        <button data-view-btn="dashboard" onclick="switchView('dashboard')" class="sidebar-active w-full text-left px-4 py-3 rounded-lg font-medium">
-          <i class="fas fa-chart-line mr-3"></i>Dashboard
-        </button>
-
-        <button data-view-btn="schedule" onclick="switchView('schedule')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-calendar mr-3"></i>Schedule
-        </button>
-
-        <button data-view-btn="notes" onclick="switchView('notes')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-note-sticky mr-3"></i>My Notes
-        </button>
-
-        <button data-view-btn="lessons" onclick="switchView('lessons')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-book-open mr-3"></i>Lesson History
-        </button>
-
-        <button data-view-btn="messages" onclick="switchView('messages')" class="w-full text-left px-4 py-3 rounded-lg font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition-smooth">
-          <i class="fas fa-comment-dots mr-3"></i>Message Coach
-        </button>
-      </nav>
-
-      <div class="border-t border-gray-200 pt-6 space-y-2">
-        <button onclick="openSettings()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition-smooth">
-          <i class="fas fa-cog mr-3"></i>Settings
-        </button>
-        <button onclick="logout()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-red-600 hover:bg-red-50 transition-smooth">
-          <i class="fas fa-sign-out-alt mr-3"></i>Logout
-        </button>
-      </div>
-    </aside>
-
-    <main class="flex-1 overflow-y-auto min-w-0">
-      <div class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <button class="lg:hidden text-gray-700" onclick="toggleSidebar()"><i class="fas fa-bars text-xl"></i></button>
-          <div>
-            <p class="text-sm text-gray-500">Welcome back,</p>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Student Portal</h1>
-          </div>
+        <div class="flex items-center gap-4">
+          <span class="pill">Student</span>
+          <a href="index.html" class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
+            <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+          </a>
         </div>
-        <div id="studentInitials" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">ST</div>
       </div>
+    </header>
 
-      <section id="dashboardView" class="p-4 sm:p-6 lg:p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div class="stat-card lg:col-span-2">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <p class="text-gray-600 text-sm">Next Lesson</p>
-                <p id="nextLessonKpi" class="text-xl font-bold mt-2">No upcoming lessons</p>
-                <button onclick="switchView('schedule')" class="btn-primary mt-4 w-full">Book Next Lesson</button>
-              </div>
-              <div>
-                <p class="text-gray-600 text-sm">Lessons This Month</p>
-                <p id="lessonsMonthKpi" class="text-3xl font-bold mt-2">0</p>
-              </div>
-              <div>
-                <p class="text-gray-600 text-sm">Coach</p>
-                <p class="text-xl font-bold mt-2">Coach Mike</p>
-                <button onclick="switchView('messages')" class="btn-secondary mt-4 w-full">Message Coach</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <p class="text-gray-600 text-sm mb-3">Lesson Time Remaining</p>
-            <div class="flex justify-center">
-              <div class="ring-wrap">
-                <svg width="140" height="140" viewBox="0 0 140 140">
-                  <circle cx="70" cy="70" r="56" stroke="#e5e7eb" stroke-width="12" fill="none"></circle>
-                  <circle id="timeRing" cx="70" cy="70" r="56" stroke="#2563eb" stroke-width="12" fill="none"
-                    stroke-linecap="round" transform="rotate(-90 70 70)"
-                    stroke-dasharray="351.86" stroke-dashoffset="0"></circle>
-                </svg>
-                <div class="ring-label">
-                  <p id="timeRemainingHours" class="text-xl font-bold">0h</p>
-                  <p class="text-xs text-gray-500">remaining</p>
-                </div>
-              </div>
-            </div>
-            <div class="text-sm mt-3 space-y-1">
-              <p><span class="font-semibold">Package:</span> <span id="packageHours">0h</span></p>
-              <p><span class="font-semibold">Used:</span> <span id="usedHours">0h</span></p>
-            </div>
-          </div>
+    <main class="max-w-7xl mx-auto px-4 py-6">
+      <section class="mb-4">
+        <div class="flex flex-wrap gap-2">
+          <button id="navDashboardBtn" class="top-nav-btn active">Dashboard</button>
+          <button id="navCalendarBtn" class="top-nav-btn">Calendar</button>
+          <button id="navVideosBtn" class="top-nav-btn">Instructional Videos</button>
+          <button id="navMessagesBtn" class="top-nav-btn">Messages</button>
         </div>
       </section>
 
-      <section id="scheduleView" class="p-4 sm:p-6 lg:p-8 hidden">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
-          <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-            <h2 class="text-2xl font-bold">Schedule</h2>
-
-            <div class="flex items-center gap-2">
-              <button id="dayViewBtn" class="btn-secondary">Day</button>
-              <button id="weekViewBtn" class="btn-secondary">Week</button>
-              <button id="monthViewBtn" class="btn-primary">Month</button>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button onclick="prevRange()" class="btn-secondary"><i class="fas fa-chevron-left"></i></button>
-              <p id="rangeLabel" class="font-semibold min-w-40 text-center"></p>
-              <button onclick="nextRange()" class="btn-secondary"><i class="fas fa-chevron-right"></i></button>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <div class="xl:col-span-2">
-              <div id="dowHeader" class="grid grid-cols-7 gap-2 text-center text-xs font-semibold text-gray-500 mb-2"></div>
-              <div id="calendarGrid" class="grid gap-2"></div>
-
-              <div class="mt-5 p-4 rounded-lg bg-gray-50 border border-gray-200 text-sm text-gray-700">
-                <p class="font-semibold mb-2">Legend</p>
-                <div class="flex flex-wrap gap-4">
-                  <div><span class="dot bg-green-300"></span> Green = Time available</div>
-                  <div><span class="dot bg-red-300"></span> Red = No times available</div>
-                  <div><span class="dot bg-blue-300"></span> Blue pill = Your booked lesson</div>
-                </div>
-              </div>
-            </div>
-
+      <!-- Dashboard -->
+      <section id="dashboardSection">
+        <section class="mb-6">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <div class="border border-gray-200 rounded-lg p-4 mb-4">
-                <h3 class="font-bold mb-2">Selected Day</h3>
-                <div id="selectedDayEvents" class="space-y-2 text-sm text-gray-700">
-                  <p class="text-gray-500">Select a day.</p>
-                </div>
-              </div>
+              <h2 class="text-2xl font-bold">Dashboard</h2>
+              <p class="muted">Your lessons, time remaining, and latest activity.</p>
+            </div>
+          </div>
+        </section>
 
-              <div class="border border-gray-200 rounded-lg p-4">
-                <h3 class="font-bold mb-2">Book Lesson</h3>
-                <label class="text-sm font-semibold">Duration</label>
-                <select id="lessonDuration" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm mt-1 mb-3">
-                  <option value="30">30 min</option>
-                  <option value="60">60 min</option>
-                  <option value="90">90 min</option>
-                </select>
-                <div id="dayTimeline" class="space-y-2 text-sm">
-                  <p class="text-gray-500">Select a day to view slots.</p>
-                </div>
+        <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-8">
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Student</p>
+            <p class="kpi-value" id="kpi_student_name">-</p>
+            <p class="text-sm mt-2 muted">Single-student view</p>
+          </article>
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Lessons This Month</p>
+            <p class="kpi-value" id="kpi_lessons_month">0</p>
+            <p class="text-sm mt-2 muted" id="kpi_next_lesson">No upcoming lesson</p>
+          </article>
+          <article class="card p-5">
+            <p class="text-sm muted mb-2">Hours Remaining</p>
+            <p class="kpi-value" id="kpi_hours_remaining">0.0h</p>
+            <p class="text-sm mt-2 muted"><span id="kpi_hours_used">0.0h</span> used</p>
+          </article>
+        </section>
+
+        <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div class="xl:col-span-2 card p-5">
+            <h3 class="text-lg font-bold mb-3">Recent Messages</h3>
+            <div id="dashboardMessages" class="space-y-2 text-sm"><p class="muted">No messages yet.</p></div>
+          </div>
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-3">Lesson Time Remaining</h3>
+            <div class="ring-wrap">
+              <svg width="160" height="160" viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="62" stroke="#e5e7eb" stroke-width="12" fill="none"></circle>
+                <circle id="timeRing" cx="80" cy="80" r="62" stroke="#2563eb" stroke-width="12" fill="none"
+                        stroke-linecap="round" transform="rotate(-90 80 80)"
+                        stroke-dasharray="389.56" stroke-dashoffset="0"></circle>
+              </svg>
+              <div class="ring-label">
+                <p id="ringRemainingText" class="text-2xl font-bold">0h</p>
+                <p class="text-xs muted">remaining</p>
               </div>
+            </div>
+            <div class="mt-3 text-sm">
+              <p><span class="font-semibold">Package:</span> <span id="ringPackageText">0h</span></p>
+              <p><span class="font-semibold">Used:</span> <span id="ringUsedText">0h</span></p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Calendar -->
+      <section id="calendarSection" class="hidden-section">
+        <div class="card p-5 mb-4">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+            <div>
+              <h2 class="text-2xl font-bold">Calendar</h2>
+              <p class="muted text-sm">Green = time available, Red = no times available.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="dayViewBtn" class="view-btn">Day</button>
+              <button id="weekViewBtn" class="view-btn">Week</button>
+              <button id="monthViewBtn" class="view-btn active">Month</button>
+              <div class="w-px h-7 bg-gray-300 mx-1"></div>
+              <button id="prevBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg"><i class="fa-solid fa-chevron-left"></i></button>
+              <p id="rangeLabel" class="min-w-44 text-center font-semibold"></p>
+              <button id="nextBtn" class="px-3 py-2 text-sm border border-gray-300 rounded-lg"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-4">
+          <div class="text-sm">
+            <span class="font-semibold mr-3">Legend:</span>
+            <span class="inline-flex items-center mr-4"><span class="w-3 h-3 rounded-full bg-green-300 border border-green-500 mr-2"></span>Available day</span>
+            <span class="inline-flex items-center mr-4"><span class="w-3 h-3 rounded-full bg-red-300 border border-red-500 mr-2"></span>No availability</span>
+            <span class="inline-flex items-center"><span class="w-3 h-3 rounded-full bg-blue-300 border border-blue-500 mr-2"></span>Your booked lesson</span>
+          </div>
+        </div>
+
+        <div id="calendarMainLayout" class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div class="xl:col-span-1">
+            <div class="card p-4 mb-4">
+              <div id="monthHeaders" class="calendar-grid mb-2">
+                <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
+                <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+              </div>
+              <div id="weekHeaders" class="week-grid mb-2 hidden"></div>
+              <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
+          </div>
+
+          <div class="xl:col-span-1">
+            <div class="card p-5 mb-4">
+              <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day</h3>
+              <div id="selectedDayEvents" class="space-y-2 text-sm"><p class="muted">No day selected.</p></div>
+            </div>
+          </div>
+
+          <div class="xl:col-span-1">
+            <div class="card p-5 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-semibold">Book Lesson (7:00 AM - 2:00 PM)</h3>
+              </div>
+              <div class="mb-3">
+                <label class="text-sm font-medium">Duration</label>
+                <select id="lessonDuration" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="30">30 minutes</option>
+                  <option value="60">60 minutes</option>
+                  <option value="90">90 minutes</option>
+                </select>
+              </div>
+              <div id="dayTimeline" class="space-y-2 text-sm"><p class="muted">Select a day to view timeline.</p></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="notesView" class="p-4 sm:p-6 lg:p-8 hidden">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
-          <h2 class="text-2xl font-bold mb-4">My Notes</h2>
-          <div class="flex gap-2 mb-4">
-            <input id="studentNoteInput" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="Type your note...">
-            <button onclick="addStudentNote()" class="btn-primary">Save</button>
+      <!-- Videos -->
+      <section id="videosSection" class="hidden-section">
+        <div class="card p-5 mb-4">
+          <h2 class="text-2xl font-bold">Instructional Videos</h2>
+          <p class="muted text-sm mb-3">View coach uploads and add your own media and notes by section.</p>
+          <div id="videoSectionTabs" class="flex flex-wrap gap-2"></div>
+        </div>
+        <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4"></div>
+      </section>
+
+      <!-- Messages -->
+      <section id="messagesSection" class="hidden-section">
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          <div class="card p-5">
+            <h2 class="text-2xl font-bold mb-2">Message Coach</h2>
+            <p class="muted text-sm mb-4">Send a message and optional photo upload.</p>
+
+            <div class="space-y-3">
+              <textarea id="studentMessageText" placeholder="Type your message..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm min-h-28"></textarea>
+              <input id="studentMessagePhoto" type="file" accept="image/*" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white" />
+              <button id="sendMessageBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Send Message</button>
+              <p id="messageSendMsg" class="text-xs muted"></p>
+            </div>
           </div>
-          <div id="notesList" class="space-y-3"></div>
-        </div>
-      </section>
 
-      <section id="lessonsView" class="p-4 sm:p-6 lg:p-8 hidden">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
-          <h2 class="text-2xl font-bold mb-4">Lesson History</h2>
-          <div id="lessonHistoryList" class="space-y-2"></div>
-        </div>
-      </section>
-
-      <section id="messagesView" class="p-4 sm:p-6 lg:p-8 hidden">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
-          <h2 class="text-2xl font-bold mb-4">Message Coach</h2>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-3">
-            <input id="studentMessageInput" class="md:col-span-3 border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="Type message...">
-            <input id="studentPhotoInput" type="file" accept="image/*" class="border border-gray-300 rounded-lg px-2 py-2 text-sm bg-white">
+          <div class="card p-5">
+            <h3 class="text-lg font-bold mb-2">Conversation</h3>
+            <div id="messageThread" class="space-y-2 text-sm max-h-[460px] overflow-auto"><p class="muted">No messages yet.</p></div>
           </div>
-          <button onclick="sendStudentMessage()" class="btn-primary mb-4">Send</button>
-          <div id="messagesList" class="space-y-3"></div>
-        </div>
-      </section>
-
-      <section id="settingsView" class="p-4 sm:p-6 lg:p-8 hidden">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
-          <h2 class="text-2xl font-bold">Settings</h2>
         </div>
       </section>
     </main>
   </div>
 
   <script>
-    // Shared store
+    // =============================
+    // Shared Store (must match coach portal)
+    // =============================
     const STORE_KEY = "lessonsshop_shared_v1";
     const STUDENT_ID = "stu_1";
     const COACH_ID = "coach_1";
-    const SLOT_START = 7 * 60, SLOT_END = 14 * 60, SLOT_STEP = 30;
+
     const defaultStore = {
-      students: { "stu_1": { id:"stu_1", name:"Robert Christenson", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 }},
+      students: {
+        "stu_1": { id:"stu_1", name:"Robert Christenson", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 }
+      },
       lessons: [],
       coachBlocks: [],
       notes: [],
@@ -267,205 +331,494 @@
       media: []
     };
 
-    const views = ['dashboard','schedule','notes','lessons','messages','settings'];
-    let calendarView = "month";
-    let currentDate = new Date();
-    let selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+    function loadStore(){
+      const raw = localStorage.getItem(STORE_KEY);
+      if(!raw){
+        localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore));
+        return structuredClone(defaultStore);
+      }
+      try { return JSON.parse(raw); }
+      catch {
+        localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore));
+        return structuredClone(defaultStore);
+      }
+    }
+    function saveStore(store){
+      localStorage.setItem(STORE_KEY, JSON.stringify(store));
+      localStorage.setItem(STORE_KEY + "_tick", String(Date.now()));
+    }
+    function uid(prefix="id"){ return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2,8)}`; }
 
-    function loadStore(){ const raw=localStorage.getItem(STORE_KEY); if(!raw){ localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore);} try{return JSON.parse(raw);}catch{return structuredClone(defaultStore);} }
-    function saveStore(s){ localStorage.setItem(STORE_KEY, JSON.stringify(s)); localStorage.setItem(STORE_KEY+"_tick", String(Date.now())); }
-    function uid(p="id"){ return `${p}_${Date.now()}_${Math.random().toString(36).slice(2,7)}`; }
-    function ymd(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
-    function addDays(d,n){ const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); x.setDate(x.getDate()+n); return x; }
-    function weekStart(d){ const x=addDays(d,0); x.setDate(x.getDate()-x.getDay()); return x; }
-    function to12Hour(m){ const h24=Math.floor(m/60), mm=m%60, ap=h24>=12?"PM":"AM"; let h=h24%12; if(h===0)h=12; return `${h}:${String(mm).padStart(2,"0")} ${ap}`; }
-    function toHHMM(m){ return `${String(Math.floor(m/60)).padStart(2,"0")}:${String(m%60).padStart(2,"0")}`; }
-    function timeToMin(t){ if(t.includes("AM")||t.includes("PM")){ const [time,s]=t.split(" "); const [h0,m]=time.split(":").map(Number); let h=h0%12; if(s==="PM")h+=12; return h*60+m;} const [h,m]=t.split(":").map(Number); return h*60+m; }
-    function esc(x=""){ return x.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
+    // =============================
+    // Helpers
+    // =============================
+    function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+    function fmtDateTime(iso){ const d = new Date(iso); return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
+    const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    const cloneDate=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    const isSameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();
+    const shortDate=d=>d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+    const monthName=(y,m)=>new Date(y,m,1).toLocaleDateString(undefined,{month:"long",year:"numeric"});
+    const getWeekStart=d=>{const x=cloneDate(d);x.setDate(x.getDate()-x.getDay());return x;};
+    const addDays=(d,n)=>{const x=cloneDate(d);x.setDate(x.getDate()+n);return x;};
+    const SLOT_START_MIN=7*60, SLOT_END_MIN=14*60, SLOT_MINUTES=30;
 
-    function getStudent(s){ return s.students[STUDENT_ID]; }
-    function getStudentLessons(s){ return s.lessons.filter(l=>l.studentId===STUDENT_ID); }
-    function getCoachDayBlocks(s,key){ return s.coachBlocks.filter(b=>b.coachId===COACH_ID && b.date===key); }
+    function to12HourLabel(total){ const h24=Math.floor(total/60),m=total%60,s=h24>=12?"PM":"AM"; let h=h24%12; if(h===0)h=12; return `${h}:${String(m).padStart(2,"0")} ${s}`; }
+    function hhmm(total){ return `${String(Math.floor(total/60)).padStart(2,"0")}:${String(total%60).padStart(2,"0")}`; }
+    function timeToMinutes(t){
+      if((t||"").includes("AM") || (t||"").includes("PM")){
+        const [time,s]=t.split(" "); const [h0,m]=time.split(":").map(Number); let h=h0%12; if(s==="PM")h+=12; return h*60+m;
+      }
+      const [h,m]=String(t||"00:00").split(":").map(Number);
+      return (h||0)*60+(m||0);
+    }
+    function overlaps(aS,aE,bS,bE){ return Math.max(aS,bS) < Math.min(aE,bE); }
 
-    function switchView(v){
-      views.forEach(x=>document.getElementById(x+"View").classList.toggle("hidden", x!==v));
-      document.querySelectorAll("[data-view-btn]").forEach(btn=>{
-        const a=btn.getAttribute("data-view-btn")===v;
-        btn.classList.toggle("sidebar-active",a);
-        btn.classList.toggle("text-gray-700",!a);
-      });
-      closeSidebar();
-      if(v==="schedule"){ renderSchedule(); }
+    // =============================
+    // Navigation
+    // =============================
+    const sections={
+      dashboard:document.getElementById("dashboardSection"),
+      calendar:document.getElementById("calendarSection"),
+      videos:document.getElementById("videosSection"),
+      messages:document.getElementById("messagesSection")
+    };
+    const navBtns={
+      dashboard:document.getElementById("navDashboardBtn"),
+      calendar:document.getElementById("navCalendarBtn"),
+      videos:document.getElementById("navVideosBtn"),
+      messages:document.getElementById("navMessagesBtn")
+    };
+    function showSection(name){
+      Object.values(sections).forEach(el=>el.classList.add("hidden-section"));
+      sections[name]?.classList.remove("hidden-section");
+      Object.values(navBtns).forEach(b=>b.classList.remove("active"));
+      navBtns[name]?.classList.add("active");
+    }
+    navBtns.dashboard.onclick=()=>showSection("dashboard");
+    navBtns.calendar.onclick=()=>showSection("calendar");
+    navBtns.videos.onclick=()=>showSection("videos");
+    navBtns.messages.onclick=()=>showSection("messages");
+
+    // =============================
+    // Dashboard
+    // =============================
+    function getStudent(store){ return store.students?.[STUDENT_ID]; }
+    function getMyLessons(store){ return (store.lessons||[]).filter(l=>l.studentId===STUDENT_ID); }
+
+    function renderRing(){
+      const store=loadStore(), s=getStudent(store);
+      const packageMinutes=s?.packageMinutes||0, usedMinutes=s?.usedMinutes||0;
+      const remaining=Math.max(0,packageMinutes-usedMinutes);
+      const pct=packageMinutes?remaining/packageMinutes:0;
+
+      const r=62, circ=2*Math.PI*r, offset=circ*(1-pct);
+      const ring=document.getElementById("timeRing");
+      ring.setAttribute("stroke-dasharray",circ.toFixed(2));
+      ring.setAttribute("stroke-dashoffset",offset.toFixed(2));
+
+      document.getElementById("ringRemainingText").textContent=`${(remaining/60).toFixed(1)}h`;
+      document.getElementById("ringPackageText").textContent=`${(packageMinutes/60).toFixed(1)}h`;
+      document.getElementById("ringUsedText").textContent=`${(usedMinutes/60).toFixed(1)}h`;
     }
 
-    function openSettings(){ switchView("settings"); }
-    function logout(){ window.location.href="login.html"; }
-    function toggleSidebar(){ document.getElementById("sidebar").classList.toggle("open"); document.getElementById("sidebarOverlay").classList.toggle("show"); }
-    function closeSidebar(){ document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebarOverlay").classList.remove("show"); }
+    function renderDashboard(){
+      const store=loadStore(), s=getStudent(store), lessons=getMyLessons(store);
+      document.getElementById("kpi_student_name").textContent=s?.name||"Student";
 
-    function isOpenSlot(store, dayDate, slotStart, duration){
-      if(dayDate.getDay()===6) return false;
-      const end = slotStart + duration;
-      if(end>SLOT_END) return false;
-      const key = ymd(dayDate);
-      const blocks = getCoachDayBlocks(store,key);
-      for(const b of blocks){ const bs=timeToMin(b.start), be=timeToMin(b.end); if(Math.max(slotStart,bs)<Math.min(end,be)) return false; }
-      const dayLessons = store.lessons.filter(l=>l.coachId===COACH_ID && l.date===key);
-      for(const l of dayLessons){ const ls=timeToMin(l.start), le=ls+Number(l.duration||30); if(Math.max(slotStart,ls)<Math.min(end,le)) return false; }
+      const now=new Date();
+      const lessonsThisMonth=lessons.filter(l=>{
+        const d=new Date(l.date+"T00:00:00");
+        return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+      }).length;
+      document.getElementById("kpi_lessons_month").textContent=lessonsThisMonth;
+
+      const upcoming=lessons.map(l=>{
+        const dt=new Date(l.date+"T00:00:00");
+        const m=timeToMinutes(l.start);
+        dt.setHours(Math.floor(m/60),m%60,0,0);
+        return {dt,l};
+      }).filter(x=>x.dt>=now).sort((a,b)=>a.dt-b.dt);
+
+      document.getElementById("kpi_next_lesson").textContent=upcoming.length
+        ? `Next: ${upcoming[0].dt.toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}`
+        : "No upcoming lesson";
+
+      const remaining=Math.max(0,(s?.packageMinutes||0)-(s?.usedMinutes||0));
+      document.getElementById("kpi_hours_remaining").textContent=`${(remaining/60).toFixed(1)}h`;
+      document.getElementById("kpi_hours_used").textContent=`${((s?.usedMinutes||0)/60).toFixed(1)}h`;
+
+      const msgs=(store.messages||[]).filter(m=>m.studentId===STUDENT_ID).slice(0,4);
+      document.getElementById("dashboardMessages").innerHTML=msgs.length
+        ? msgs.map(m=>`<div class="border border-gray-200 rounded-lg px-3 py-2 ${m.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}"><p class="text-xs muted">${m.authorRole==="coach"?"Coach":"You"} · ${fmtDateTime(m.createdAt)}</p><p>${escapeHtml(m.text||"(photo)")}</p></div>`).join("")
+        : `<p class="muted">No messages yet.</p>`;
+
+      renderRing();
+    }
+
+    // =============================
+    // Calendar + Booking
+    // =============================
+    const calendarGrid=document.getElementById("calendarGrid"),monthHeaders=document.getElementById("monthHeaders"),weekHeaders=document.getElementById("weekHeaders"),selectedDateLabel=document.getElementById("selectedDateLabel"),selectedDayEvents=document.getElementById("selectedDayEvents"),rangeLabel=document.getElementById("rangeLabel"),dayTimeline=document.getElementById("dayTimeline");
+    const dayViewBtn=document.getElementById("dayViewBtn"),weekViewBtn=document.getElementById("weekViewBtn"),monthViewBtn=document.getElementById("monthViewBtn");
+    const prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn"),lessonDurationEl=document.getElementById("lessonDuration");
+    const today=new Date();
+    let selectedDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    let currentDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    let calendarView="month";
+
+    function getCoachBlocksForDay(store,key){
+      return (store.coachBlocks||[]).filter(b=>b.coachId===COACH_ID && b.date===key);
+    }
+    function getLessonsForDay(store,key){
+      return (store.lessons||[]).filter(l=>l.date===key);
+    }
+    function getMyLessonsForDay(store,key){
+      return (store.lessons||[]).filter(l=>l.studentId===STUDENT_ID && l.date===key);
+    }
+
+    function isSlotAvailable(store,dateObj,slotStart,slotEnd){
+      if(dateObj.getDay()===6) return false; // Saturday off
+      if(slotEnd>SLOT_END_MIN) return false;
+      const key=ymd(dateObj);
+
+      // blocks
+      for(const b of getCoachBlocksForDay(store,key)){
+        const bs=timeToMinutes(b.start), be=timeToMinutes(b.end);
+        if(overlaps(slotStart,slotEnd,bs,be)) return false;
+      }
+
+      // existing lessons (any lesson with this coach at same time blocks slot)
+      for(const l of getLessonsForDay(store,key)){
+        const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30);
+        if(overlaps(slotStart,slotEnd,ls,le)) return false;
+      }
       return true;
     }
-    function dayHasAvailability(store,d){ for(let t=SLOT_START;t<SLOT_END;t+=SLOT_STEP){ if(isOpenSlot(store,d,t,30)) return true; } return false; }
 
+    function getAvailabilityForDate(store,date){
+      if(date.getDay()===6) return {totalSlots:0,bookedSlots:0,blockedSlots:0,availableSlots:0,isOpenDay:false};
+      const key=ymd(date), total=((SLOT_END_MIN-SLOT_START_MIN)/SLOT_MINUTES);
+      const lessons=getLessonsForDay(store,key);
+      let blockedSlots=0;
+
+      for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
+        const open=isSlotAvailable(store,date,t,t+SLOT_MINUTES);
+        if(!open){
+          const booked=lessons.some(l=>{
+            const ls=timeToMinutes(l.start), le=ls+Number(l.duration||30);
+            return overlaps(t,t+SLOT_MINUTES,ls,le);
+          });
+          if(!booked) blockedSlots++;
+        }
+      }
+
+      const bookedSlots=Math.min(total,lessons.length);
+      const availableSlots=Math.max(0,total-bookedSlots-blockedSlots);
+      return {totalSlots:total,bookedSlots,blockedSlots,availableSlots,isOpenDay:true};
+    }
+
+    function setActiveViewBtn(){
+      [dayViewBtn,weekViewBtn,monthViewBtn].forEach(b=>b.classList.remove("active"));
+      if(calendarView==="day")dayViewBtn.classList.add("active");
+      if(calendarView==="week")weekViewBtn.classList.add("active");
+      if(calendarView==="month")monthViewBtn.classList.add("active");
+    }
     function renderRangeLabel(){
-      const el=document.getElementById("rangeLabel");
-      if(calendarView==="month") el.textContent=currentDate.toLocaleDateString(undefined,{month:"long",year:"numeric"});
-      else if(calendarView==="week"){ const s=weekStart(currentDate), e=addDays(s,6); el.textContent=`${s.toLocaleDateString(undefined,{month:"short",day:"numeric"})} - ${e.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`; }
-      else el.textContent=currentDate.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+      if(calendarView==="month")rangeLabel.textContent=monthName(currentDate.getFullYear(),currentDate.getMonth());
+      else if(calendarView==="week"){const s=getWeekStart(currentDate),e=addDays(s,6); rangeLabel.textContent=`${shortDate(s)} - ${shortDate(e)}`;}
+      else rangeLabel.textContent=currentDate.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+    }
+    function renderHeaders(){
+      if(calendarView==="month"){monthHeaders.classList.remove("hidden");weekHeaders.classList.add("hidden");}
+      else if(calendarView==="week"){
+        monthHeaders.classList.add("hidden");weekHeaders.classList.remove("hidden");
+        const s=getWeekStart(currentDate); weekHeaders.innerHTML="";
+        for(let i=0;i<7;i++){const d=addDays(s,i),el=document.createElement("div");el.className="cal-dow";el.textContent=d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});weekHeaders.appendChild(el);}
+      } else {monthHeaders.classList.add("hidden");weekHeaders.classList.add("hidden");}
     }
 
-    function renderSchedule(){
-      renderRangeLabel();
-      const store=loadStore(), grid=document.getElementById("calendarGrid"), hdr=document.getElementById("dowHeader");
-      grid.innerHTML=""; hdr.innerHTML="";
-      const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-
-      if(calendarView==="month"){
-        hdr.className="grid grid-cols-7 gap-2 text-center text-xs font-semibold text-gray-500 mb-2";
-        days.forEach(d=>{ const x=document.createElement("div"); x.textContent=d; hdr.appendChild(x); });
-        grid.className="grid grid-cols-7 gap-2";
-        const y=currentDate.getFullYear(), m=currentDate.getMonth();
-        const first=new Date(y,m,1), start=first.getDay(), count=new Date(y,m+1,0).getDate(), prevCount=new Date(y,m,0).getDate();
-        const cells=[];
-        for(let i=start-1;i>=0;i--) cells.push({d:new Date(y,m-1,prevCount-i),inMonth:false});
-        for(let d=1;d<=count;d++) cells.push({d:new Date(y,m,d),inMonth:true});
-        while(cells.length<42){ const n=cells.length-(start+count)+1; cells.push({d:new Date(y,m+1,n),inMonth:false}); }
-        cells.forEach(c=>grid.appendChild(makeDayCell(c.d,c.inMonth,store)));
-      }
-
-      if(calendarView==="week"){
-        hdr.className="grid grid-cols-7 gap-2 text-center text-xs font-semibold text-gray-500 mb-2";
-        const s=weekStart(currentDate);
-        for(let i=0;i<7;i++){ const d=addDays(s,i); const x=document.createElement("div"); x.textContent=d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}); hdr.appendChild(x); }
-        grid.className="grid grid-cols-7 gap-2";
-        for(let i=0;i<7;i++) grid.appendChild(makeDayCell(addDays(s,i),true,store));
-      }
-
-      if(calendarView==="day"){
-        hdr.className="grid grid-cols-1 gap-2 text-left text-xs font-semibold text-gray-500 mb-2";
-        const x=document.createElement("div"); x.textContent=currentDate.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}); hdr.appendChild(x);
-        grid.className="grid grid-cols-1 gap-2";
-        grid.appendChild(makeDayCell(currentDate,true,store));
-      }
-
-      renderSelectedDay(); renderTimeline();
-    }
-
-    function makeDayCell(d,inMonth,store){
-      const key=ymd(d), lessons=getStudentLessons(store).filter(l=>l.date===key);
-      const available=dayHasAvailability(store,d);
+    function renderDayCard(date,{otherMonth=false}={}){
+      const store=loadStore(), key=ymd(date), avail=getAvailabilityForDate(store,date), myCount=getMyLessonsForDay(store,key).length;
       const btn=document.createElement("button");
-      btn.className="calendar-day";
-      if(!inMonth) btn.classList.add("opacity-40");
-      btn.style.background=available?"#ecfdf3":"#fef2f2";
-      btn.style.borderColor=available?"#86efac":"#fca5a5";
-      if(d.toDateString()===selectedDate.toDateString()) btn.classList.add("ring-2","ring-blue-500");
-      btn.innerHTML=`<div class="calendar-day-num">${d.getDate()}</div>`;
-      lessons.slice(0,2).forEach(l=>btn.innerHTML+=`<span class="event-pill event-lesson">${esc(l.title||"Lesson")} ${esc(l.start||"")}</span>`);
-      if(lessons.length>2) btn.innerHTML+=`<span class="event-pill event-more">+${lessons.length-2} more</span>`;
-      btn.onclick=()=>{ selectedDate=new Date(d.getFullYear(),d.getMonth(),d.getDate()); if(calendarView==="day") currentDate=new Date(selectedDate); renderSchedule(); };
+      btn.className=["cal-day",avail.availableSlots>0?"available-day":"unavailable-day",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
+      btn.innerHTML=`
+        <div class="cal-daynum">${date.getDate()}</div>
+        ${avail.availableSlots>0?`<span class="availability-pill open">${avail.availableSlots} open</span>`:`<span class="availability-pill closed">${avail.isOpenDay?"0 open":"Off day"}</span>`}
+        ${myCount?`<div class="event-dot"><span class="dot"></span>${myCount} booked</div>`:""}
+      `;
+      btn.onclick=()=>{selectedDate=cloneDate(date); if(calendarView==="day") currentDate=cloneDate(date); renderCalendar(); renderSelectedDay();};
       return btn;
     }
 
-    function renderSelectedDay(){
-      const store=loadStore(), key=ymd(selectedDate), el=document.getElementById("selectedDayEvents");
-      const lessons=getStudentLessons(store).filter(l=>l.date===key).sort((a,b)=>timeToMin(a.start)-timeToMin(b.start));
-      const blocks=getCoachDayBlocks(store,key);
-      let html=`<p class="font-semibold">${selectedDate.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})}</p>`;
-      if(!lessons.length&&!blocks.length) html+=`<p class="text-gray-500">No lessons or coach blocks.</p>`;
-      lessons.forEach(l=>html+=`<div class="border rounded px-2 py-1"><strong>${esc(l.title||"Lesson")}</strong><br><span class="text-xs">${esc(l.start)} · ${l.duration} min</span></div>`);
-      blocks.forEach(b=>html+=`<div class="border rounded px-2 py-1 bg-red-50 text-red-700 text-xs">Blocked ${esc(b.start)}-${esc(b.end)}</div>`);
-      el.innerHTML=html;
-    }
+    function renderCalendar(){
+      calendarGrid.innerHTML=""; renderRangeLabel(); renderHeaders(); setActiveViewBtn();
 
-    function renderTimeline(){
-      const store=loadStore(), duration=Number(document.getElementById("lessonDuration").value), key=ymd(selectedDate), el=document.getElementById("dayTimeline");
-      const mine=getStudentLessons(store).filter(l=>l.date===key);
-      const rows=[];
-      for(let t=SLOT_START;t<SLOT_END;t+=SLOT_STEP){
-        const mineAt=mine.find(l=>timeToMin(l.start)===t);
-        if(mineAt){ rows.push(`<div class="timeline-row timeline-booked"><div><strong>${to12Hour(t)}</strong> ${esc(mineAt.title||"Lesson")}</div><span class="text-xs">${mineAt.duration}m</span></div>`); continue; }
-        const open=isOpenSlot(store,selectedDate,t,duration);
-        if(open) rows.push(`<button class="timeline-row timeline-open w-full text-left" data-book="${t}"><div><strong>${to12Hour(t)}</strong> Open (${duration}m)</div><span class="text-xs font-semibold text-green-700">Book</span></button>`);
-        else rows.push(`<div class="timeline-row timeline-blocked"><div><strong>${to12Hour(t)}</strong> Unavailable</div><span class="text-xs">Blocked/Booked</span></div>`);
+      if(calendarView==="month"){
+        calendarGrid.className="calendar-grid";
+        const y=currentDate.getFullYear(),m=currentDate.getMonth(),f=new Date(y,m,1),start=f.getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();
+        const cells=[];
+        for(let i=start-1;i>=0;i--)cells.push({date:new Date(y,m-1,prevDays-i),otherMonth:true});
+        for(let d=1;d<=days;d++)cells.push({date:new Date(y,m,d),otherMonth:false});
+        while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});}
+        cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth})));
       }
-      el.innerHTML=rows.join("");
-      el.querySelectorAll("[data-book]").forEach(btn=>btn.onclick=()=>{
-        const start=Number(btn.dataset.book), s=loadStore().students[STUDENT_ID], rem=Math.max(0,s.packageMinutes-s.usedMinutes);
-        if(rem<duration){ alert("Not enough remaining package time."); return; }
-        const storeNow=loadStore();
-        storeNow.lessons.push({id:uid("lesson"),studentId:STUDENT_ID,coachId:COACH_ID,date:key,start:toHHMM(start),duration,title:"Student Booked Lesson",createdBy:"student",createdAt:new Date().toISOString()});
-        storeNow.students[STUDENT_ID].usedMinutes+=duration;
-        saveStore(storeNow);
-        rerenderAll();
-        alert("Lesson booked. Coach portal can now read this.");
+      if(calendarView==="week"){
+        calendarGrid.className="week-grid";
+        const s=getWeekStart(currentDate);
+        for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i)));
+      }
+      if(calendarView==="day"){
+        calendarGrid.className="day-grid";
+        calendarGrid.appendChild(renderDayCard(currentDate));
+      }
+
+      renderDayTimeline();
+    }
+
+    function bookMyLesson(dateObj,slotStartMin,durationMin){
+      const store=loadStore();
+      const student=store.students[STUDENT_ID];
+      const remaining=(student?.packageMinutes||0)-(student?.usedMinutes||0);
+      if(remaining<durationMin){ alert("Not enough remaining lesson hours in your package."); return; }
+
+      const slotEnd=slotStartMin+durationMin;
+      if(!isSlotAvailable(store,dateObj,slotStartMin,slotEnd)){ alert("That slot is no longer available."); return; }
+
+      store.lessons.push({
+        id:uid("lesson"),
+        studentId:STUDENT_ID,
+        coachId:COACH_ID,
+        date:ymd(dateObj),
+        start:hhmm(slotStartMin),
+        duration:durationMin,
+        title:"Student Booked Lesson",
+        createdBy:"student",
+        createdAt:new Date().toISOString()
       });
+      if(store.students[STUDENT_ID]) store.students[STUDENT_ID].usedMinutes += durationMin;
+
+      saveStore(store);
+      rerenderAll();
+      alert("Lesson booked. Coach portal is updated too.");
     }
 
-    function prevRange(){ if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1); else if(calendarView==="week") currentDate=addDays(currentDate,-7); else {currentDate=addDays(currentDate,-1); selectedDate=new Date(currentDate);} renderSchedule(); }
-    function nextRange(){ if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1); else if(calendarView==="week") currentDate=addDays(currentDate,7); else {currentDate=addDays(currentDate,1); selectedDate=new Date(currentDate);} renderSchedule(); }
+    function renderDayTimeline(){
+      if(calendarView!=="day"&&calendarView!=="week"){dayTimeline.innerHTML=`<p class="muted">Switch to Day or Week view to see timeline.</p>`;return;}
+      const store=loadStore(), duration=Number(lessonDurationEl.value||30), day=calendarView==="week"?selectedDate:currentDate, key=ymd(day);
+      if(day.getDay()===6){dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;return;}
 
-    function addStudentNote(){
-      const input=document.getElementById("studentNoteInput"), text=input.value.trim(); if(!text) return;
-      const s=loadStore(); s.notes.unshift({id:uid("note"),studentId:STUDENT_ID,authorRole:"student",text,createdAt:new Date().toISOString()}); saveStore(s); input.value=""; renderNotes();
-    }
-    function renderNotes(){
-      const notes=loadStore().notes.filter(n=>n.studentId===STUDENT_ID), list=document.getElementById("notesList");
-      list.innerHTML=notes.length?notes.map(n=>`<div class="p-3 border rounded ${n.authorRole==="coach"?"bg-yellow-50":"bg-blue-50"}"><p class="text-xs text-gray-500">${n.authorRole==="coach"?"Coach":"Me"} · ${new Date(n.createdAt).toLocaleString()}</p><p class="text-sm mt-1">${esc(n.text)}</p></div>`).join(""):`<p class="text-gray-500">No notes yet.</p>`;
-    }
-    function renderLessonHistory(){
-      const list=document.getElementById("lessonHistoryList"), rows=getStudentLessons(loadStore()).sort((a,b)=>new Date(b.date+"T"+b.start)-new Date(a.date+"T"+a.start));
-      list.innerHTML=rows.length?rows.map(l=>`<div class="border rounded p-3"><p class="font-semibold">${esc(l.title||"Lesson")}</p><p class="text-xs text-gray-600">${esc(l.date)} ${esc(l.start)} · ${l.duration} min</p></div>`).join(""):`<p class="text-gray-500">No lessons yet.</p>`;
-    }
-    function sendStudentMessage(){
-      const input=document.getElementById("studentMessageInput"), file=document.getElementById("studentPhotoInput"), text=input.value.trim(), f=file.files?.[0];
-      if(!text&&!f) return;
-      if(f){ const r=new FileReader(); r.onload=()=>{ const s=loadStore(); s.messages.unshift({id:uid("msg"),studentId:STUDENT_ID,authorRole:"student",text,imageDataUrl:r.result,createdAt:new Date().toISOString()}); saveStore(s); input.value=""; file.value=""; renderMessages(); }; r.readAsDataURL(f);}
-      else { const s=loadStore(); s.messages.unshift({id:uid("msg"),studentId:STUDENT_ID,authorRole:"student",text,imageDataUrl:"",createdAt:new Date().toISOString()}); saveStore(s); input.value=""; renderMessages(); }
-    }
-    function renderMessages(){
-      const list=document.getElementById("messagesList"), rows=loadStore().messages.filter(m=>m.studentId===STUDENT_ID);
-      list.innerHTML=rows.length?rows.map(m=>`<div class="border rounded p-3 ${m.authorRole==="coach"?"bg-yellow-50":"bg-indigo-50"}"><p class="text-xs text-gray-500">${m.authorRole==="coach"?"Coach":"Me"} · ${new Date(m.createdAt).toLocaleString()}</p><p class="text-sm mt-1">${esc(m.text||"")}</p>${m.imageDataUrl?`<img src="${m.imageDataUrl}" class="mt-2 w-28 h-20 object-cover border rounded">`:""}</div>`).join(""):`<p class="text-gray-500">No messages yet.</p>`;
-    }
+      const myLessons=getMyLessonsForDay(store,key).map(l=>({...l,startMin:timeToMinutes(l.start)}));
+      const rows=[];
 
-    function renderHeaderAndKpis(){
-      const store=loadStore(), s=getStudent(store), name=s?.name||"Student";
-      document.getElementById("studentNameSidebar").textContent=name;
-      document.getElementById("studentInitials").textContent=name.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase();
-      const remaining=Math.max(0,(s.packageMinutes||0)-(s.usedMinutes||0)), pct=s.packageMinutes?remaining/s.packageMinutes:0, c=2*Math.PI*56;
-      document.getElementById("timeRing").setAttribute("stroke-dasharray",c.toFixed(2));
-      document.getElementById("timeRing").setAttribute("stroke-dashoffset",(c*(1-pct)).toFixed(2));
-      document.getElementById("timeRemainingHours").textContent=`${(remaining/60).toFixed(1)}h`;
-      document.getElementById("packageHours").textContent=`${(s.packageMinutes/60).toFixed(1)}h`;
-      document.getElementById("usedHours").textContent=`${(s.usedMinutes/60).toFixed(1)}h`;
+      for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
+        const label=to12HourLabel(t);
+        const mine=myLessons.find(l=>l.startMin===t);
+        const open=isSlotAvailable(store,day,t,t+duration);
 
-      const mine=getStudentLessons(store), now=new Date();
-      const monthCount=mine.filter(l=>{ const d=new Date(l.date+"T00:00:00"); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); }).length;
-      document.getElementById("lessonsMonthKpi").textContent=monthCount;
-      const up=mine.map(l=>{ const d=new Date(l.date+"T00:00:00"); const m=timeToMin(l.start); d.setHours(Math.floor(m/60),m%60,0,0); return d; }).filter(d=>d>=now).sort((a,b)=>a-b);
-      document.getElementById("nextLessonKpi").textContent=up.length?up[0].toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}):"No upcoming lessons";
+        if(mine){
+          rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${escapeHtml(mine.title)}</span></div><span class="timeline-status status-booked">${mine.duration}m</span></div>`);
+        } else if(open){
+          rows.push(`<button data-open-slot="${t}" class="timeline-row timeline-open w-full text-left"><div><span class="timeline-time">${label}</span><span class="ml-2">Open slot (${duration}m)</span></div><span class="timeline-status status-open">Book</span></button>`);
+        } else {
+          rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
+        }
+      }
+
+      dayTimeline.innerHTML=rows.join("");
+      dayTimeline.querySelectorAll("[data-open-slot]").forEach(btn=>btn.onclick=()=>bookMyLesson(day,Number(btn.dataset.openSlot),duration));
     }
 
-    function rerenderAll(){ renderHeaderAndKpis(); renderSchedule(); renderNotes(); renderLessonHistory(); renderMessages(); }
+    function renderSelectedDay(){
+      const store=loadStore(), day=calendarView==="day"?currentDate:selectedDate, key=ymd(day), avail=getAvailabilityForDate(store,day), items=getMyLessonsForDay(store,key);
+      selectedDateLabel.textContent=day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"})+" - Your Appointments";
+      selectedDayEvents.innerHTML=`
+        <div class="border rounded-lg px-3 py-2 ${avail.availableSlots>0?'border-green-200 bg-green-50':'border-red-200 bg-red-50'}">
+          <p class="font-semibold ${avail.availableSlots>0?'text-green-800':'text-red-800'}">${avail.isOpenDay?`Available: ${avail.availableSlots} / ${avail.totalSlots} slots`:'Closed: Saturday (Off Day)'}</p>
+        </div>
+      ` + (items.length
+        ? `<div class="space-y-2 mt-2">${items.map(ev=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${escapeHtml(ev.title)}</span><span class="text-blue-700 font-semibold">${escapeHtml(ev.start)} · ${ev.duration}m</span></div>`).join("")}</div>`
+        : `<p class="muted mt-2">No lessons scheduled.</p>`);
 
-    document.getElementById("monthViewBtn").onclick=()=>{ calendarView="month"; renderSchedule(); };
-    document.getElementById("weekViewBtn").onclick=()=>{ calendarView="week"; currentDate=new Date(selectedDate); renderSchedule(); };
-    document.getElementById("dayViewBtn").onclick=()=>{ calendarView="day"; currentDate=new Date(selectedDate); renderSchedule(); };
-    document.getElementById("lessonDuration").addEventListener("change", renderTimeline);
+      renderDayTimeline();
+    }
 
-    window.addEventListener("storage", e=>{ if(e.key===STORE_KEY||e.key===STORE_KEY+"_tick") rerenderAll(); });
+    dayViewBtn.onclick=()=>{calendarView="day";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
+    weekViewBtn.onclick=()=>{calendarView="week";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
+    monthViewBtn.onclick=()=>{calendarView="month";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
+    prevBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);else if(calendarView==="week")currentDate=addDays(currentDate,-7);else{currentDate=addDays(currentDate,-1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
+    nextBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);else if(calendarView==="week")currentDate=addDays(currentDate,7);else{currentDate=addDays(currentDate,1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
+    lessonDurationEl.onchange=()=>renderDayTimeline();
+
+    // =============================
+    // Videos
+    // =============================
+    const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
+    const videosGridEl=document.getElementById("videosGrid");
+    const videoSectionTabsEl=document.getElementById("videoSectionTabs");
+    let activeVideoSection="Scoring";
+
+    function getSectionMedia(store,section){
+      return (store.media||[]).filter(m=>m.studentId===STUDENT_ID && m.section===section);
+    }
+    function renderVideoSectionTabs(activeName="Scoring"){
+      videoSectionTabsEl.innerHTML=videoSections.map(name=>`<button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>`).join("");
+      videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>btn.onclick=()=>{activeVideoSection=btn.dataset.videoTab;renderInstructionalVideos();});
+    }
+    function renderInstructionalVideos(){
+      const store=loadStore();
+      renderVideoSectionTabs(activeVideoSection);
+      const sectionName=activeVideoSection;
+      const mediaList=getSectionMedia(store,sectionName);
+      const myNotes=(store.notes||[]).filter(n=>n.studentId===STUDENT_ID && n.section===sectionName);
+
+      videosGridEl.innerHTML=`
+        <div class="card p-5">
+          <h3 class="text-xl font-bold mb-3">${escapeHtml(sectionName)}</h3>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <h4 class="text-sm font-semibold mb-2">Media</h4>
+              <input type="file" accept="image/*,video/*" id="uploadMediaFile" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white mb-2">
+              <button id="uploadMediaBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mb-3">Upload to ${escapeHtml(sectionName)}</button>
+              <div class="space-y-2 max-h-[420px] overflow-auto">
+                ${mediaList.length ? mediaList.map(m=>`
+                  <div class="border border-gray-200 rounded-lg p-2">
+                    <div class="flex gap-2">
+                      <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name||"Media")}">
+                      <div class="min-w-0">
+                        <p class="text-sm font-semibold truncate">${escapeHtml(m.name||"Media")}</p>
+                        <p class="text-xs muted">${escapeHtml(m.type||"file")} · ${m.createdBy==="coach"?"Coach":"You"}</p>
+                        <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
+                      </div>
+                    </div>
+                  </div>`).join("") : `<p class="text-xs muted">No media uploaded.</p>`}
+              </div>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold mb-2">My Section Notes</h4>
+              <textarea id="sectionNoteText" placeholder="Add note..." class="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm min-h-24"></textarea>
+              <button id="addSectionNoteBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mt-2">Add Note</button>
+              <div class="space-y-2 max-h-[420px] overflow-auto mt-3">
+                ${myNotes.length ? myNotes.map(n=>`
+                  <div class="border border-gray-200 rounded-lg p-2 ${n.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}">
+                    <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
+                    <p class="text-xs muted mt-1">${n.authorRole==="coach"?"Coach":"You"} · ${fmtDateTime(n.createdAt)}</p>
+                  </div>`).join("") : `<p class="text-xs muted">No notes yet.</p>`}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("uploadMediaBtn").onclick=()=>{
+        const file=document.getElementById("uploadMediaFile")?.files?.[0];
+        if(!file) return;
+        const reader=new FileReader();
+        reader.onload=()=>{
+          const s=loadStore();
+          s.media.unshift({
+            id:uid("media"),
+            studentId:STUDENT_ID,
+            section:sectionName,
+            name:file.name,
+            url:reader.result,
+            type:file.type.startsWith("video")?"video":"photo",
+            createdBy:"student",
+            createdAt:new Date().toISOString()
+          });
+          saveStore(s);
+          renderInstructionalVideos();
+        };
+        reader.readAsDataURL(file);
+      };
+
+      document.getElementById("addSectionNoteBtn").onclick=()=>{
+        const text=(document.getElementById("sectionNoteText")?.value||"").trim();
+        if(!text) return;
+        const s=loadStore();
+        s.notes.unshift({
+          id:uid("note"),
+          studentId:STUDENT_ID,
+          section:sectionName,
+          authorRole:"student",
+          text,
+          createdAt:new Date().toISOString()
+        });
+        saveStore(s);
+        renderInstructionalVideos();
+      };
+    }
+
+    // =============================
+    // Messages
+    // =============================
+    const studentMessageTextEl=document.getElementById("studentMessageText");
+    const studentMessagePhotoEl=document.getElementById("studentMessagePhoto");
+    const sendMessageBtn=document.getElementById("sendMessageBtn");
+    const messageSendMsg=document.getElementById("messageSendMsg");
+    const messageThread=document.getElementById("messageThread");
+
+    function renderMessageThread(){
+      const msgs=(loadStore().messages||[]).filter(m=>m.studentId===STUDENT_ID).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      messageThread.innerHTML=msgs.length
+        ? msgs.map(m=>`
+          <div class="border border-gray-200 rounded-lg p-3 ${m.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}">
+            <p class="text-xs muted mb-1">${m.authorRole==="coach"?"Coach":"You"} · ${fmtDateTime(m.createdAt)}</p>
+            <p class="text-sm">${escapeHtml(m.text||"")}</p>
+            ${m.imageDataUrl?`<img src="${m.imageDataUrl}" class="mt-2 media-thumb" alt="Message upload">`:""}
+          </div>
+        `).join("")
+        : `<p class="muted">No messages yet.</p>`;
+    }
+
+    sendMessageBtn.onclick=()=>{
+      const text=(studentMessageTextEl.value||"").trim();
+      const file=studentMessagePhotoEl.files?.[0];
+      if(!text && !file){ messageSendMsg.textContent="Enter a message or attach a photo."; return; }
+
+      const commit=(imageDataUrl="")=>{
+        const s=loadStore();
+        s.messages.unshift({
+          id:uid("msg"),
+          studentId:STUDENT_ID,
+          authorRole:"student",
+          text,
+          imageDataUrl,
+          createdAt:new Date().toISOString()
+        });
+        saveStore(s);
+        studentMessageTextEl.value=""; studentMessagePhotoEl.value="";
+        messageSendMsg.textContent="Message sent.";
+        renderMessageThread();
+        renderDashboard();
+      };
+
+      if(file){
+        const r=new FileReader();
+        r.onload=()=>commit(r.result);
+        r.readAsDataURL(file);
+      } else commit("");
+    };
+
+    // =============================
+    // Live Sync + Init
+    // =============================
+    function rerenderAll(){
+      renderDashboard();
+      renderCalendar();
+      renderSelectedDay();
+      renderInstructionalVideos();
+      renderMessageThread();
+    }
+
+    window.addEventListener("storage",(e)=>{
+      if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick"){
+        rerenderAll();
+      }
+    });
 
     rerenderAll();
-    switchView("dashboard");
+    showSection("dashboard");
   </script>
 </body>
 </html>
