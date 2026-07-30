@@ -10,10 +10,6 @@
     body { font-family: system-ui, -apple-system, sans-serif; }
     .card { border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; }
     .muted { color: #6b7280; }
-    .kpi-value { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
-    .up { color: #16a34a; font-weight: 600; }
-    .down { color: #dc2626; font-weight: 600; }
-    .flat { color: #6b7280; font-weight: 600; }
     .pill {
       border: 1px solid #dbeafe;
       background: #eff6ff;
@@ -36,36 +32,20 @@
       transition: all .15s ease;
     }
     .top-nav-btn:hover { background: #f9fafb; }
-    .top-nav-btn.active {
-      border-color: #93c5fd;
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
+    .top-nav-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
     .video-tab-btn{
-      border:1px solid #d1d5db;
-      background:#fff;
-      color:#374151;
-      border-radius:10px;
-      padding:6px 10px;
-      font-size:12px;
-      font-weight:700;
+      border:1px solid #d1d5db;background:#fff;color:#374151;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;
     }
-    .video-tab-btn.active{
-      border-color:#93c5fd;
-      background:#eff6ff;
-      color:#1d4ed8;
-    }
+    .video-tab-btn.active{ border-color:#93c5fd;background:#eff6ff;color:#1d4ed8; }
 
     .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .week-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .day-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 8px; }
-
     .cal-dow { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 6px 0; }
     .cal-day {
       min-height: 118px; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px;
-      cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease;
-      background: white;
+      cursor: pointer; display: flex; flex-direction: column; gap: 6px; text-align: left; transition: all .15s ease; background: white;
     }
     .cal-day:hover { transform: translateY(-1px); }
     .cal-day.other-month { opacity: .55; }
@@ -73,35 +53,15 @@
     .cal-day.unavailable-day { background: #fef2f2; border-color: #fca5a5; }
     .cal-day.today { box-shadow: 0 0 0 2px #93c5fd inset; }
     .cal-day.selected { outline: 2px solid #2563eb; outline-offset: 0; }
-
     .cal-daynum { font-size: 13px; font-weight: 700; }
-    .event-dot {
-      display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #1e3a8a;
-      background: #eff6ff; border: 1px solid #dbeafe; border-radius: 999px; padding: 2px 8px; width: fit-content;
-      max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex: 0 0 auto; }
-
-    .availability-pill {
-      font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 8px; width: fit-content;
-    }
-    .availability-pill.open { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
-    .availability-pill.closed { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
 
     .view-btn {
-      border: 1px solid #d1d5db;
-      background: white;
-      color: #374151;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
+      border: 1px solid #d1d5db;background: white;color: #374151;border-radius: 10px;padding: 8px 12px;font-size: 12px;font-weight: 700;
     }
     .view-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
     .timeline-row {
-      border: 1px solid #e5e7eb; border-radius: 10px; padding: 8px 10px; display: flex;
-      justify-content: space-between; align-items: center; gap: 10px;
+      border: 1px solid #e5e7eb;border-radius: 10px;padding: 8px 10px;display: flex;justify-content: space-between;align-items: center;gap: 10px;
     }
     .timeline-open { background: #ecfdf3; border-color: #86efac; cursor: pointer; }
     .timeline-booked { background: #eff6ff; border-color: #bfdbfe; }
@@ -112,12 +72,10 @@
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
-    .student-avatar { width: 96px; height: 96px; border-radius: 999px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
     .media-thumb { width: 96px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
     .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
 
     .hidden-section { display: none; }
-    .hidden { display: none !important; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -125,16 +83,12 @@
     <header class="bg-white border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="logo-wrap">
-            <img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" />
-          </div>
+          <div class="logo-wrap"><img src="Lessonsshop%20updated%20logo.jpg" alt="Lessons Shop Logo" /></div>
           <h1 class="text-xl font-bold">Coach Portal</h1>
         </div>
         <div class="flex items-center gap-4">
           <span class="pill">Coach</span>
-          <a href="index.html" class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
-            <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
-          </a>
+          <a href="index.html" class="text-sm text-blue-600 font-semibold"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a>
         </div>
       </div>
     </header>
@@ -150,40 +104,19 @@
       </section>
 
       <section id="dashboardSection">
-        <section class="mb-6">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <h2 class="text-2xl font-bold">Dashboard</h2>
-              <p class="muted">Overview metrics with period comparisons.</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <label for="dateRange" class="text-sm font-medium text-gray-700">Date Range:</label>
-              <select id="dateRange" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
-                <option value="this_month">This month</option>
-                <option value="last_month">Last month</option>
-                <option value="this_quarter">This quarter</option>
-                <option value="this_year">This year</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
-        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
-          <article class="card p-5"><p class="text-sm muted mb-2">Total Students This Year</p><p class="kpi-value" id="kpi_students_year">0</p><p class="text-sm mt-2" id="cmp_students_year">-</p></article>
-          <article class="card p-5"><p class="text-sm muted mb-2">Lessons This Month</p><p class="kpi-value" id="kpi_lessons_month">0</p><p class="text-sm mt-2" id="cmp_lessons_month">-</p></article>
-          <article class="card p-5"><p class="text-sm muted mb-2">Lessons This Week</p><p class="kpi-value" id="kpi_lessons_week">0</p><p class="text-sm mt-2" id="cmp_lessons_week">-</p></article>
-          <article class="card p-5"><p class="text-sm muted mb-2">Average Daily Lessons</p><p class="kpi-value" id="kpi_avg_daily">0</p><p class="text-sm mt-2" id="cmp_avg_daily">-</p></article>
-          <article class="card p-5"><p class="text-sm muted mb-2">Avg Available Lesson Times / Week</p><p class="kpi-value" id="kpi_avg_slots_week">0</p><p class="text-sm mt-2" id="cmp_avg_slots_week">-</p></article>
-          <article class="card p-5"><p class="text-sm muted mb-2">New Lessons This Month</p><p class="kpi-value" id="kpi_new_lessons_month">0</p><p class="text-sm mt-2" id="cmp_new_lessons_month">-</p></article>
-        </section>
+        <div class="card p-5">
+          <h2 class="text-2xl font-bold mb-1">Dashboard</h2>
+          <p class="muted mb-4">Shared simulation mode is ON. Changes here sync to student portal tabs instantly.</p>
+          <div id="dashboardStats" class="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm"></div>
+        </div>
       </section>
 
       <section id="calendarSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-            <div><h2 class="text-2xl font-bold">Calendar</h2><p class="muted text-sm">Green = availability, Red = no availability.</p></div>
+            <div><h2 class="text-2xl font-bold">Calendar</h2><p class="muted text-sm">Click open slot to book student instantly. Add blocks on the right.</p></div>
             <div class="flex flex-wrap items-center gap-2">
-              <button id="dayViewBtn" class="view-btn">Today</button>
+              <button id="dayViewBtn" class="view-btn">Day</button>
               <button id="weekViewBtn" class="view-btn">Week</button>
               <button id="monthViewBtn" class="view-btn active">Month</button>
               <div class="w-px h-7 bg-gray-300 mx-1"></div>
@@ -209,7 +142,7 @@
           <div id="calendarMiddleCol" class="xl:col-span-1">
             <div class="card p-5 mb-4">
               <h3 class="font-semibold mb-2" id="selectedDateLabel">Selected Day Appointments</h3>
-              <div id="selectedDayEvents" class="space-y-2 text-sm"><p class="muted">No day selected.</p></div>
+              <div id="selectedDayEvents" class="space-y-2 text-sm"></div>
             </div>
           </div>
 
@@ -217,29 +150,28 @@
             <div class="card p-5 mb-4" id="dayTimelineCard">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-semibold">Day Timeline (7:00 AM - 2:00 PM)</h3>
-                <span class="text-xs muted">Click open slot to book lesson</span>
+                <span class="text-xs muted">Click open slot to book</span>
               </div>
-              <div id="dayTimeline" class="space-y-2 text-sm"><p class="muted">Select a day to view timeline.</p></div>
+              <div class="mb-3">
+                <label class="text-sm font-medium">Duration</label>
+                <select id="coachDuration" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="30">30 minutes</option>
+                  <option value="60">60 minutes</option>
+                  <option value="90">90 minutes</option>
+                </select>
+              </div>
+              <div id="dayTimeline" class="space-y-2 text-sm"></div>
             </div>
 
             <div class="card p-5" id="editAvailabilityCard">
               <h3 class="text-lg font-bold mb-1">Edit Availability</h3>
-              <p class="text-sm muted mb-4">Block time by hours or multiple days.</p>
-              <div class="space-y-3">
-                <div>
-                  <label class="text-sm font-medium">Block Type</label>
-                  <select id="blockType" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
-                    <option value="time_range">Time range</option>
-                    <option value="full_day">Full day(s)</option>
-                  </select>
-                </div>
+              <p class="text-sm muted mb-4">Blocks sync to students immediately.</p>
+              <div class="space-y-2">
+                <label class="text-sm font-medium">Date</label>
+                <input id="blockDate" type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
                 <div class="grid grid-cols-2 gap-2">
-                  <div><label class="text-sm font-medium">Start Date</label><input id="blockStartDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
-                  <div><label class="text-sm font-medium">End Date</label><input id="blockEndDate" type="date" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
-                </div>
-                <div id="timeInputs" class="grid grid-cols-2 gap-2">
-                  <div><label class="text-sm font-medium">Start Time</label><input id="blockStartTime" type="time" step="1800" value="07:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
-                  <div><label class="text-sm font-medium">End Time</label><input id="blockEndTime" type="time" step="1800" value="14:00" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
+                  <div><label class="text-sm font-medium">Start</label><input id="blockStart" type="time" value="07:00" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
+                  <div><label class="text-sm font-medium">End</label><input id="blockEnd" type="time" value="08:00" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" /></div>
                 </div>
                 <button id="addBlockBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Block</button>
                 <p id="blockMsg" class="text-xs muted"></p>
@@ -249,7 +181,7 @@
                 <h4 class="font-semibold">Current Blocks</h4>
                 <button id="clearBlocksBtn" class="text-xs text-red-600 font-semibold">Clear All</button>
               </div>
-              <div id="blocksList" class="space-y-2 text-sm"><p class="muted">No blocks added.</p></div>
+              <div id="blocksList" class="space-y-2 text-sm"></div>
             </div>
           </div>
         </div>
@@ -258,10 +190,18 @@
       <section id="videosSection" class="hidden-section">
         <div class="card p-5 mb-4">
           <h2 class="text-2xl font-bold">Instructional Videos</h2>
-          <p class="muted text-sm mb-3">Upload media and add notes for each training area. All items are timestamped.</p>
-          <div id="videoSectionTabs" class="flex flex-wrap gap-2"></div>
+          <p class="muted text-sm mb-3">Pick student + section. Uploads and notes appear in student portal too.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="text-sm font-medium">Target Student</label>
+              <select id="videoStudentSelect" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></select>
+            </div>
+            <div class="flex items-end">
+              <div id="videoSectionTabs" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
         </div>
-        <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"></div>
+        <div id="videosGrid" class="grid grid-cols-1 gap-4"></div>
       </section>
 
       <section id="studentsSection" class="hidden-section">
@@ -269,45 +209,28 @@
           <div class="xl:col-span-1">
             <div class="card p-5 mb-4">
               <h2 class="text-2xl font-bold mb-1">Students</h2>
-              <p class="muted text-sm mb-3">Search and open student profiles.</p>
-              <input id="studentSearch" type="text" placeholder="Search by name, email, or phone..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+              <p class="muted text-sm mb-3">Create students and send invite links.</p>
+              <input id="studentSearch" type="text" placeholder="Search..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
             </div>
-
-            <div class="card p-5 mb-4">
-              <h3 class="text-sm font-semibold mb-2">Message Alerts</h3>
-              <div class="space-y-2 text-sm">
-                <label class="flex items-center gap-2"><input id="alertEmailEnabled" type="checkbox" checked /><span>Email alerts</span></label>
-                <label class="flex items-center gap-2"><input id="alertTextEnabled" type="checkbox" checked /><span>Text alerts</span></label>
-                <input id="alertEmailAddress" type="email" placeholder="Coach alert email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <input id="alertPhoneNumber" type="text" placeholder="Coach alert phone" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <button id="saveAlertSettingsBtn" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold">Save Alert Settings</button>
-                <p id="alertSettingsMsg" class="text-xs muted"></p>
-              </div>
-            </div>
-
             <div class="card p-3"><div id="studentsList" class="space-y-2"></div></div>
           </div>
 
           <div class="xl:col-span-2 space-y-4">
             <div class="card p-5">
-              <div class="flex items-center justify-between mb-3">
-                <h3 class="text-xl font-bold">Student Profile</h3>
-                <span id="profileStatus" class="text-xs muted">Select a student</span>
-              </div>
-              <div id="studentProfileContent" class="text-sm"><p class="muted">Choose a student from the list to view full profile details.</p></div>
-            </div>
-
-            <div class="card p-5">
               <h3 class="text-xl font-bold mb-2">Add Student</h3>
-              <p class="muted text-sm mb-4">Create a student record and send invite link.</p>
               <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
                 <input id="newStudentName" type="text" placeholder="Full name" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentEmail" type="email" placeholder="Email" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentPhone" type="text" placeholder="Phone" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
-                <input id="newStudentPhoto" type="file" accept="image/*" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
+                <input id="newStudentPackage" type="number" min="1" value="30" placeholder="Hours package" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               </div>
-              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Student + Send Invite</button>
+              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Student + Invite Link</button>
               <p id="addStudentMsg" class="text-xs muted mt-2"></p>
+            </div>
+
+            <div class="card p-5">
+              <h3 class="text-xl font-bold mb-2">Selected Student</h3>
+              <div id="selectedStudentPanel" class="text-sm"><p class="muted">Select a student from the list.</p></div>
             </div>
           </div>
         </div>
@@ -316,35 +239,54 @@
   </div>
 
   <script>
+    // ===== Shared Store =====
+    const STORE_KEY = "lessonsshop_shared_v1";
+    const COACH_ID = "coach_1";
+
+    const defaultStore = {
+      students: {
+        "stu_1": { id:"stu_1", name:"Robert Christenson", email:"robert@example.com", phone:"(555) 111-2222", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 }
+      },
+      lessons: [],
+      coachBlocks: [],
+      notes: [],
+      messages: [],
+      media: []
+    };
+
+    function loadStore(){
+      const raw = localStorage.getItem(STORE_KEY);
+      if(!raw){ localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
+      try { return JSON.parse(raw); } catch { localStorage.setItem(STORE_KEY, JSON.stringify(defaultStore)); return structuredClone(defaultStore); }
+    }
+    function saveStore(store){
+      localStorage.setItem(STORE_KEY, JSON.stringify(store));
+      localStorage.setItem(STORE_KEY + "_tick", String(Date.now()));
+    }
+    function uid(prefix="id"){ return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2,8)}`; }
+
+    // ===== Helpers =====
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
     function fmtDateTime(iso){ const d = new Date(iso); return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
-    function phoneDigits(phone){ return phone.replace(/[^\d+]/g, ""); }
-
-    // Dashboard
-    const dashboardData = { this_month:{label:"previous month",current:{studentsYear:124,lessonsMonth:38,lessonsWeek:11,avgDaily:1.27,avgSlotsWeek:22.5,newLessonsMonth:5},previous:{studentsYear:116,lessonsMonth:31,lessonsWeek:9,avgDaily:1.03,avgSlotsWeek:24,newLessonsMonth:3}} };
-    function formatNumber(v){ return Number.isInteger(v)?`${v}`:v.toFixed(2).replace(/\.00$/,""); }
-    function pctChange(c,p){ if(p===0) return c===0?0:100; return ((c-p)/Math.abs(p))*100; }
-    function comparisonText(c,p,label,isInt=true){
-      const delta=c-p,pct=pctChange(c,p),sign=delta>0?"+":"",cls=delta>0?"up":delta<0?"down":"flat";
-      const dt=isInt?`${sign}${Math.round(delta)}`:`${sign}${delta.toFixed(2).replace(/\.00$/,"")}`;
-      return `<span class="${cls}">${dt} (${pct>0?"+":""}${pct.toFixed(1)}%)</span> <span class="muted">vs ${label}</span>`;
+    const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    const cloneDate=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    const isSameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();
+    const shortDate=d=>d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+    const monthName=(y,m)=>new Date(y,m,1).toLocaleDateString(undefined,{month:"long",year:"numeric"});
+    const getWeekStart=d=>{const x=cloneDate(d);x.setDate(x.getDate()-x.getDay());return x;};
+    const addDays=(d,n)=>{const x=cloneDate(d);x.setDate(x.getDate()+n);return x;};
+    const SLOT_START_MIN=7*60, SLOT_END_MIN=14*60, SLOT_MINUTES=30;
+    function to12HourLabel(total){ const h24=Math.floor(total/60),m=total%60,s=h24>=12?"PM":"AM"; let h=h24%12; if(h===0)h=12; return `${h}:${String(m).padStart(2,"0")} ${s}`; }
+    function hhmm(total){ return `${String(Math.floor(total/60)).padStart(2,"0")}:${String(total%60).padStart(2,"0")}`; }
+    function timeToMinutes(t){
+      if((t||"").includes("AM") || (t||"").includes("PM")){
+        const [time,s]=t.split(" "); const [h0,m]=time.split(":").map(Number); let h=h0%12; if(s==="PM")h+=12; return h*60+m;
+      }
+      const [h,m]=String(t||"00:00").split(":").map(Number); return (h||0)*60+(m||0);
     }
-    function setText(id,val){ const el=document.getElementById(id); if(el) el.textContent=val; }
-    function setHTML(id,val){ const el=document.getElementById(id); if(el) el.innerHTML=val; }
-    function renderDashboard(){
-      const d=dashboardData.this_month,c=d.current,p=d.previous;
-      setText("kpi_students_year",formatNumber(c.studentsYear)); setText("kpi_lessons_month",formatNumber(c.lessonsMonth)); setText("kpi_lessons_week",formatNumber(c.lessonsWeek));
-      setText("kpi_avg_daily",formatNumber(c.avgDaily)); setText("kpi_avg_slots_week",formatNumber(c.avgSlotsWeek)); setText("kpi_new_lessons_month",formatNumber(c.newLessonsMonth));
-      setHTML("cmp_students_year",comparisonText(c.studentsYear,p.studentsYear,d.label,true));
-      setHTML("cmp_lessons_month",comparisonText(c.lessonsMonth,p.lessonsMonth,d.label,true));
-      setHTML("cmp_lessons_week",comparisonText(c.lessonsWeek,p.lessonsWeek,d.label,true));
-      setHTML("cmp_avg_daily",comparisonText(c.avgDaily,p.avgDaily,d.label,false));
-      setHTML("cmp_avg_slots_week",comparisonText(c.avgSlotsWeek,p.avgSlotsWeek,d.label,false));
-      setHTML("cmp_new_lessons_month",comparisonText(c.newLessonsMonth,p.newLessonsMonth,d.label,true));
-    }
-    renderDashboard();
+    function overlaps(aS,aE,bS,bE){ return Math.max(aS,bS) < Math.min(aE,bE); }
 
-    // Nav
+    // ===== Nav =====
     const sections={dashboard:document.getElementById("dashboardSection"),calendar:document.getElementById("calendarSection"),videos:document.getElementById("videosSection"),students:document.getElementById("studentsSection")};
     const navBtns={dashboard:document.getElementById("navDashboardBtn"),calendar:document.getElementById("navCalendarBtn"),videos:document.getElementById("navVideosBtn"),students:document.getElementById("navStudentsBtn")};
     function showSection(name){
@@ -358,274 +300,406 @@
     navBtns.videos.onclick=()=>showSection("videos");
     navBtns.students.onclick=()=>showSection("students");
 
-    // Calendar (kept)
+    // ===== Dashboard =====
+    function renderDashboard(){
+      const s=loadStore();
+      const students=Object.values(s.students||{}).filter(x=>x.coachId===COACH_ID);
+      const lessons=(s.lessons||[]).filter(l=>l.coachId===COACH_ID);
+      const upcoming=lessons.map(l=>{const d=new Date(l.date+"T"+l.start);return {...l,dt:d};}).filter(x=>x.dt>=new Date()).sort((a,b)=>a.dt-b.dt);
+      const totalBookedMinutes=lessons.reduce((sum,l)=>sum+Number(l.duration||30),0);
+
+      document.getElementById("dashboardStats").innerHTML=`
+        <div class="border rounded-lg p-3"><p class="text-xs muted">Students</p><p class="text-xl font-bold">${students.length}</p></div>
+        <div class="border rounded-lg p-3"><p class="text-xs muted">Total Lessons</p><p class="text-xl font-bold">${lessons.length}</p></div>
+        <div class="border rounded-lg p-3"><p class="text-xs muted">Booked Hours</p><p class="text-xl font-bold">${(totalBookedMinutes/60).toFixed(1)}h</p></div>
+        <div class="border rounded-lg p-3"><p class="text-xs muted">Next Lesson</p><p class="text-sm font-semibold">${upcoming[0]?`${upcoming[0].date} ${upcoming[0].start}`:"None"}</p></div>
+      `;
+    }
+
+    // ===== Students =====
+    let selectedStudentId = null;
+    const studentsListEl=document.getElementById("studentsList");
+    const studentSearchEl=document.getElementById("studentSearch");
+
+    function getCoachStudents(store){
+      return Object.values(store.students||{}).filter(s=>s.coachId===COACH_ID);
+    }
+
+    function renderStudentsList(){
+      const store=loadStore();
+      const q=(studentSearchEl.value||"").trim().toLowerCase();
+      const arr=getCoachStudents(store).filter(s=>!q || s.name.toLowerCase().includes(q) || (s.email||"").toLowerCase().includes(q) || (s.phone||"").toLowerCase().includes(q));
+
+      if(!arr.length){ studentsListEl.innerHTML=`<p class="muted text-sm px-2 py-2">No students found.</p>`; return; }
+
+      studentsListEl.innerHTML=arr.map(s=>`
+        <button class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${s.id===selectedStudentId?'border-blue-300 bg-blue-50':'border-gray-200'}" data-student-id="${s.id}">
+          <p class="font-semibold text-sm">${escapeHtml(s.name)}</p>
+          <p class="text-xs muted">${escapeHtml(s.email||"")}</p>
+          <p class="text-xs muted">${escapeHtml(s.phone||"")}</p>
+        </button>
+      `).join("");
+
+      studentsListEl.querySelectorAll("[data-student-id]").forEach(btn=>{
+        btn.onclick=()=>{
+          selectedStudentId=btn.dataset.studentId;
+          renderStudentsList();
+          renderSelectedStudentPanel();
+          renderVideoStudentSelect();
+        };
+      });
+    }
+
+    function renderSelectedStudentPanel(){
+      const store=loadStore();
+      const s=store.students?.[selectedStudentId];
+      const panel=document.getElementById("selectedStudentPanel");
+      if(!s){ panel.innerHTML=`<p class="muted">Select a student from the list.</p>`; return; }
+
+      const invite = `student-portal.html?student=${encodeURIComponent(s.id)}`;
+      panel.innerHTML=`
+        <div class="space-y-2">
+          <p><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</p>
+          <p><span class="font-semibold">Email:</span> ${escapeHtml(s.email||"")}</p>
+          <p><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone||"")}</p>
+          <p><span class="font-semibold">Package:</span> ${(Number(s.packageMinutes||0)/60).toFixed(1)}h</p>
+          <p><span class="font-semibold">Used:</span> ${(Number(s.usedMinutes||0)/60).toFixed(1)}h</p>
+          <div class="border rounded-lg p-2 bg-gray-50">
+            <p class="text-xs font-semibold mb-1">Invite Link</p>
+            <input id="inviteLinkInput" value="${invite}" class="w-full border border-gray-300 rounded px-2 py-1 text-xs" readonly />
+            <button id="copyInviteBtn" class="mt-2 text-xs bg-blue-600 text-white px-2 py-1 rounded">Copy Link</button>
+          </div>
+        </div>
+      `;
+      document.getElementById("copyInviteBtn").onclick=async()=>{
+        const txt=document.getElementById("inviteLinkInput").value;
+        try { await navigator.clipboard.writeText(txt); alert("Invite link copied."); }
+        catch { alert("Copy failed. You can copy manually."); }
+      };
+    }
+
+    document.getElementById("addStudentBtn").onclick=()=>{
+      const name=(document.getElementById("newStudentName").value||"").trim();
+      const email=(document.getElementById("newStudentEmail").value||"").trim();
+      const phone=(document.getElementById("newStudentPhone").value||"").trim();
+      const packageHours=Number(document.getElementById("newStudentPackage").value||30);
+      const msg=document.getElementById("addStudentMsg");
+      if(!name){ msg.textContent="Please enter student name."; return; }
+
+      const store=loadStore();
+      const id=uid("stu");
+      store.students[id]={ id,name,email,phone,coachId:COACH_ID,packageMinutes:Math.max(1,packageHours)*60,usedMinutes:0 };
+      saveStore(store);
+
+      selectedStudentId=id;
+      document.getElementById("newStudentName").value="";
+      document.getElementById("newStudentEmail").value="";
+      document.getElementById("newStudentPhone").value="";
+      document.getElementById("newStudentPackage").value="30";
+      msg.innerHTML=`Student added. Invite: <strong>student-portal.html?student=${id}</strong>`;
+      renderStudentsList();
+      renderSelectedStudentPanel();
+      renderVideoStudentSelect();
+      renderDashboard();
+    };
+    studentSearchEl.oninput=renderStudentsList;
+
+    // ===== Calendar =====
     const calendarGrid=document.getElementById("calendarGrid"),monthHeaders=document.getElementById("monthHeaders"),weekHeaders=document.getElementById("weekHeaders"),selectedDateLabel=document.getElementById("selectedDateLabel"),selectedDayEvents=document.getElementById("selectedDayEvents"),rangeLabel=document.getElementById("rangeLabel"),dayTimeline=document.getElementById("dayTimeline");
-    const dayViewBtn=document.getElementById("dayViewBtn"),weekViewBtn=document.getElementById("weekViewBtn"),monthViewBtn=document.getElementById("monthViewBtn"),prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn");
-    const blockType=document.getElementById("blockType"),blockStartDate=document.getElementById("blockStartDate"),blockEndDate=document.getElementById("blockEndDate"),blockStartTime=document.getElementById("blockStartTime"),blockEndTime=document.getElementById("blockEndTime"),timeInputs=document.getElementById("timeInputs"),addBlockBtn=document.getElementById("addBlockBtn"),blocksList=document.getElementById("blocksList"),blockMsg=document.getElementById("blockMsg"),clearBlocksBtn=document.getElementById("clearBlocksBtn");
+    const dayViewBtn=document.getElementById("dayViewBtn"),weekViewBtn=document.getElementById("weekViewBtn"),monthViewBtn=document.getElementById("monthViewBtn"),prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn"),coachDurationEl=document.getElementById("coachDuration");
     const today=new Date(); let selectedDate=new Date(today.getFullYear(),today.getMonth(),today.getDate()),currentDate=new Date(today.getFullYear(),today.getMonth(),today.getDate()),calendarView="month";
-    const SLOT_START_HOUR=7,SLOT_END_HOUR=14,SLOT_MINUTES=30,TOTAL_SLOTS_PER_OPEN_DAY=((SLOT_END_HOUR-SLOT_START_HOUR)*60)/SLOT_MINUTES;
-    const lessonEvents={"2026-07-29":[{time:"7:00 AM",title:"Piano - Ava M."},{time:"7:30 AM",title:"Voice - Liam R."}]}; let availabilityBlocks=[];
-    const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`, cloneDate=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate()), isSameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(), isSaturday=d=>d.getDay()===6;
-    const shortDate=d=>d.toLocaleDateString(undefined,{month:"short",day:"numeric"}), monthName=(y,m)=>new Date(y,m,1).toLocaleDateString(undefined,{month:"long",year:"numeric"}), getWeekStart=d=>{const x=cloneDate(d);x.setDate(x.getDate()-x.getDay());return x;}, addDays=(d,n)=>{const x=cloneDate(d);x.setDate(x.getDate()+n);return x;};
-    const timeToMinutes=t=>{const [h,m]=t.split(":").map(Number);return h*60+m;};
-    function eventTimeToMinutes(label){const [time,s]=label.split(" ");const [h0,m]=time.split(":").map(Number);let h=h0%12;if(s==="PM")h+=12;return h*60+m;}
-    function to12HourLabel(total){const h24=Math.floor(total/60),m=total%60,s=h24>=12?"PM":"AM";let h=h24%12;if(h===0)h=12;return `${h}:${String(m).padStart(2,"0")} ${s}`;}
-    function overlapMinutes(aS,aE,bS,bE){const s=Math.max(aS,bS),e=Math.min(aE,bE);return Math.max(0,e-s);}
-    function addLessonAtSlot(dateObj, slotStartMin){
-      const student=prompt("Student name for this lesson:"); if(!student||!student.trim()) return;
-      const lessonType=prompt("Lesson title/type (optional):","Lesson"); const title=`${(lessonType||"Lesson").trim()} - ${student.trim()}`; const key=ymd(dateObj);
-      if(!lessonEvents[key]) lessonEvents[key]=[]; lessonEvents[key].push({time:to12HourLabel(slotStartMin),title}); lessonEvents[key].sort((a,b)=>eventTimeToMinutes(a.time)-eventTimeToMinutes(b.time));
-      renderCalendar(); renderSelectedDay();
+
+    function getCoachLessonsForDay(store,key){ return (store.lessons||[]).filter(l=>l.coachId===COACH_ID && l.date===key); }
+    function getCoachBlocksForDay(store,key){ return (store.coachBlocks||[]).filter(b=>b.coachId===COACH_ID && b.date===key); }
+
+    function isSlotOpenForCoach(store,dateObj,slotStart,slotEnd){
+      if(dateObj.getDay()===6 || slotEnd>SLOT_END_MIN) return false;
+      const key=ymd(dateObj);
+      for(const b of getCoachBlocksForDay(store,key)){ if(overlaps(slotStart,slotEnd,timeToMinutes(b.start),timeToMinutes(b.end))) return false; }
+      for(const l of getCoachLessonsForDay(store,key)){ const ls=timeToMinutes(l.start),le=ls+Number(l.duration||30); if(overlaps(slotStart,slotEnd,ls,le)) return false; }
+      return true;
     }
-    function getBlockedSlotsForDate(date){
-      if(isSaturday(date)) return TOTAL_SLOTS_PER_OPEN_DAY; const k=ymd(date); let blocked=0;
-      for(const b of availabilityBlocks){ if(k<b.startDate||k>b.endDate) continue; if(b.type==="full_day"){blocked+=(SLOT_END_HOUR-SLOT_START_HOUR)*60;} else {blocked+=overlapMinutes(SLOT_START_HOUR*60,SLOT_END_HOUR*60,timeToMinutes(b.startTime),timeToMinutes(b.endTime));}}
-      return Math.max(0,Math.min(TOTAL_SLOTS_PER_OPEN_DAY,Math.ceil(blocked/SLOT_MINUTES)));
+
+    function getDayStatus(store,date){
+      if(date.getDay()===6) return "unavailable";
+      for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){ if(isSlotOpenForCoach(store,date,t,t+SLOT_MINUTES)) return "available"; }
+      return "unavailable";
     }
-    function isSlotBlocked(dateObj, slotStartMin, slotEndMin){
-      if(isSaturday(dateObj)) return true; const k=ymd(dateObj);
-      for(const b of availabilityBlocks){ if(k<b.startDate||k>b.endDate) continue; if(b.type==="full_day") return true; if(overlapMinutes(slotStartMin,slotEndMin,timeToMinutes(b.startTime),timeToMinutes(b.endTime))>0) return true;}
-      return false;
+
+    function setActiveViewBtn(){
+      [dayViewBtn,weekViewBtn,monthViewBtn].forEach(b=>b.classList.remove("active"));
+      if(calendarView==="day")dayViewBtn.classList.add("active");
+      if(calendarView==="week")weekViewBtn.classList.add("active");
+      if(calendarView==="month")monthViewBtn.classList.add("active");
     }
-    function getAvailabilityForDate(date){
-      if(isSaturday(date)) return {totalSlots:0,bookedSlots:0,blockedSlots:0,availableSlots:0,isOpenDay:false};
-      const total=TOTAL_SLOTS_PER_OPEN_DAY, booked=Math.min((lessonEvents[ymd(date)]||[]).length,total), blocked=getBlockedSlotsForDate(date), available=Math.max(0,total-booked-blocked);
-      return {totalSlots:total,bookedSlots:booked,blockedSlots:blocked,availableSlots:available,isOpenDay:true};
+    function renderRangeLabel(){
+      if(calendarView==="month")rangeLabel.textContent=monthName(currentDate.getFullYear(),currentDate.getMonth());
+      else if(calendarView==="week"){const s=getWeekStart(currentDate),e=addDays(s,6); rangeLabel.textContent=`${shortDate(s)} - ${shortDate(e)}`;}
+      else rangeLabel.textContent=currentDate.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
     }
-    function renderBlocksList(){
-      if(!availabilityBlocks.length){blocksList.innerHTML=`<p class="muted">No blocks added.</p>`;return;}
-      blocksList.innerHTML=availabilityBlocks.map(b=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-start justify-between gap-2"><p>${b.type==="full_day"?`Full day block: ${b.startDate} → ${b.endDate}`:`Time block: ${b.startDate} ${b.startTime} → ${b.endDate} ${b.endTime}`}</p><button data-id="${b.id}" class="delete-block-btn text-xs text-red-600 font-semibold">Delete</button></div>`).join("");
-      document.querySelectorAll(".delete-block-btn").forEach(btn=>btn.onclick=()=>{availabilityBlocks=availabilityBlocks.filter(b=>b.id!==btn.dataset.id);renderBlocksList();renderCalendar();renderSelectedDay();});
-    }
-    function renderDayCard(date,{otherMonth=false}={}){
-      const key=ymd(date),avail=getAvailabilityForDate(date),count=(lessonEvents[key]||[]).length;
-      const btn=document.createElement("button");
-      btn.className=["cal-day",avail.availableSlots>0?"available-day":"unavailable-day",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
-      btn.innerHTML=`<div class="cal-daynum">${date.getDate()}</div>${avail.availableSlots>0?`<span class="availability-pill open">${avail.availableSlots} open</span>`:`<span class="availability-pill closed">${avail.isOpenDay?"0 open":"Off day"}</span>`}${count?`<div class="event-dot"><span class="dot"></span>${count} booked</div>`:""}`;
-      btn.onclick=()=>{selectedDate=cloneDate(date); if(calendarView==="month"){calendarView="day"; currentDate=cloneDate(date);} else if(calendarView==="day"){currentDate=cloneDate(date);} renderCalendar(); renderSelectedDay();};
-      return btn;
-    }
-    function setActiveViewBtn(){ [dayViewBtn,weekViewBtn,monthViewBtn].forEach(b=>b.classList.remove("active")); if(calendarView==="day")dayViewBtn.classList.add("active"); if(calendarView==="week")weekViewBtn.classList.add("active"); if(calendarView==="month")monthViewBtn.classList.add("active"); }
-    function renderRangeLabel(){ if(calendarView==="month")rangeLabel.textContent=monthName(currentDate.getFullYear(),currentDate.getMonth()); else if(calendarView==="week"){const s=getWeekStart(currentDate),e=addDays(s,6); rangeLabel.textContent=`${shortDate(s)} - ${shortDate(e)}`;} else rangeLabel.textContent=currentDate.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"}); }
     function renderHeaders(){
       if(calendarView==="month"){monthHeaders.classList.remove("hidden");weekHeaders.classList.add("hidden");}
-      else if(calendarView==="week"){monthHeaders.classList.add("hidden");weekHeaders.classList.remove("hidden");const s=getWeekStart(currentDate);weekHeaders.innerHTML="";for(let i=0;i<7;i++){const d=addDays(s,i),el=document.createElement("div");el.className="cal-dow";el.textContent=d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});weekHeaders.appendChild(el);}}
-      else {monthHeaders.classList.add("hidden");weekHeaders.classList.add("hidden");}
+      else if(calendarView==="week"){
+        monthHeaders.classList.add("hidden");weekHeaders.classList.remove("hidden");
+        const s=getWeekStart(currentDate); weekHeaders.innerHTML="";
+        for(let i=0;i<7;i++){const d=addDays(s,i),el=document.createElement("div");el.className="cal-dow";el.textContent=d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});weekHeaders.appendChild(el);}
+      } else {monthHeaders.classList.add("hidden");weekHeaders.classList.add("hidden");}
     }
-    function applyCalendarLayoutByView(){
-      const layout=document.getElementById("calendarMainLayout"),right=document.getElementById("calendarRightCol"),edit=document.getElementById("editAvailabilityCard"),timeline=document.getElementById("dayTimelineCard");
-      if(calendarView==="week"){ if(!document.getElementById("weekEditWrap")){const w=document.createElement("div");w.id="weekEditWrap";w.className="xl:col-span-3";layout.appendChild(w);} document.getElementById("weekEditWrap").appendChild(edit); timeline.classList.remove("hidden");}
-      else { right.appendChild(timeline); right.appendChild(edit); const w=document.getElementById("weekEditWrap"); if(w)w.remove(); if(calendarView!=="day")timeline.classList.add("hidden"); else timeline.classList.remove("hidden"); }
+
+    function renderDayCard(date,{otherMonth=false}={}){
+      const store=loadStore(), key=ymd(date), status=getDayStatus(store,date), lessons=getCoachLessonsForDay(store,key).length;
+      const btn=document.createElement("button");
+      btn.className=["cal-day",status==="available"?"available-day":"unavailable-day",otherMonth?"other-month":"",isSameDay(date,today)?"today":"",isSameDay(date,selectedDate)?"selected":""].join(" ");
+      btn.innerHTML=`<div class="cal-daynum">${date.getDate()}</div>${lessons?`<div class="text-xs text-blue-700 font-semibold">${lessons} booked</div>`:""}`;
+      btn.onclick=()=>{ selectedDate=cloneDate(date); if(calendarView==="month"){calendarView="day"; currentDate=cloneDate(date);} renderCalendar(); renderSelectedDay(); };
+      return btn;
     }
+
     function renderCalendar(){
-      calendarGrid.innerHTML=""; renderRangeLabel(); renderHeaders(); setActiveViewBtn(); applyCalendarLayoutByView();
-      if(calendarView==="month"){calendarGrid.className="calendar-grid"; const y=currentDate.getFullYear(),m=currentDate.getMonth(),f=new Date(y,m,1),start=f.getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate(); const cells=[]; for(let i=start-1;i>=0;i--)cells.push({date:new Date(y,m-1,prevDays-i),otherMonth:true}); for(let d=1;d<=days;d++)cells.push({date:new Date(y,m,d),otherMonth:false}); while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});} cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth}))); }
+      calendarGrid.innerHTML="";
+      renderRangeLabel(); renderHeaders(); setActiveViewBtn();
+
+      if(calendarView==="month"){
+        calendarGrid.className="calendar-grid";
+        const y=currentDate.getFullYear(),m=currentDate.getMonth(),f=new Date(y,m,1),start=f.getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();
+        const cells=[]; for(let i=start-1;i>=0;i--)cells.push({date:new Date(y,m-1,prevDays-i),otherMonth:true}); for(let d=1;d<=days;d++)cells.push({date:new Date(y,m,d),otherMonth:false});
+        while(cells.length<42){const n=cells.length-(start+days)+1;cells.push({date:new Date(y,m+1,n),otherMonth:true});}
+        cells.forEach(c=>calendarGrid.appendChild(renderDayCard(c.date,{otherMonth:c.otherMonth})));
+      }
       if(calendarView==="week"){calendarGrid.className="week-grid"; const s=getWeekStart(currentDate); for(let i=0;i<7;i++)calendarGrid.appendChild(renderDayCard(addDays(s,i))); }
       if(calendarView==="day"){calendarGrid.className="day-grid"; calendarGrid.appendChild(renderDayCard(currentDate)); }
-    }
-    function renderDayTimeline(){
-      if(calendarView!=="day"&&calendarView!=="week"){dayTimeline.innerHTML=`<p class="muted">Switch to Day or Week view to see timeline.</p>`;return;}
-      const day=calendarView==="week"?selectedDate:currentDate; if(isSaturday(day)){dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday is off. No slots available.</p>`;return;}
-      const key=ymd(day),events=(lessonEvents[key]||[]).map(e=>({...e,startMin:eventTimeToMinutes(e.time)})); const rows=[];
-      for(let t=SLOT_START_HOUR*60;t<SLOT_END_HOUR*60;t+=SLOT_MINUTES){ const label=to12HourLabel(t),booked=events.find(e=>e.startMin===t),blocked=isSlotBlocked(day,t,t+SLOT_MINUTES);
-        if(booked) rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${booked.title}</span></div><span class="timeline-status status-booked">Booked</span></div>`);
-        else if(blocked) rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
-        else rows.push(`<button data-open-slot="${t}" class="timeline-row timeline-open w-full text-left"><div><span class="timeline-time">${label}</span><span class="ml-2">Open slot</span></div><span class="timeline-status status-open">Book</span></button>`);
-      }
-      dayTimeline.innerHTML=rows.join("");
-      dayTimeline.querySelectorAll("[data-open-slot]").forEach(btn=>btn.onclick=()=>addLessonAtSlot(day,Number(btn.dataset.openSlot)));
-    }
-    function renderSelectedDay(){
-      const day=calendarView==="day"?currentDate:selectedDate,key=ymd(day),avail=getAvailabilityForDate(day),items=lessonEvents[key]||[];
-      selectedDateLabel.textContent=day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"})+" - Appointments";
-      selectedDayEvents.innerHTML=`<div class="border rounded-lg px-3 py-2 ${avail.availableSlots>0?'border-green-200 bg-green-50':'border-red-200 bg-red-50'}"><p class="font-semibold ${avail.availableSlots>0?'text-green-800':'text-red-800'}">${avail.isOpenDay?`Available: ${avail.availableSlots} / ${avail.totalSlots} slots`:'Closed: Saturday (Off Day)'}</p>${avail.isOpenDay?`<p class="text-xs ${avail.availableSlots>0?'text-green-700':'text-red-700'}">Booked: ${avail.bookedSlots} · Blocked: ${avail.blockedSlots}</p>`:''}</div>` + (items.length?`<div class="space-y-2 mt-2">${items.map((ev,idx)=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between"><span class="font-medium">${ev.title}</span><div class="flex items-center gap-2"><span class="text-blue-700 font-semibold">${ev.time}</span><button data-del-event="${idx}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div></div>`).join("")}</div>`:`<p class="muted mt-2">No lessons scheduled.</p>`);
-      selectedDayEvents.querySelectorAll("[data-del-event]").forEach(btn=>btn.onclick=()=>{lessonEvents[key].splice(Number(btn.dataset.delEvent),1);if(!lessonEvents[key].length)delete lessonEvents[key];renderCalendar();renderSelectedDay();});
+
       renderDayTimeline();
     }
+
+    function renderSelectedDay(){
+      const store=loadStore(), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day), lessons=getCoachLessonsForDay(store,key);
+      selectedDateLabel.textContent = day.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"}) + " - Appointments";
+      selectedDayEvents.innerHTML = lessons.length
+        ? lessons.map(l=>{
+            const stu=store.students?.[l.studentId];
+            return `<div class="border border-gray-200 rounded-lg px-3 py-2"><p class="font-semibold">${escapeHtml(l.title||"Lesson")}</p><p class="text-xs muted">${escapeHtml(l.start)} · ${l.duration}m · ${escapeHtml(stu?.name||l.studentId)}</p></div>`;
+          }).join("")
+        : `<p class="muted">No lessons scheduled.</p>`;
+    }
+
+    function quickBook(slotStart){
+      const store=loadStore();
+      const students=getCoachStudents(store);
+      if(!students.length){ alert("Add a student first."); return; }
+      const names=students.map((s,i)=>`${i+1}. ${s.name}`).join("\n");
+      const pick=prompt(`Pick student number:\n${names}`);
+      const idx=Number(pick)-1;
+      if(!Number.isInteger(idx)||idx<0||idx>=students.length) return;
+      const student=students[idx];
+      const duration=Number(coachDurationEl.value||30);
+      const day=(calendarView==="day")?currentDate:selectedDate;
+      if(!isSlotOpenForCoach(store,day,slotStart,slotStart+duration)){ alert("Slot unavailable."); return; }
+
+      store.lessons.push({
+        id:uid("lesson"),
+        studentId:student.id,
+        coachId:COACH_ID,
+        date:ymd(day),
+        start:hhmm(slotStart),
+        duration,
+        title:"Coach Booked Lesson",
+        createdBy:"coach",
+        createdAt:new Date().toISOString()
+      });
+
+      if(store.students[student.id]) store.students[student.id].usedMinutes += duration;
+      saveStore(store);
+      rerenderAll();
+      alert("Lesson booked.");
+    }
+
+    function renderDayTimeline(){
+      const store=loadStore(), day=(calendarView==="day")?currentDate:selectedDate, key=ymd(day), lessons=getCoachLessonsForDay(store,key).map(l=>({...l,startMin:timeToMinutes(l.start)})), duration=Number(coachDurationEl.value||30);
+      if(day.getDay()===6){ dayTimeline.innerHTML=`<p class="text-red-700 font-semibold">Saturday off.</p>`; return; }
+
+      const rows=[];
+      for(let t=SLOT_START_MIN;t<SLOT_END_MIN;t+=SLOT_MINUTES){
+        const label=to12HourLabel(t);
+        const booked=lessons.find(l=>l.startMin===t);
+        const open=isSlotOpenForCoach(store,day,t,t+duration);
+
+        if(booked){
+          const stu=store.students?.[booked.studentId];
+          rows.push(`<div class="timeline-row timeline-booked"><div><span class="timeline-time">${label}</span><span class="ml-2">${escapeHtml(stu?.name||booked.studentId)}</span></div><span class="timeline-status status-booked">${booked.duration}m</span></div>`);
+        }else if(open){
+          rows.push(`<button data-open-slot="${t}" class="timeline-row timeline-open w-full text-left"><div><span class="timeline-time">${label}</span><span class="ml-2">Open (${duration}m)</span></div><span class="timeline-status status-open">Book</span></button>`);
+        }else{
+          rows.push(`<div class="timeline-row timeline-blocked"><div><span class="timeline-time">${label}</span><span class="ml-2">Unavailable</span></div><span class="timeline-status status-blocked">Blocked</span></div>`);
+        }
+      }
+      dayTimeline.innerHTML=rows.join("");
+      dayTimeline.querySelectorAll("[data-open-slot]").forEach(btn=>btn.onclick=()=>quickBook(Number(btn.dataset.openSlot)));
+    }
+
     dayViewBtn.onclick=()=>{calendarView="day";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
     weekViewBtn.onclick=()=>{calendarView="week";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
     monthViewBtn.onclick=()=>{calendarView="month";currentDate=cloneDate(selectedDate);renderCalendar();renderSelectedDay();};
-    prevBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1);else if(calendarView==="week")currentDate=addDays(currentDate,-7);else{currentDate=addDays(currentDate,-1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
-    nextBtn.onclick=()=>{if(calendarView==="month")currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1);else if(calendarView==="week")currentDate=addDays(currentDate,7);else{currentDate=addDays(currentDate,1);selectedDate=cloneDate(currentDate);}renderCalendar();renderSelectedDay();};
-    function syncBlockInputs(){ timeInputs.style.display=blockType.value==="time_range"?"grid":"none"; } blockType.onchange=syncBlockInputs; syncBlockInputs();
-    blockStartDate.value=ymd(today); blockEndDate.value=ymd(today);
-    addBlockBtn.onclick=()=>{const type=blockType.value,sD=blockStartDate.value,eD=blockEndDate.value,sT=blockStartTime.value,eT=blockEndTime.value; if(!sD||!eD)return blockMsg.textContent="Please select both start and end dates."; if(eD<sD)return blockMsg.textContent="End date must be the same or after start date."; if(type==="time_range"&&(!sT||!eT||eT<=sT))return blockMsg.textContent="Invalid time range."; availabilityBlocks.push({id:crypto.randomUUID(),type,startDate:sD,endDate:eD,startTime:type==="time_range"?sT:null,endTime:type==="time_range"?eT:null}); blockMsg.textContent="Block added."; renderBlocksList(); renderCalendar(); renderSelectedDay();};
-    clearBlocksBtn.onclick=()=>{availabilityBlocks=[];renderBlocksList();renderCalendar();renderSelectedDay();blockMsg.textContent="All blocks cleared.";};
+    prevBtn.onclick=()=>{ if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()-1,1); else if(calendarView==="week") currentDate=addDays(currentDate,-7); else { currentDate=addDays(currentDate,-1); selectedDate=cloneDate(currentDate); } renderCalendar(); renderSelectedDay(); };
+    nextBtn.onclick=()=>{ if(calendarView==="month") currentDate=new Date(currentDate.getFullYear(),currentDate.getMonth()+1,1); else if(calendarView==="week") currentDate=addDays(currentDate,7); else { currentDate=addDays(currentDate,1); selectedDate=cloneDate(currentDate); } renderCalendar(); renderSelectedDay(); };
+    coachDurationEl.onchange=renderDayTimeline;
 
-    // Instructional Videos
-const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
-let instructionalData={}; videoSections.forEach(n=>instructionalData[n]={media:[],notes:[]});
+    // Blocks
+    const blockDate=document.getElementById("blockDate"),blockStart=document.getElementById("blockStart"),blockEnd=document.getElementById("blockEnd"),addBlockBtn=document.getElementById("addBlockBtn"),blockMsg=document.getElementById("blockMsg"),blocksList=document.getElementById("blocksList"),clearBlocksBtn=document.getElementById("clearBlocksBtn");
+    blockDate.value=ymd(today);
 
-const videosGridEl=document.getElementById("videosGrid");
-const videoSectionTabsEl=document.getElementById("videoSectionTabs");
-let activeVideoSection = "Scoring";
-
-function renderVideoSectionTabs(activeName="Scoring"){
-  videoSectionTabsEl.innerHTML=videoSections.map(name=>`
-    <button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>
-  `).join("");
-
-  videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>{
-    btn.onclick=()=>{
-      activeVideoSection = btn.dataset.videoTab;
-      renderInstructionalVideos();
-    };
-  });
-}
-
-function renderInstructionalVideos(){
-  renderVideoSectionTabs(activeVideoSection);
-
-  const sectionName = activeVideoSection;
-  const sec=instructionalData[sectionName];
-
-  const mediaList=sec.media.length
-    ? sec.media.map((m,idx)=>`
-      <div class="border border-gray-200 rounded-lg p-2">
-        <div class="flex gap-2">
-          <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name)}">
-          <div class="min-w-0">
-            <p class="text-sm font-semibold truncate">${escapeHtml(m.name)}</p>
-            <p class="text-xs muted">${m.type}</p>
-            <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
-          </div>
-        </div>
-        <button data-del-media="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
-      </div>
-    `).join("")
-    : `<p class="text-xs muted">No media uploaded.</p>`;
-
-  const notesList=sec.notes.length
-    ? sec.notes.map((n,idx)=>`
-      <div class="border border-gray-200 rounded-lg p-2">
-        <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
-        <p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p>
-        <button data-del-note="${sectionName}|${idx}" class="mt-2 text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button>
-      </div>
-    `).join("")
-    : `<p class="text-xs muted">No notes yet.</p>`;
-
-  videosGridEl.className = "grid grid-cols-1 gap-4";
-  videosGridEl.innerHTML = `
-    <div id="video-card-${sectionName}" class="card p-5">
-      <h3 class="text-2xl font-bold mb-4">${escapeHtml(sectionName)}</h3>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div>
-          <h4 class="text-sm font-semibold mb-2">Uploads</h4>
-          <div class="space-y-2">
-            <input type="file" accept="image/*,video/*" id="upload-${sectionName}" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white">
-            <button data-upload="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold">Upload</button>
-            <div class="space-y-2 max-h-[420px] overflow-auto">${mediaList}</div>
-          </div>
-        </div>
-        <div>
-          <h4 class="text-sm font-semibold mb-2">Notes / Description</h4>
-          <div class="space-y-2">
-            <textarea id="note-${sectionName}" placeholder="Add note/description..." class="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm min-h-24"></textarea>
-            <button data-add-note="${sectionName}" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold">Add Note</button>
-            <div class="space-y-2 max-h-[420px] overflow-auto">${notesList}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  videosGridEl.querySelectorAll("[data-upload]").forEach(btn=>{
-    btn.onclick=()=>{
-      const section=btn.dataset.upload;
-      const input=document.getElementById(`upload-${section}`);
-      const file=input?.files?.[0];
-      if(!file) return;
-      const type=file.type.startsWith("video")?"Video":"Photo";
-      const r=new FileReader();
-      r.onload=()=>{
-        instructionalData[section].media.unshift({type,name:file.name,url:r.result,createdAt:new Date().toISOString()});
-        renderInstructionalVideos();
-      };
-      r.readAsDataURL(file);
-    };
-  });
-
-  videosGridEl.querySelectorAll("[data-add-note]").forEach(btn=>{
-    btn.onclick=()=>{
-      const section=btn.dataset.addNote;
-      const nEl=document.getElementById(`note-${section}`);
-      const text=(nEl?.value||"").trim();
-      if(!text) return;
-      instructionalData[section].notes.unshift({text,createdAt:new Date().toISOString()});
-      renderInstructionalVideos();
-    };
-  });
-
-  videosGridEl.querySelectorAll("[data-del-media]").forEach(btn=>{
-    btn.onclick=()=>{
-      const [s,i]=btn.dataset.delMedia.split("|");
-      instructionalData[s].media.splice(Number(i),1);
-      renderInstructionalVideos();
-    };
-  });
-
-  videosGridEl.querySelectorAll("[data-del-note]").forEach(btn=>{
-    btn.onclick=()=>{
-      const [s,i]=btn.dataset.delNote.split("|");
-      instructionalData[s].notes.splice(Number(i),1);
-      renderInstructionalVideos();
-    };
-  });
-}
-
-    // Students
-    let alertSettings={emailEnabled:true,textEnabled:true,emailAddress:"",phoneNumber:""};
-    const alertEmailEnabledEl=document.getElementById("alertEmailEnabled"),alertTextEnabledEl=document.getElementById("alertTextEnabled"),alertEmailAddressEl=document.getElementById("alertEmailAddress"),alertPhoneNumberEl=document.getElementById("alertPhoneNumber"),saveAlertSettingsBtnEl=document.getElementById("saveAlertSettingsBtn"),alertSettingsMsgEl=document.getElementById("alertSettingsMsg");
-    let studentsData=[{id:"stu_1",name:"Ava Martinez",phone:"(555) 210-8841",email:"ava.martinez@email.com",photo:"",notes:[{id:crypto.randomUUID(),text:"Prefers evening lessons after school.",createdAt:new Date().toISOString()}],media:[{id:crypto.randomUUID(),type:"photo",name:"Recital Photo",url:"https://via.placeholder.com/300x200.png?text=Recital+Photo",createdAt:new Date().toISOString()}],questions:[{id:crypto.randomUUID(),text:"Can we spend more time on left-hand independence?",createdAt:new Date().toISOString(),replies:[]}]}];
-    let selectedStudentId=null;
-    const studentsListEl=document.getElementById("studentsList"),studentSearchEl=document.getElementById("studentSearch"),studentProfileContentEl=document.getElementById("studentProfileContent"),profileStatusEl=document.getElementById("profileStatus"),addStudentBtnEl=document.getElementById("addStudentBtn"),addStudentMsgEl=document.getElementById("addStudentMsg");
-    function sendCoachAlert(studentName,messageText){ if(alertSettings.emailEnabled&&alertSettings.emailAddress)console.log(`EMAIL ALERT to ${alertSettings.emailAddress}: ${studentName} - ${messageText}`); if(alertSettings.textEnabled&&alertSettings.phoneNumber)console.log(`TEXT ALERT to ${alertSettings.phoneNumber}: ${studentName} - ${messageText}`); }
-    function getFilteredStudents(){const q=(studentSearchEl?.value||"").trim().toLowerCase(); if(!q)return studentsData; return studentsData.filter(s=>s.name.toLowerCase().includes(q)||s.email.toLowerCase().includes(q)||s.phone.toLowerCase().includes(q));}
-    function renderStudentsList(){
-      const filtered=getFilteredStudents(); if(!filtered.length){studentsListEl.innerHTML=`<p class="muted text-sm px-2 py-2">No students found.</p>`;return;}
-      studentsListEl.innerHTML=filtered.map(s=>`<button class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${s.id===selectedStudentId?'border-blue-300 bg-blue-50':'border-gray-200'}" data-student-id="${s.id}"><div class="flex items-center gap-3"><img src="${s.photo||'https://via.placeholder.com/80x80.png?text=Photo'}" class="w-10 h-10 rounded-full object-cover border border-gray-200"><div><p class="font-semibold text-sm">${escapeHtml(s.name)}</p><p class="text-xs muted">${escapeHtml(s.email)}</p><p class="text-xs muted">${escapeHtml(s.phone)}</p></div></div></button>`).join("");
-      studentsListEl.querySelectorAll("[data-student-id]").forEach(btn=>btn.onclick=()=>{selectedStudentId=btn.dataset.studentId;renderStudentsList();renderStudentProfile();});
-    }
-    function renderStudentProfile(){
-      const s=studentsData.find(x=>x.id===selectedStudentId); if(!s){profileStatusEl.textContent="Select a student";studentProfileContentEl.innerHTML=`<p class="muted">Choose a student from the list to view full profile details.</p>`;return;}
-      profileStatusEl.textContent=`Viewing: ${s.name}`;
-      const notesHtml=s.notes.length?s.notes.map(n=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><div class="flex items-start justify-between gap-2"><div><p>${escapeHtml(n.text)}</p><p class="text-xs muted mt-1">${fmtDateTime(n.createdAt)}</p></div><div class="flex gap-1"><button data-note-edit="${n.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button><button data-note-delete="${n.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button></div></div></div>`).join(""):`<p class="muted">No notes uploaded.</p>`;
-      const mediaHtml=s.media.length?s.media.map(m=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><div class="flex items-start justify-between gap-2"><div class="flex gap-3"><img src="${m.url}" class="media-thumb"><div><p class="font-semibold">${m.type==="photo"?"Photo":"Video"}: ${escapeHtml(m.name)}</p><a href="${m.url}" target="_blank" class="text-blue-600 text-sm">Open file</a><p class="text-xs muted mt-1">${fmtDateTime(m.createdAt)}</p></div></div><div class="flex gap-1"><button data-media-edit="${m.id}" class="text-xs px-2 py-1 border border-gray-300 rounded">Edit</button><button data-media-delete="${m.id}" class="text-xs px-2 py-1 border border-red-300 text-red-700 rounded">Delete</button></div></div></div>`).join(""):`<p class="muted">No photos/videos uploaded.</p>`;
-      const questionsHtml=s.questions.length?s.questions.map(q=>`<div class="border border-gray-200 rounded-lg px-3 py-2"><p>${escapeHtml(q.text)}</p><p class="text-xs muted mt-1">Asked: ${fmtDateTime(q.createdAt)}</p><div class="mt-2 space-y-1">${q.replies.length?q.replies.map(r=>`<div class="text-xs bg-blue-50 border border-blue-200 rounded px-2 py-1"><strong>Reply:</strong> ${escapeHtml(r.text)} <span class="muted">(${fmtDateTime(r.createdAt)})</span></div>`).join(""):`<p class="text-xs muted">No reply yet.</p>`}</div><div class="mt-2 flex gap-2"><input data-reply-input="${q.id}" type="text" placeholder="Reply to student..." class="flex-1 border border-gray-300 rounded px-2 py-1 text-xs"><button data-reply-send="${q.id}" class="text-xs bg-blue-600 text-white px-2 py-1 rounded">Reply</button><button data-question-delete="${q.id}" class="text-xs border border-red-300 text-red-700 px-2 py-1 rounded">Delete</button></div></div>`).join(""):`<p class="muted">No student questions yet.</p>`;
-
-      studentProfileContentEl.innerHTML=`<div class="flex flex-col md:flex-row md:items-start gap-4 mb-4"><div><img src="${s.photo||'https://via.placeholder.com/120x120.png?text=Photo'}" class="student-avatar"><label class="mt-2 inline-block text-xs font-semibold text-blue-700 cursor-pointer">Upload Profile Photo<input id="profilePhotoUpload" type="file" accept="image/*" class="hidden"></label></div><div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2"><div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</div><div class="border border-gray-200 rounded-lg px-3 py-2"><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone)}</div><div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2"><span class="font-semibold">Email:</span> <a href="mailto:${encodeURIComponent(s.email)}" class="text-blue-600">${escapeHtml(s.email)}</a></div><div class="border border-gray-200 rounded-lg px-3 py-2 md:col-span-2 flex flex-wrap gap-2"><a href="tel:${phoneDigits(s.phone)}" class="text-sm bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-lg">Call</a><a href="sms:${phoneDigits(s.phone)}" class="text-sm bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-lg">Text</a><a href="mailto:${encodeURIComponent(s.email)}" class="text-sm bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1 rounded-lg">Email</a></div></div></div><div class="space-y-5"><div><h4 class="font-semibold mb-2">Notes</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2"><input id="newNoteText" type="text" placeholder="Add note..." class="md:col-span-3 border border-gray-300 rounded-lg px-3 py-2 text-sm"><button id="addNoteBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold">Add Note</button></div><div class="space-y-2">${notesHtml}</div></div><div><h4 class="font-semibold mb-2">Photos & Videos</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2"><select id="newMediaType" class="border border-gray-300 rounded-lg px-3 py-2 text-sm"><option value="photo">Photo</option><option value="video">Video</option></select><input id="newMediaFile" type="file" accept="image/*,video/*" class="md:col-span-2 border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"><button id="addMediaBtn" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold">Upload</button></div><div class="space-y-2">${mediaHtml}</div></div><div><div class="flex items-center justify-between mb-2"><h4 class="font-semibold">Questions from Student Portal</h4><button id="simulateMessageBtn" class="text-xs bg-amber-100 border border-amber-300 text-amber-800 px-2 py-1 rounded">Simulate Incoming Message</button></div><div class="space-y-2">${questionsHtml}</div></div></div>`;
-
-      document.getElementById("profilePhotoUpload")?.addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{s.photo=r.result;renderStudentsList();renderStudentProfile();};r.readAsDataURL(f);});
-      document.getElementById("addNoteBtn")?.addEventListener("click",()=>{const el=document.getElementById("newNoteText"),text=(el?.value||"").trim();if(!text)return;s.notes.unshift({id:crypto.randomUUID(),text,createdAt:new Date().toISOString()});renderStudentProfile();});
-      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.onclick=()=>{const n=s.notes.find(x=>x.id===btn.dataset.noteEdit);if(!n)return;const x=prompt("Edit note:",n.text);if(x===null)return;n.text=x.trim()||n.text;renderStudentProfile();});
-      document.querySelectorAll("[data-note-delete]").forEach(btn=>btn.onclick=()=>{s.notes=s.notes.filter(x=>x.id!==btn.dataset.noteDelete);renderStudentProfile();});
-      document.getElementById("addMediaBtn")?.addEventListener("click",()=>{const type=document.getElementById("newMediaType").value,file=document.getElementById("newMediaFile").files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{s.media.unshift({id:crypto.randomUUID(),type,name:file.name,url:r.result,createdAt:new Date().toISOString()});renderStudentProfile();};r.readAsDataURL(file);});
-      document.querySelectorAll("[data-media-edit]").forEach(btn=>btn.onclick=()=>{const m=s.media.find(x=>x.id===btn.dataset.mediaEdit);if(!m)return;const x=prompt("Edit media title:",m.name);if(x===null)return;m.name=x.trim()||m.name;renderStudentProfile();});
-      document.querySelectorAll("[data-media-delete]").forEach(btn=>btn.onclick=()=>{s.media=s.media.filter(x=>x.id!==btn.dataset.mediaDelete);renderStudentProfile();});
-      document.querySelectorAll("[data-reply-send]").forEach(btn=>btn.onclick=()=>{const q=s.questions.find(x=>x.id===btn.dataset.replySend),input=document.querySelector(`[data-reply-input="${btn.dataset.replySend}"]`),text=(input?.value||"").trim();if(!q||!text)return;q.replies.push({text,createdAt:new Date().toISOString()});renderStudentProfile();});
-      document.querySelectorAll("[data-question-delete]").forEach(btn=>btn.onclick=()=>{s.questions=s.questions.filter(x=>x.id!==btn.dataset.questionDelete);renderStudentProfile();});
-      document.getElementById("simulateMessageBtn")?.addEventListener("click",()=>{const sample=prompt("Simulate student message:","Can we reschedule this week?");if(!sample)return;s.questions.unshift({id:crypto.randomUUID(),text:sample,createdAt:new Date().toISOString(),replies:[]});sendCoachAlert(s.name,sample);renderStudentProfile();});
-    }
-    function wireStudentSearch(){ studentSearchEl?.addEventListener("input",renderStudentsList); }
-    function wireAddStudent(){
-      addStudentBtnEl?.addEventListener("click",()=>{
-        const name=(document.getElementById("newStudentName").value||"").trim(),email=(document.getElementById("newStudentEmail").value||"").trim(),phone=(document.getElementById("newStudentPhone").value||"").trim(),photoEl=document.getElementById("newStudentPhoto");
-        if(!name||!email||!phone){addStudentMsgEl.textContent="Please enter name, email, and phone.";return;}
-        const base={id:`stu_${Date.now()}`,name,email,phone,photo:"",notes:[],media:[],questions:[]};
-        const commit=sObj=>{studentsData.unshift(sObj);selectedStudentId=sObj.id;document.getElementById("newStudentName").value="";document.getElementById("newStudentEmail").value="";document.getElementById("newStudentPhone").value="";if(photoEl)photoEl.value="";renderStudentsList();renderStudentProfile();addStudentMsgEl.innerHTML=`Student added. Invite sent to <strong>${escapeHtml(email)}</strong>.`;};
-        const pf=photoEl?.files?.[0]; if(pf){const r=new FileReader();r.onload=()=>{base.photo=r.result;commit(base);};r.readAsDataURL(pf);} else commit(base);
+    function renderBlocksList(){
+      const store=loadStore();
+      const blocks=(store.coachBlocks||[]).filter(b=>b.coachId===COACH_ID).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+      blocksList.innerHTML=blocks.length
+        ? blocks.map(b=>`<div class="border border-gray-200 rounded-lg px-3 py-2 flex justify-between gap-2"><p>${b.date} ${b.start}-${b.end}</p><button data-del-block="${b.id}" class="text-xs text-red-600 font-semibold">Delete</button></div>`).join("")
+        : `<p class="muted">No blocks added.</p>`;
+      blocksList.querySelectorAll("[data-del-block]").forEach(btn=>{
+        btn.onclick=()=>{
+          const s=loadStore();
+          s.coachBlocks=(s.coachBlocks||[]).filter(b=>b.id!==btn.dataset.delBlock);
+          saveStore(s); rerenderAll();
+        };
       });
     }
-    function wireAlertSettings(){
-      alertEmailAddressEl.value=alertSettings.emailAddress;alertPhoneNumberEl.value=alertSettings.phoneNumber;alertEmailEnabledEl.checked=alertSettings.emailEnabled;alertTextEnabledEl.checked=alertSettings.textEnabled;
-      saveAlertSettingsBtnEl.onclick=()=>{alertSettings={emailEnabled:alertEmailEnabledEl.checked,textEnabled:alertTextEnabledEl.checked,emailAddress:(alertEmailAddressEl.value||"").trim(),phoneNumber:(alertPhoneNumberEl.value||"").trim()};alertSettingsMsgEl.textContent="Alert settings saved.";};
+
+    addBlockBtn.onclick=()=>{
+      const date=blockDate.value,start=blockStart.value,end=blockEnd.value;
+      if(!date||!start||!end||end<=start){ blockMsg.textContent="Invalid block."; return; }
+      const s=loadStore();
+      s.coachBlocks.push({id:uid("block"),coachId:COACH_ID,date,start,end,createdAt:new Date().toISOString()});
+      saveStore(s); blockMsg.textContent="Block added."; rerenderAll();
+    };
+    clearBlocksBtn.onclick=()=>{ const s=loadStore(); s.coachBlocks=(s.coachBlocks||[]).filter(b=>b.coachId!==COACH_ID); saveStore(s); rerenderAll(); };
+
+    // ===== Videos =====
+    const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
+    const videoStudentSelect=document.getElementById("videoStudentSelect");
+    const videoSectionTabsEl=document.getElementById("videoSectionTabs");
+    const videosGridEl=document.getElementById("videosGrid");
+    let activeVideoSection="Scoring";
+    let activeVideoStudentId=null;
+
+    function renderVideoStudentSelect(){
+      const s=loadStore(), students=getCoachStudents(s);
+      if(!students.length){
+        videoStudentSelect.innerHTML=`<option value="">No students</option>`;
+        activeVideoStudentId=null; renderInstructionalVideos(); return;
+      }
+      if(!activeVideoStudentId || !s.students[activeVideoStudentId]) activeVideoStudentId=students[0].id;
+      videoStudentSelect.innerHTML=students.map(st=>`<option value="${st.id}" ${st.id===activeVideoStudentId?"selected":""}>${escapeHtml(st.name)}</option>`).join("");
+      renderInstructionalVideos();
+    }
+    videoStudentSelect.onchange=()=>{ activeVideoStudentId=videoStudentSelect.value; renderInstructionalVideos(); };
+
+    function renderVideoSectionTabs(activeName="Scoring"){
+      videoSectionTabsEl.innerHTML=videoSections.map(name=>`<button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>`).join("");
+      videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>btn.onclick=()=>{activeVideoSection=btn.dataset.videoTab;renderInstructionalVideos();});
     }
 
-    // Init
-    renderBlocksList(); renderCalendar(); renderSelectedDay();
-    renderInstructionalVideos();
-    renderStudentsList(); renderStudentProfile(); wireStudentSearch(); wireAddStudent(); wireAlertSettings();
+    function renderInstructionalVideos(){
+      renderVideoSectionTabs(activeVideoSection);
+      const store=loadStore();
+      if(!activeVideoStudentId){
+        videosGridEl.innerHTML=`<div class="card p-5"><p class="muted">Add a student first.</p></div>`;
+        return;
+      }
+
+      const section=activeVideoSection;
+      const media=(store.media||[]).filter(m=>m.studentId===activeVideoStudentId && m.section===section);
+      const notes=(store.notes||[]).filter(n=>n.studentId===activeVideoStudentId && n.section===section);
+
+      videosGridEl.innerHTML=`
+        <div class="card p-5">
+          <h3 class="text-xl font-bold mb-3">${escapeHtml(section)} · ${escapeHtml(store.students[activeVideoStudentId]?.name||activeVideoStudentId)}</h3>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <h4 class="text-sm font-semibold mb-2">Coach Uploads</h4>
+              <input id="coachMediaFile" type="file" accept="image/*,video/*" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white mb-2">
+              <button id="uploadCoachMediaBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mb-3">Upload</button>
+              <div class="space-y-2 max-h-[420px] overflow-auto">
+                ${media.length ? media.map(m=>`
+                  <div class="border border-gray-200 rounded-lg p-2">
+                    <div class="flex gap-2">
+                      <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name||"Media")}">
+                      <div class="min-w-0">
+                        <p class="text-sm font-semibold truncate">${escapeHtml(m.name||"Media")}</p>
+                        <p class="text-xs muted">${escapeHtml(m.type||"file")} · ${m.createdBy==="coach"?"Coach":"Student"}</p>
+                        <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
+                      </div>
+                    </div>
+                  </div>`).join("") : `<p class="text-xs muted">No media yet.</p>`}
+              </div>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold mb-2">Coach Notes</h4>
+              <textarea id="coachNoteText" placeholder="Add coaching note..." class="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm min-h-24"></textarea>
+              <button id="addCoachNoteBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mt-2">Add Note</button>
+              <div class="space-y-2 max-h-[420px] overflow-auto mt-3">
+                ${notes.length ? notes.map(n=>`
+                  <div class="border border-gray-200 rounded-lg p-2 ${n.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}">
+                    <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
+                    <p class="text-xs muted mt-1">${n.authorRole==="coach"?"Coach":"Student"} · ${fmtDateTime(n.createdAt)}</p>
+                  </div>`).join("") : `<p class="text-xs muted">No notes yet.</p>`}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("uploadCoachMediaBtn").onclick=()=>{
+        const file=document.getElementById("coachMediaFile")?.files?.[0];
+        if(!file) return;
+        const reader=new FileReader();
+        reader.onload=()=>{
+          const s=loadStore();
+          s.media.unshift({
+            id:uid("media"),
+            studentId:activeVideoStudentId,
+            section,
+            name:file.name,
+            url:reader.result,
+            type:file.type.startsWith("video")?"video":"photo",
+            createdBy:"coach",
+            createdAt:new Date().toISOString()
+          });
+          saveStore(s); rerenderAll();
+        };
+        reader.readAsDataURL(file);
+      };
+
+      document.getElementById("addCoachNoteBtn").onclick=()=>{
+        const text=(document.getElementById("coachNoteText")?.value||"").trim();
+        if(!text) return;
+        const s=loadStore();
+        s.notes.unshift({
+          id:uid("note"),
+          studentId:activeVideoStudentId,
+          section,
+          authorRole:"coach",
+          text,
+          createdAt:new Date().toISOString()
+        });
+        saveStore(s); rerenderAll();
+      };
+    }
+
+    // ===== Init + Sync =====
+    function rerenderAll(){
+      renderDashboard();
+      renderStudentsList();
+      renderSelectedStudentPanel();
+      renderCalendar();
+      renderSelectedDay();
+      renderDayTimeline();
+      renderBlocksList();
+      renderVideoStudentSelect();
+      renderInstructionalVideos();
+    }
+
+    window.addEventListener("storage",(e)=>{ if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick") rerenderAll(); });
+
+    rerenderAll();
     showSection("dashboard");
   </script>
 </body>
