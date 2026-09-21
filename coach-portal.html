@@ -34,11 +34,6 @@
     .top-nav-btn:hover { background: #f9fafb; }
     .top-nav-btn.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
 
-    .video-tab-btn{
-      border:1px solid #d1d5db;background:#fff;color:#374151;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;
-    }
-    .video-tab-btn.active{ border-color:#93c5fd;background:#eff6ff;color:#1d4ed8; }
-
     .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .week-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
     .day-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 8px; }
@@ -72,9 +67,6 @@
     .status-booked { background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; }
     .status-blocked { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
 
-    .media-thumb { width: 96px; height: 72px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
-    .instr-thumb { width: 84px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #d1d5db; background: #f3f4f6; }
-
     .hidden-section { display: none; }
   </style>
 </head>
@@ -98,7 +90,6 @@
         <div class="flex flex-wrap gap-2">
           <button id="navDashboardBtn" class="top-nav-btn active">Dashboard</button>
           <button id="navCalendarBtn" class="top-nav-btn">Calendar</button>
-          <button id="navVideosBtn" class="top-nav-btn">Instructional Videos</button>
           <button id="navStudentsBtn" class="top-nav-btn">Students</button>
         </div>
       </section>
@@ -106,7 +97,7 @@
       <section id="dashboardSection">
         <div class="card p-5">
           <h2 class="text-2xl font-bold mb-1">Dashboard</h2>
-          <p class="muted mb-4">Shared simulation mode is ON. Changes here sync to student portal tabs instantly.</p>
+          <p class="muted mb-4">Overview of your students, lessons, and schedule.</p>
           <div id="dashboardStats" class="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm"></div>
         </div>
       </section>
@@ -165,7 +156,7 @@
 
             <div class="card p-5" id="editAvailabilityCard">
               <h3 class="text-lg font-bold mb-1">Edit Availability</h3>
-              <p class="text-sm muted mb-4">Blocks sync to students immediately.</p>
+              <p class="text-sm muted mb-4">Manage your open and blocked time.</p>
               <div class="space-y-2">
                 <label class="text-sm font-medium">Date</label>
                 <input id="blockDate" type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
@@ -187,29 +178,12 @@
         </div>
       </section>
 
-      <section id="videosSection" class="hidden-section">
-        <div class="card p-5 mb-4">
-          <h2 class="text-2xl font-bold">Instructional Videos</h2>
-          <p class="muted text-sm mb-3">Pick student + section. Uploads and notes appear in student portal too.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-            <div>
-              <label class="text-sm font-medium">Target Student</label>
-              <select id="videoStudentSelect" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></select>
-            </div>
-            <div class="flex items-end">
-              <div id="videoSectionTabs" class="flex flex-wrap gap-2"></div>
-            </div>
-          </div>
-        </div>
-        <div id="videosGrid" class="grid grid-cols-1 gap-4"></div>
-      </section>
-
       <section id="studentsSection" class="hidden-section">
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div class="xl:col-span-1">
             <div class="card p-5 mb-4">
               <h2 class="text-2xl font-bold mb-1">Students</h2>
-              <p class="muted text-sm mb-3">Create students and send invite links.</p>
+              <p class="muted text-sm mb-3">Manage your student roster.</p>
               <input id="studentSearch" type="text" placeholder="Search..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
             </div>
             <div class="card p-3"><div id="studentsList" class="space-y-2"></div></div>
@@ -224,7 +198,7 @@
                 <input id="newStudentPhone" type="text" placeholder="Phone" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <input id="newStudentPackage" type="number" min="1" value="30" placeholder="Hours package" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               </div>
-              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Student + Invite Link</button>
+              <button id="addStudentBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Add Student</button>
               <p id="addStudentMsg" class="text-xs muted mt-2"></p>
             </div>
 
@@ -248,10 +222,7 @@
         "stu_1": { id:"stu_1", name:"Robert Christenson", email:"robert@example.com", phone:"(555) 111-2222", coachId:"coach_1", packageMinutes:1800, usedMinutes:0 }
       },
       lessons: [],
-      coachBlocks: [],
-      notes: [],
-      messages: [],
-      media: []
+      coachBlocks: []
     };
 
     function loadStore(){
@@ -267,7 +238,6 @@
 
     // ===== Helpers =====
     function escapeHtml(str=""){ return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-    function fmtDateTime(iso){ const d = new Date(iso); return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
     const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
     const cloneDate=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
     const isSameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();
@@ -287,8 +257,8 @@
     function overlaps(aS,aE,bS,bE){ return Math.max(aS,bS) < Math.min(aE,bE); }
 
     // ===== Nav =====
-    const sections={dashboard:document.getElementById("dashboardSection"),calendar:document.getElementById("calendarSection"),videos:document.getElementById("videosSection"),students:document.getElementById("studentsSection")};
-    const navBtns={dashboard:document.getElementById("navDashboardBtn"),calendar:document.getElementById("navCalendarBtn"),videos:document.getElementById("navVideosBtn"),students:document.getElementById("navStudentsBtn")};
+    const sections={dashboard:document.getElementById("dashboardSection"),calendar:document.getElementById("calendarSection"),students:document.getElementById("studentsSection")};
+    const navBtns={dashboard:document.getElementById("navDashboardBtn"),calendar:document.getElementById("navCalendarBtn"),students:document.getElementById("navStudentsBtn")};
     function showSection(name){
       Object.values(sections).forEach(el=>el.classList.add("hidden-section"));
       sections[name]?.classList.remove("hidden-section");
@@ -297,7 +267,6 @@
     }
     navBtns.dashboard.onclick=()=>showSection("dashboard");
     navBtns.calendar.onclick=()=>showSection("calendar");
-    navBtns.videos.onclick=()=>showSection("videos");
     navBtns.students.onclick=()=>showSection("students");
 
     // ===== Dashboard =====
@@ -345,7 +314,6 @@
           selectedStudentId=btn.dataset.studentId;
           renderStudentsList();
           renderSelectedStudentPanel();
-          renderVideoStudentSelect();
         };
       });
     }
@@ -356,7 +324,6 @@
       const panel=document.getElementById("selectedStudentPanel");
       if(!s){ panel.innerHTML=`<p class="muted">Select a student from the list.</p>`; return; }
 
-      const invite = `student-portal.html?student=${encodeURIComponent(s.id)}`;
       panel.innerHTML=`
         <div class="space-y-2">
           <p><span class="font-semibold">Name:</span> ${escapeHtml(s.name)}</p>
@@ -364,18 +331,8 @@
           <p><span class="font-semibold">Phone:</span> ${escapeHtml(s.phone||"")}</p>
           <p><span class="font-semibold">Package:</span> ${(Number(s.packageMinutes||0)/60).toFixed(1)}h</p>
           <p><span class="font-semibold">Used:</span> ${(Number(s.usedMinutes||0)/60).toFixed(1)}h</p>
-          <div class="border rounded-lg p-2 bg-gray-50">
-            <p class="text-xs font-semibold mb-1">Invite Link</p>
-            <input id="inviteLinkInput" value="${invite}" class="w-full border border-gray-300 rounded px-2 py-1 text-xs" readonly />
-            <button id="copyInviteBtn" class="mt-2 text-xs bg-blue-600 text-white px-2 py-1 rounded">Copy Link</button>
-          </div>
         </div>
       `;
-      document.getElementById("copyInviteBtn").onclick=async()=>{
-        const txt=document.getElementById("inviteLinkInput").value;
-        try { await navigator.clipboard.writeText(txt); alert("Invite link copied."); }
-        catch { alert("Copy failed. You can copy manually."); }
-      };
     }
 
     document.getElementById("addStudentBtn").onclick=()=>{
@@ -396,10 +353,9 @@
       document.getElementById("newStudentEmail").value="";
       document.getElementById("newStudentPhone").value="";
       document.getElementById("newStudentPackage").value="30";
-      msg.innerHTML=`Student added. Invite: <strong>student-portal.html?student=${id}</strong>`;
+      msg.textContent="Student added.";
       renderStudentsList();
       renderSelectedStudentPanel();
-      renderVideoStudentSelect();
       renderDashboard();
     };
     studentSearchEl.oninput=renderStudentsList;
@@ -572,118 +528,6 @@
     };
     clearBlocksBtn.onclick=()=>{ const s=loadStore(); s.coachBlocks=(s.coachBlocks||[]).filter(b=>b.coachId!==COACH_ID); saveStore(s); rerenderAll(); };
 
-    // ===== Videos =====
-    const videoSections=["Scoring","Fundamentals","Strategy","Theory","Putting","Chipping & Bunkers","Irons","Woods"];
-    const videoStudentSelect=document.getElementById("videoStudentSelect");
-    const videoSectionTabsEl=document.getElementById("videoSectionTabs");
-    const videosGridEl=document.getElementById("videosGrid");
-    let activeVideoSection="Scoring";
-    let activeVideoStudentId=null;
-
-    function renderVideoStudentSelect(){
-      const s=loadStore(), students=getCoachStudents(s);
-      if(!students.length){
-        videoStudentSelect.innerHTML=`<option value="">No students</option>`;
-        activeVideoStudentId=null; renderInstructionalVideos(); return;
-      }
-      if(!activeVideoStudentId || !s.students[activeVideoStudentId]) activeVideoStudentId=students[0].id;
-      videoStudentSelect.innerHTML=students.map(st=>`<option value="${st.id}" ${st.id===activeVideoStudentId?"selected":""}>${escapeHtml(st.name)}</option>`).join("");
-      renderInstructionalVideos();
-    }
-    videoStudentSelect.onchange=()=>{ activeVideoStudentId=videoStudentSelect.value; renderInstructionalVideos(); };
-
-    function renderVideoSectionTabs(activeName="Scoring"){
-      videoSectionTabsEl.innerHTML=videoSections.map(name=>`<button class="video-tab-btn ${activeName===name?"active":""}" data-video-tab="${name}">${name}</button>`).join("");
-      videoSectionTabsEl.querySelectorAll("[data-video-tab]").forEach(btn=>btn.onclick=()=>{activeVideoSection=btn.dataset.videoTab;renderInstructionalVideos();});
-    }
-
-    function renderInstructionalVideos(){
-      renderVideoSectionTabs(activeVideoSection);
-      const store=loadStore();
-      if(!activeVideoStudentId){
-        videosGridEl.innerHTML=`<div class="card p-5"><p class="muted">Add a student first.</p></div>`;
-        return;
-      }
-
-      const section=activeVideoSection;
-      const media=(store.media||[]).filter(m=>m.studentId===activeVideoStudentId && m.section===section);
-      const notes=(store.notes||[]).filter(n=>n.studentId===activeVideoStudentId && n.section===section);
-
-      videosGridEl.innerHTML=`
-        <div class="card p-5">
-          <h3 class="text-xl font-bold mb-3">${escapeHtml(section)} · ${escapeHtml(store.students[activeVideoStudentId]?.name||activeVideoStudentId)}</h3>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div>
-              <h4 class="text-sm font-semibold mb-2">Coach Uploads</h4>
-              <input id="coachMediaFile" type="file" accept="image/*,video/*" class="w-full border border-gray-300 rounded-lg px-2 py-1 text-xs bg-white mb-2">
-              <button id="uploadCoachMediaBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mb-3">Upload</button>
-              <div class="space-y-2 max-h-[420px] overflow-auto">
-                ${media.length ? media.map(m=>`
-                  <div class="border border-gray-200 rounded-lg p-2">
-                    <div class="flex gap-2">
-                      <img src="${m.url}" class="instr-thumb" alt="${escapeHtml(m.name||"Media")}">
-                      <div class="min-w-0">
-                        <p class="text-sm font-semibold truncate">${escapeHtml(m.name||"Media")}</p>
-                        <p class="text-xs muted">${escapeHtml(m.type||"file")} · ${m.createdBy==="coach"?"Coach":"Student"}</p>
-                        <p class="text-xs muted">${fmtDateTime(m.createdAt)}</p>
-                      </div>
-                    </div>
-                  </div>`).join("") : `<p class="text-xs muted">No media yet.</p>`}
-              </div>
-            </div>
-            <div>
-              <h4 class="text-sm font-semibold mb-2">Coach Notes</h4>
-              <textarea id="coachNoteText" placeholder="Add coaching note..." class="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm min-h-24"></textarea>
-              <button id="addCoachNoteBtn" class="w-full bg-blue-600 text-white px-2 py-2 rounded text-sm font-semibold mt-2">Add Note</button>
-              <div class="space-y-2 max-h-[420px] overflow-auto mt-3">
-                ${notes.length ? notes.map(n=>`
-                  <div class="border border-gray-200 rounded-lg p-2 ${n.authorRole==="coach"?"bg-amber-50":"bg-blue-50"}">
-                    <p class="text-sm whitespace-pre-wrap">${escapeHtml(n.text)}</p>
-                    <p class="text-xs muted mt-1">${n.authorRole==="coach"?"Coach":"Student"} · ${fmtDateTime(n.createdAt)}</p>
-                  </div>`).join("") : `<p class="text-xs muted">No notes yet.</p>`}
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      document.getElementById("uploadCoachMediaBtn").onclick=()=>{
-        const file=document.getElementById("coachMediaFile")?.files?.[0];
-        if(!file) return;
-        const reader=new FileReader();
-        reader.onload=()=>{
-          const s=loadStore();
-          s.media.unshift({
-            id:uid("media"),
-            studentId:activeVideoStudentId,
-            section,
-            name:file.name,
-            url:reader.result,
-            type:file.type.startsWith("video")?"video":"photo",
-            createdBy:"coach",
-            createdAt:new Date().toISOString()
-          });
-          saveStore(s); rerenderAll();
-        };
-        reader.readAsDataURL(file);
-      };
-
-      document.getElementById("addCoachNoteBtn").onclick=()=>{
-        const text=(document.getElementById("coachNoteText")?.value||"").trim();
-        if(!text) return;
-        const s=loadStore();
-        s.notes.unshift({
-          id:uid("note"),
-          studentId:activeVideoStudentId,
-          section,
-          authorRole:"coach",
-          text,
-          createdAt:new Date().toISOString()
-        });
-        saveStore(s); rerenderAll();
-      };
-    }
-
     // ===== Init + Sync =====
     function rerenderAll(){
       renderDashboard();
@@ -693,8 +537,6 @@
       renderSelectedDay();
       renderDayTimeline();
       renderBlocksList();
-      renderVideoStudentSelect();
-      renderInstructionalVideos();
     }
 
     window.addEventListener("storage",(e)=>{ if(e.key===STORE_KEY || e.key===STORE_KEY+"_tick") rerenderAll(); });
