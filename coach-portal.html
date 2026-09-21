@@ -6,6 +6,7 @@
   <title>Lessons Shop - Coach Portal</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -253,6 +254,10 @@
       .week-grid {
         gap: 4px;
       }
+
+      .timeline-time {
+        min-width: 72px;
+      }
     }
   </style>
 </head>
@@ -270,7 +275,10 @@
               alt="Lessons Shop Logo"
             />
           </div>
-          <h1 class="text-xl font-bold truncate">Coach Portal</h1>
+
+          <h1 class="text-xl font-bold truncate">
+            Coach Portal
+          </h1>
         </div>
 
         <div class="flex items-center gap-4">
@@ -292,15 +300,24 @@
       <!-- Navigation -->
       <section class="mb-4">
         <div class="flex flex-wrap gap-2">
-          <button id="navDashboardBtn" class="top-nav-btn active">
+          <button
+            id="navDashboardBtn"
+            class="top-nav-btn active"
+          >
             Dashboard
           </button>
 
-          <button id="navCalendarBtn" class="top-nav-btn">
+          <button
+            id="navCalendarBtn"
+            class="top-nav-btn"
+          >
             Calendar
           </button>
 
-          <button id="navStudentsBtn" class="top-nav-btn">
+          <button
+            id="navStudentsBtn"
+            class="top-nav-btn"
+          >
             Students
           </button>
         </div>
@@ -309,7 +326,10 @@
       <!-- Dashboard -->
       <section id="dashboardSection">
         <div class="card p-5">
-          <h2 class="text-2xl font-bold mb-1">Dashboard</h2>
+          <h2 class="text-2xl font-bold mb-1">
+            Dashboard
+          </h2>
+
           <p class="muted mb-4">
             Overview of your students, lessons, and schedule.
           </p>
@@ -322,28 +342,41 @@
       </section>
 
       <!-- Calendar -->
-      <section id="calendarSection" class="hidden-section">
-
+      <section
+        id="calendarSection"
+        class="hidden-section"
+      >
         <div class="card p-5 mb-4">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-
             <div>
-              <h2 class="text-2xl font-bold">Calendar</h2>
+              <h2 class="text-2xl font-bold">
+                Calendar
+              </h2>
+
               <p class="muted text-sm">
                 Schedule lessons and manage your availability.
               </p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-              <button id="dayViewBtn" class="view-btn">
+              <button
+                id="dayViewBtn"
+                class="view-btn"
+              >
                 Day
               </button>
 
-              <button id="weekViewBtn" class="view-btn">
+              <button
+                id="weekViewBtn"
+                class="view-btn"
+              >
                 Week
               </button>
 
-              <button id="monthViewBtn" class="view-btn active">
+              <button
+                id="monthViewBtn"
+                class="view-btn active"
+              >
                 Month
               </button>
 
@@ -357,7 +390,10 @@
                 <i class="fa-solid fa-chevron-left"></i>
               </button>
 
-              <p id="rangeLabel" class="min-w-44 text-center font-semibold"></p>
+              <p
+                id="rangeLabel"
+                class="min-w-44 text-center font-semibold"
+              ></p>
 
               <button
                 id="nextBtn"
@@ -375,7 +411,10 @@
           <!-- Calendar Grid -->
           <div>
             <div class="card p-4">
-              <div id="monthHeaders" class="calendar-grid mb-2">
+              <div
+                id="monthHeaders"
+                class="calendar-grid mb-2"
+              >
                 <div class="cal-dow">Sun</div>
                 <div class="cal-dow">Mon</div>
                 <div class="cal-dow">Tue</div>
@@ -385,9 +424,15 @@
                 <div class="cal-dow">Sat</div>
               </div>
 
-              <div id="weekHeaders" class="week-grid mb-2 hidden"></div>
+              <div
+                id="weekHeaders"
+                class="week-grid mb-2 hidden"
+              ></div>
 
-              <div id="calendarGrid" class="calendar-grid"></div>
+              <div
+                id="calendarGrid"
+                class="calendar-grid"
+              ></div>
             </div>
           </div>
 
@@ -395,8 +440,8 @@
           <div>
             <div class="card p-5">
               <h3
-                class="font-semibold mb-2"
                 id="selectedDateLabel"
+                class="font-semibold mb-2"
               >
                 Selected Day Appointments
               </h3>
@@ -518,7 +563,9 @@
               <hr class="my-4" />
 
               <div class="flex items-center justify-between mb-2">
-                <h4 class="font-semibold">Current Blocks</h4>
+                <h4 class="font-semibold">
+                  Current Blocks
+                </h4>
 
                 <button
                   id="clearBlocksBtn"
@@ -538,101 +585,104 @@
       </section>
 
       <!-- Students -->
-      <section id="studentsSection" class="hidden-section">
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <section
+        id="studentsSection"
+        class="hidden-section"
+      >
+        <div class="max-w-3xl mx-auto space-y-4">
 
-          <!-- Student List -->
-          <div class="xl:col-span-1">
-            <div class="card p-5 mb-4">
-              <h2 class="text-2xl font-bold mb-1">Students</h2>
+          <!-- Add Student First -->
+          <div class="card p-5">
+            <h2 class="text-2xl font-bold mb-1">
+              Add Student
+            </h2>
 
-              <p class="muted text-sm mb-3">
-                Manage your student roster.
-              </p>
+            <p class="muted text-sm mb-4">
+              Add a student to your coaching roster.
+            </p>
 
+            <div class="space-y-2">
               <input
-                id="studentSearch"
+                id="newStudentName"
                 type="text"
-                placeholder="Search students..."
+                placeholder="Full name"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
               />
-            </div>
 
-            <div class="card p-3 mb-4">
-              <div
-                id="studentsList"
-                class="space-y-2"
-              ></div>
-            </div>
+              <input
+                id="newStudentEmail"
+                type="email"
+                placeholder="Email"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              />
 
-            <!-- Add Student -->
-            <div class="card p-5">
-              <h3 class="text-lg font-bold mb-2">
-                Add Student
-              </h3>
+              <input
+                id="newStudentPhone"
+                type="text"
+                placeholder="Phone"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              />
 
-              <div class="space-y-2">
-                <input
-                  id="newStudentName"
-                  type="text"
-                  placeholder="Full name"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                />
-
-                <input
-                  id="newStudentEmail"
-                  type="email"
-                  placeholder="Email"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                />
+              <div>
+                <label
+                  for="newStudentLessons"
+                  class="text-xs font-medium muted"
+                >
+                  Lessons Purchased
+                </label>
 
                 <input
-                  id="newStudentPhone"
-                  type="text"
-                  placeholder="Phone"
+                  id="newStudentLessons"
+                  type="number"
+                  min="1"
+                  value="4"
                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                 />
-
-                <div>
-                  <label
-                    for="newStudentLessons"
-                    class="text-xs font-medium muted"
-                  >
-                    Lessons Purchased
-                  </label>
-
-                  <input
-                    id="newStudentLessons"
-                    type="number"
-                    min="1"
-                    value="4"
-                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                  />
-                </div>
               </div>
 
               <button
                 id="addStudentBtn"
-                class="w-full mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+                class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold"
               >
                 Add Student
               </button>
 
               <p
                 id="addStudentMsg"
-                class="text-xs muted mt-2"
+                class="text-xs muted"
               ></p>
             </div>
           </div>
 
-          <!-- Student Detail Workspace -->
-          <div class="xl:col-span-2">
-            <div id="selectedStudentPanel">
-              <div class="card p-5">
-                <p class="muted">
-                  Select a student to view their lessons, notes, photos, and videos.
-                </p>
-              </div>
+          <!-- Search and Select Student -->
+          <div class="card p-5">
+            <h2 class="text-lg font-bold mb-2">
+              Find Student
+            </h2>
+
+            <input
+              id="studentSearch"
+              type="text"
+              placeholder="Search students..."
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm mb-3"
+            />
+
+            <select
+              id="studentsList"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="">
+                Select a student
+              </option>
+            </select>
+          </div>
+
+          <!-- Selected Student Profile -->
+          <div id="selectedStudentPanel">
+            <div class="card p-5">
+              <p class="muted">
+                Select a student to view their profile, lessons, notes, photos, and videos.
+              </p>
             </div>
           </div>
         </div>
@@ -676,7 +726,10 @@
 
       if (!raw) {
         const initialStore = cloneStore(defaultStore);
-        localStorage.setItem(STORE_KEY, JSON.stringify(initialStore));
+        localStorage.setItem(
+          STORE_KEY,
+          JSON.stringify(initialStore)
+        );
         return initialStore;
       }
 
@@ -708,17 +761,30 @@
         console.error("Could not read saved data:", error);
 
         const resetStore = cloneStore(defaultStore);
-        localStorage.setItem(STORE_KEY, JSON.stringify(resetStore));
+
+        localStorage.setItem(
+          STORE_KEY,
+          JSON.stringify(resetStore)
+        );
+
         return resetStore;
       }
     }
 
     function saveStore(store) {
       try {
-        localStorage.setItem(STORE_KEY, JSON.stringify(store));
-        localStorage.setItem(`${STORE_KEY}_tick`, String(Date.now()));
+        localStorage.setItem(
+          STORE_KEY,
+          JSON.stringify(store)
+        );
+
+        localStorage.setItem(
+          `${STORE_KEY}_tick`,
+          String(Date.now())
+        );
       } catch (error) {
         console.error("Could not save data:", error);
+
         alert(
           "The item could not be saved. Your browser may be out of storage, especially if a video file is very large."
         );
@@ -798,10 +864,13 @@
     }
 
     function monthName(year, month) {
-      return new Date(year, month, 1).toLocaleDateString(undefined, {
-        month: "long",
-        year: "numeric"
-      });
+      return new Date(year, month, 1).toLocaleDateString(
+        undefined,
+        {
+          month: "long",
+          year: "numeric"
+        }
+      );
     }
 
     function getWeekStart(date) {
@@ -844,10 +913,9 @@
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
 
-      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-        2,
-        "0"
-      )}`;
+      return `${String(hours).padStart(2, "0")}:${String(
+        minutes
+      ).padStart(2, "0")}`;
     }
 
     function minutesToLabel(totalMinutes) {
@@ -861,11 +929,17 @@
         hour12 = 12;
       }
 
-      return `${hour12}:${String(minutes).padStart(2, "0")} ${meridiem}`;
+      return `${hour12}:${String(minutes).padStart(
+        2,
+        "0"
+      )} ${meridiem}`;
     }
 
     function overlaps(startA, endA, startB, endB) {
-      return Math.max(startA, startB) < Math.min(endA, endB);
+      return (
+        Math.max(startA, startB) <
+        Math.min(endA, endB)
+      );
     }
 
     function formatLessonLabel(index, total) {
@@ -902,7 +976,9 @@
       });
 
       if (sections[sectionName]) {
-        sections[sectionName].classList.remove("hidden-section");
+        sections[sectionName].classList.remove(
+          "hidden-section"
+        );
       }
 
       if (navButtons[sectionName]) {
@@ -927,15 +1003,15 @@
     // ============================================================
 
     function getCoachStudents(store) {
-      return Object.values(store.students || {}).filter(student => {
-        return student.coachId === COACH_ID;
-      });
+      return Object.values(store.students || {}).filter(
+        student => student.coachId === COACH_ID
+      );
     }
 
     function getCoachLessons(store) {
-      return (store.lessons || []).filter(lesson => {
-        return lesson.coachId === COACH_ID;
-      });
+      return (store.lessons || []).filter(
+        lesson => lesson.coachId === COACH_ID
+      );
     }
 
     function renderDashboard() {
@@ -947,28 +1023,40 @@
         .map(lesson => {
           return {
             ...lesson,
-            dateTime: new Date(`${lesson.date}T${lesson.start}`)
+            dateTime: new Date(
+              `${lesson.date}T${lesson.start}`
+            )
           };
         })
-        .filter(lesson => lesson.dateTime >= new Date())
-        .sort((a, b) => a.dateTime - b.dateTime);
+        .filter(lesson => {
+          return lesson.dateTime >= new Date();
+        })
+        .sort((a, b) => {
+          return a.dateTime - b.dateTime;
+        });
 
       const nextLesson = upcomingLessons[0];
 
       document.getElementById("dashboardStats").innerHTML = `
         <div class="border rounded-lg p-3">
           <p class="text-xs muted">Students</p>
-          <p class="text-xl font-bold">${students.length}</p>
+          <p class="text-xl font-bold">
+            ${students.length}
+          </p>
         </div>
 
         <div class="border rounded-lg p-3">
           <p class="text-xs muted">Lessons Scheduled</p>
-          <p class="text-xl font-bold">${lessons.length}</p>
+          <p class="text-xl font-bold">
+            ${lessons.length}
+          </p>
         </div>
 
         <div class="border rounded-lg p-3">
           <p class="text-xs muted">Upcoming Lessons</p>
-          <p class="text-xl font-bold">${upcomingLessons.length}</p>
+          <p class="text-xl font-bold">
+            ${upcomingLessons.length}
+          </p>
         </div>
 
         <div class="border rounded-lg p-3">
@@ -976,7 +1064,9 @@
           <p class="text-sm font-semibold">
             ${
               nextLesson
-                ? `${escapeHtml(nextLesson.date)} ${escapeHtml(nextLesson.start)}`
+                ? `${escapeHtml(nextLesson.date)} ${escapeHtml(
+                    nextLesson.start
+                  )}`
                 : "None scheduled"
             }
           </p>
@@ -990,8 +1080,14 @@
 
     let selectedStudentId = null;
 
-    const studentsListElement = document.getElementById("studentsList");
-    const studentSearchElement = document.getElementById("studentSearch");
+    const studentsListElement = document.getElementById(
+      "studentsList"
+    );
+
+    const studentSearchElement = document.getElementById(
+      "studentSearch"
+    );
+
     const selectedStudentPanel = document.getElementById(
       "selectedStudentPanel"
     );
@@ -1007,6 +1103,7 @@
         .sort((a, b) => {
           const first = `${a.date}T${a.start}`;
           const second = `${b.date}T${b.start}`;
+
           return first.localeCompare(second);
         });
     }
@@ -1020,7 +1117,10 @@
           );
         })
         .sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt);
+          return (
+            new Date(b.createdAt) -
+            new Date(a.createdAt)
+          );
         });
     }
 
@@ -1033,86 +1133,104 @@
           );
         })
         .sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt);
+          return (
+            new Date(b.createdAt) -
+            new Date(a.createdAt)
+          );
         });
     }
 
     function renderStudentsList() {
       const store = loadStore();
-      const search = String(studentSearchElement.value || "")
+
+      const search = String(
+        studentSearchElement.value || ""
+      )
         .trim()
         .toLowerCase();
 
-      const students = getCoachStudents(store).filter(student => {
-        if (!search) {
-          return true;
-        }
+      const students = getCoachStudents(store)
+        .filter(student => {
+          if (!search) {
+            return true;
+          }
 
-        return (
-          String(student.name || "").toLowerCase().includes(search) ||
-          String(student.email || "").toLowerCase().includes(search) ||
-          String(student.phone || "").toLowerCase().includes(search)
-        );
-      });
+          return (
+            String(student.name || "")
+              .toLowerCase()
+              .includes(search) ||
+            String(student.email || "")
+              .toLowerCase()
+              .includes(search) ||
+            String(student.phone || "")
+              .toLowerCase()
+              .includes(search)
+          );
+        })
+        .sort((a, b) => {
+          return String(a.name || "").localeCompare(
+            String(b.name || "")
+          );
+        });
 
       if (!students.length) {
         studentsListElement.innerHTML = `
-          <p class="muted text-sm px-2 py-2">
-            No students found.
-          </p>
+          <option value="">
+            No students found
+          </option>
         `;
+
+        selectedStudentId = null;
+        renderSelectedStudentPanel();
         return;
       }
 
-      studentsListElement.innerHTML = students
-        .map(student => {
-          const scheduledLessons = getStudentLessons(
-            store,
-            student.id
-          ).length;
+      studentsListElement.innerHTML = `
+        <option value="">
+          Select a student
+        </option>
 
-          const purchasedLessons = Number(
-            student.lessonsPurchased || 0
-          );
+        ${students
+          .map(student => {
+            const scheduledLessons = getStudentLessons(
+              store,
+              student.id
+            ).length;
 
-          return `
-            <button
-              type="button"
-              data-student-id="${escapeHtml(student.id)}"
-              class="w-full text-left border rounded-lg px-3 py-3 hover:bg-gray-50 ${
-                student.id === selectedStudentId
-                  ? "border-blue-300 bg-blue-50"
-                  : "border-gray-200"
-              }"
-            >
-              <p class="font-semibold text-sm">
+            const purchasedLessons = Number(
+              student.lessonsPurchased || 0
+            );
+
+            return `
+              <option
+                value="${escapeHtml(student.id)}"
+                ${
+                  student.id === selectedStudentId
+                    ? "selected"
+                    : ""
+                }
+              >
                 ${escapeHtml(student.name)}
-              </p>
+                - ${scheduledLessons}/${purchasedLessons} lessons
+              </option>
+            `;
+          })
+          .join("")}
+      `;
 
-              <p class="text-xs muted">
-                ${escapeHtml(student.email || "")}
-              </p>
+      studentsListElement.onchange = () => {
+        selectedStudentId =
+          studentsListElement.value || null;
 
-              <p class="text-xs muted mt-1">
-                ${scheduledLessons} of ${purchasedLessons} lessons scheduled
-              </p>
-            </button>
-          `;
-        })
-        .join("");
-
-      studentsListElement
-        .querySelectorAll("[data-student-id]")
-        .forEach(button => {
-          button.addEventListener("click", () => {
-            selectedStudentId = button.dataset.studentId;
-            renderStudentsList();
-            renderSelectedStudentPanel();
-          });
-        });
+        renderSelectedStudentPanel();
+      };
     }
 
-    function findNextOpenSlot(store, startingDate, duration = 30) {
+    function findNextOpenSlot(
+      store,
+      startingDate,
+      duration = 30
+    ) {
       for (let offset = 0; offset < 90; offset += 1) {
         const date = addDays(startingDate, offset);
 
@@ -1155,16 +1273,27 @@
         selectedStudentPanel.innerHTML = `
           <div class="card p-5">
             <p class="muted">
-              Select a student to view their lessons, notes, photos, and videos.
+              Select a student to view their profile, lessons, notes, photos, and videos.
             </p>
           </div>
         `;
         return;
       }
 
-      const lessons = getStudentLessons(store, student.id);
-      const notes = getStudentNotes(store, student.id);
-      const media = getStudentMedia(store, student.id);
+      const lessons = getStudentLessons(
+        store,
+        student.id
+      );
+
+      const notes = getStudentNotes(
+        store,
+        student.id
+      );
+
+      const media = getStudentMedia(
+        store,
+        student.id
+      );
 
       const purchasedLessons = Math.max(
         0,
@@ -1173,10 +1302,14 @@
 
       const scheduledLessons = lessons.length;
       const nextLessonNumber = scheduledLessons + 1;
+
       const progressPercent = purchasedLessons
         ? Math.min(
             100,
-            Math.round((scheduledLessons / purchasedLessons) * 100)
+            Math.round(
+              (scheduledLessons / purchasedLessons) *
+                100
+            )
           )
         : 0;
 
@@ -1187,7 +1320,7 @@
       );
 
       selectedStudentPanel.innerHTML = `
-        <!-- Student Header -->
+        <!-- Student Profile Header -->
         <div class="card p-5 mb-4">
           <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
             <div>
@@ -1207,8 +1340,13 @@
 
             <div class="md:min-w-56">
               <div class="flex items-center justify-between text-sm mb-1">
-                <span class="font-semibold">Lesson Progress</span>
-                <span>${scheduledLessons} of ${purchasedLessons}</span>
+                <span class="font-semibold">
+                  Lesson Progress
+                </span>
+
+                <span>
+                  ${scheduledLessons} of ${purchasedLessons}
+                </span>
               </div>
 
               <div class="progress-track">
@@ -1221,7 +1359,7 @@
           </div>
         </div>
 
-        <!-- Lessons -->
+        <!-- Scheduled Lessons -->
         <div class="card p-5 mb-4">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
             <div>
@@ -1252,7 +1390,8 @@
                         `${lesson.date}T${lesson.start}`
                       );
 
-                      const isPast = lessonDate < new Date();
+                      const isPast =
+                        lessonDate < new Date();
 
                       return `
                         <div class="border border-gray-200 rounded-lg px-3 py-3">
@@ -1270,7 +1409,10 @@
                                 ·
                                 ${escapeHtml(lesson.start)}
                                 ·
-                                ${Number(lesson.duration || 30)} minutes
+                                ${Number(
+                                  lesson.duration || 30
+                                )}
+                                minutes
                               </p>
 
                               <p class="text-xs ${
@@ -1278,13 +1420,19 @@
                                   ? "text-gray-500"
                                   : "text-blue-600"
                               } mt-1">
-                                ${isPast ? "Past lesson" : "Upcoming lesson"}
+                                ${
+                                  isPast
+                                    ? "Past lesson"
+                                    : "Upcoming lesson"
+                                }
                               </p>
                             </div>
 
                             <button
                               type="button"
-                              data-remove-lesson="${escapeHtml(lesson.id)}"
+                              data-remove-lesson="${escapeHtml(
+                                lesson.id
+                              )}"
                               class="text-xs text-red-600 font-semibold"
                             >
                               Cancel
@@ -1315,14 +1463,18 @@
               <input
                 id="scheduleDate"
                 type="date"
-                value="${escapeHtml(suggestedSlot.date)}"
+                value="${escapeHtml(
+                  suggestedSlot.date
+                )}"
                 class="border border-gray-300 rounded-lg px-3 py-2 text-sm"
               />
 
               <input
                 id="scheduleTime"
                 type="time"
-                value="${escapeHtml(suggestedSlot.time)}"
+                value="${escapeHtml(
+                  suggestedSlot.time
+                )}"
                 step="1800"
                 class="border border-gray-300 rounded-lg px-3 py-2 text-sm"
               />
@@ -1331,9 +1483,17 @@
                 id="scheduleDuration"
                 class="border border-gray-300 rounded-lg px-3 py-2 text-sm"
               >
-                <option value="30">30 minutes</option>
-                <option value="60">60 minutes</option>
-                <option value="90">90 minutes</option>
+                <option value="30">
+                  30 minutes
+                </option>
+
+                <option value="60">
+                  60 minutes
+                </option>
+
+                <option value="90">
+                  90 minutes
+                </option>
               </select>
 
               <button
@@ -1387,12 +1547,16 @@
                           </p>
 
                           <p class="text-xs muted mt-2">
-                            Added ${formatDateTime(note.createdAt)}
+                            Added ${formatDateTime(
+                              note.createdAt
+                            )}
                           </p>
 
                           <button
                             type="button"
-                            data-remove-note="${escapeHtml(note.id)}"
+                            data-remove-note="${escapeHtml(
+                              note.id
+                            )}"
                             class="text-xs text-red-600 font-semibold mt-2"
                           >
                             Delete Note
@@ -1410,7 +1574,7 @@
           </div>
         </div>
 
-        <!-- Media -->
+        <!-- Photos and Videos -->
         <div class="card p-5 mb-4">
           <h3 class="text-lg font-bold mb-1">
             Photos and Videos
@@ -1446,7 +1610,8 @@
               media.length
                 ? media
                     .map(item => {
-                      const isVideo = item.type === "video";
+                      const isVideo =
+                        item.type === "video";
 
                       return `
                         <div class="border border-gray-200 rounded-lg p-2">
@@ -1463,22 +1628,30 @@
                                 <img
                                   src="${item.url}"
                                   class="media-thumb"
-                                  alt="${escapeHtml(item.name || "Photo")}"
+                                  alt="${escapeHtml(
+                                    item.name || "Photo"
+                                  )}"
                                 />
                               `
                           }
 
                           <p class="text-xs font-semibold truncate mt-2">
-                            ${escapeHtml(item.name || "Upload")}
+                            ${escapeHtml(
+                              item.name || "Upload"
+                            )}
                           </p>
 
                           <p class="text-xs muted">
-                            Added ${formatDateTime(item.createdAt)}
+                            Added ${formatDateTime(
+                              item.createdAt
+                            )}
                           </p>
 
                           <button
                             type="button"
-                            data-remove-media="${escapeHtml(item.id)}"
+                            data-remove-media="${escapeHtml(
+                              item.id
+                            )}"
                             class="text-xs text-red-600 font-semibold mt-2"
                           >
                             Delete
@@ -1506,15 +1679,30 @@
       );
 
       scheduleButton.addEventListener("click", () => {
-        const date = document.getElementById("scheduleDate").value;
-        const time = document.getElementById("scheduleTime").value;
+        const date =
+          document.getElementById(
+            "scheduleDate"
+          ).value;
+
+        const time =
+          document.getElementById(
+            "scheduleTime"
+          ).value;
+
         const duration = Number(
-          document.getElementById("scheduleDuration").value || 30
+          document.getElementById(
+            "scheduleDuration"
+          ).value || 30
         );
-        const message = document.getElementById("scheduleMessage");
+
+        const message =
+          document.getElementById(
+            "scheduleMessage"
+          );
 
         if (!date || !time) {
-          message.textContent = "Please select a date and time.";
+          message.textContent =
+            "Please select a date and time.";
           return;
         }
 
@@ -1548,9 +1736,11 @@
         });
 
         saveStore(store);
+
         renderAll();
 
         selectedStudentId = student.id;
+
         renderStudentsList();
         renderSelectedStudentPanel();
       });
@@ -1559,7 +1749,8 @@
         .querySelectorAll("[data-remove-lesson]")
         .forEach(button => {
           button.addEventListener("click", () => {
-            const lessonId = button.dataset.removeLesson;
+            const lessonId =
+              button.dataset.removeLesson;
 
             if (!confirm("Cancel this lesson?")) {
               return;
@@ -1567,9 +1758,9 @@
 
             const store = loadStore();
 
-            store.lessons = store.lessons.filter(lesson => {
-              return lesson.id !== lessonId;
-            });
+            store.lessons = store.lessons.filter(
+              lesson => lesson.id !== lessonId
+            );
 
             saveStore(store);
             renderAll();
@@ -1605,7 +1796,8 @@
         .querySelectorAll("[data-remove-note]")
         .forEach(button => {
           button.addEventListener("click", () => {
-            const noteId = button.dataset.removeNote;
+            const noteId =
+              button.dataset.removeNote;
 
             if (!confirm("Delete this note?")) {
               return;
@@ -1613,9 +1805,9 @@
 
             const store = loadStore();
 
-            store.notes = store.notes.filter(note => {
-              return note.id !== noteId;
-            });
+            store.notes = store.notes.filter(
+              note => note.id !== noteId
+            );
 
             saveStore(store);
             renderAll();
@@ -1625,8 +1817,16 @@
       document
         .getElementById("addMediaBtn")
         .addEventListener("click", () => {
-          const fileInput = document.getElementById("newMediaFile");
-          const message = document.getElementById("mediaMessage");
+          const fileInput =
+            document.getElementById(
+              "newMediaFile"
+            );
+
+          const message =
+            document.getElementById(
+              "mediaMessage"
+            );
+
           const file = fileInput.files?.[0];
 
           if (!file) {
@@ -1668,7 +1868,8 @@
         .querySelectorAll("[data-remove-media]")
         .forEach(button => {
           button.addEventListener("click", () => {
-            const mediaId = button.dataset.removeMedia;
+            const mediaId =
+              button.dataset.removeMedia;
 
             if (!confirm("Delete this photo or video?")) {
               return;
@@ -1676,9 +1877,9 @@
 
             const store = loadStore();
 
-            store.media = store.media.filter(item => {
-              return item.id !== mediaId;
-            });
+            store.media = store.media.filter(
+              item => item.id !== mediaId
+            );
 
             saveStore(store);
             renderAll();
@@ -1688,7 +1889,9 @@
 
     document
       .getElementById("studentSearch")
-      .addEventListener("input", renderStudentsList);
+      .addEventListener("input", () => {
+        renderStudentsList();
+      });
 
     document
       .getElementById("addStudentBtn")
@@ -1706,13 +1909,19 @@
           .value.trim();
 
         const lessonsPurchased = Number(
-          document.getElementById("newStudentLessons").value || 4
+          document.getElementById(
+            "newStudentLessons"
+          ).value || 4
         );
 
-        const message = document.getElementById("addStudentMsg");
+        const message =
+          document.getElementById(
+            "addStudentMsg"
+          );
 
         if (!name) {
-          message.textContent = "Please enter a student name.";
+          message.textContent =
+            "Please enter a student name.";
           return;
         }
 
@@ -1725,17 +1934,31 @@
           email,
           phone,
           coachId: COACH_ID,
-          lessonsPurchased: Math.max(1, lessonsPurchased)
+          lessonsPurchased: Math.max(
+            1,
+            lessonsPurchased
+          )
         };
 
         saveStore(store);
 
         selectedStudentId = id;
 
-        document.getElementById("newStudentName").value = "";
-        document.getElementById("newStudentEmail").value = "";
-        document.getElementById("newStudentPhone").value = "";
-        document.getElementById("newStudentLessons").value = "4";
+        document.getElementById(
+          "newStudentName"
+        ).value = "";
+
+        document.getElementById(
+          "newStudentEmail"
+        ).value = "";
+
+        document.getElementById(
+          "newStudentPhone"
+        ).value = "";
+
+        document.getElementById(
+          "newStudentLessons"
+        ).value = "4";
 
         message.textContent = "Student added.";
 
@@ -1750,25 +1973,54 @@
     const SLOT_END_MIN = 14 * 60;
     const SLOT_MINUTES = 30;
 
-    const calendarGrid = document.getElementById("calendarGrid");
-    const monthHeaders = document.getElementById("monthHeaders");
-    const weekHeaders = document.getElementById("weekHeaders");
+    const calendarGrid = document.getElementById(
+      "calendarGrid"
+    );
+
+    const monthHeaders = document.getElementById(
+      "monthHeaders"
+    );
+
+    const weekHeaders = document.getElementById(
+      "weekHeaders"
+    );
+
     const selectedDateLabel = document.getElementById(
       "selectedDateLabel"
     );
+
     const selectedDayEvents = document.getElementById(
       "selectedDayEvents"
     );
-    const rangeLabel = document.getElementById("rangeLabel");
-    const dayTimeline = document.getElementById("dayTimeline");
 
-    const dayViewButton = document.getElementById("dayViewBtn");
-    const weekViewButton = document.getElementById("weekViewBtn");
+    const rangeLabel = document.getElementById(
+      "rangeLabel"
+    );
+
+    const dayTimeline = document.getElementById(
+      "dayTimeline"
+    );
+
+    const dayViewButton = document.getElementById(
+      "dayViewBtn"
+    );
+
+    const weekViewButton = document.getElementById(
+      "weekViewBtn"
+    );
+
     const monthViewButton = document.getElementById(
       "monthViewBtn"
     );
-    const previousButton = document.getElementById("prevBtn");
-    const nextButton = document.getElementById("nextBtn");
+
+    const previousButton = document.getElementById(
+      "prevBtn"
+    );
+
+    const nextButton = document.getElementById(
+      "nextBtn"
+    );
+
     const coachDurationElement = document.getElementById(
       "coachDuration"
     );
@@ -1827,11 +2079,19 @@
 
       const dateKey = ymd(date);
 
-      const blocks = getCoachBlocksForDay(store, dateKey);
+      const blocks = getCoachBlocksForDay(
+        store,
+        dateKey
+      );
 
       for (const block of blocks) {
-        const blockStart = timeToMinutes(block.start);
-        const blockEnd = timeToMinutes(block.end);
+        const blockStart = timeToMinutes(
+          block.start
+        );
+
+        const blockEnd = timeToMinutes(
+          block.end
+        );
 
         if (
           overlaps(
@@ -1845,12 +2105,19 @@
         }
       }
 
-      const lessons = getCoachLessonsForDay(store, dateKey);
+      const lessons = getCoachLessonsForDay(
+        store,
+        dateKey
+      );
 
       for (const lesson of lessons) {
-        const lessonStart = timeToMinutes(lesson.start);
+        const lessonStart = timeToMinutes(
+          lesson.start
+        );
+
         const lessonEnd =
-          lessonStart + Number(lesson.duration || 30);
+          lessonStart +
+          Number(lesson.duration || 30);
 
         if (
           overlaps(
@@ -1916,6 +2183,7 @@
           currentDate.getFullYear(),
           currentDate.getMonth()
         );
+
         return;
       }
 
@@ -1923,22 +2191,23 @@
         const start = getWeekStart(currentDate);
         const end = addDays(start, 6);
 
-        rangeLabel.textContent = `${shortDate(start)} - ${shortDate(
-          end
-        )}`;
+        rangeLabel.textContent = `${shortDate(
+          start
+        )} - ${shortDate(end)}`;
 
         return;
       }
 
-      rangeLabel.textContent = currentDate.toLocaleDateString(
-        undefined,
-        {
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-          year: "numeric"
-        }
-      );
+      rangeLabel.textContent =
+        currentDate.toLocaleDateString(
+          undefined,
+          {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+          }
+        );
     }
 
     function renderCalendarHeaders() {
@@ -1961,14 +2230,16 @@
           const header = document.createElement("div");
 
           header.className = "cal-dow";
-          header.textContent = date.toLocaleDateString(
-            undefined,
-            {
-              weekday: "short",
-              month: "short",
-              day: "numeric"
-            }
-          );
+
+          header.textContent =
+            date.toLocaleDateString(
+              undefined,
+              {
+                weekday: "short",
+                month: "short",
+                day: "numeric"
+              }
+            );
 
           weekHeaders.appendChild(header);
         }
@@ -1981,26 +2252,36 @@
     }
 
     function renderDayCard(date, options = {}) {
-      const { otherMonth = false } = options;
+      const {
+        otherMonth = false
+      } = options;
+
       const store = loadStore();
       const dateKey = ymd(date);
       const status = getDayStatus(store, date);
-      const lessonCount = getCoachLessonsForDay(
-        store,
-        dateKey
-      ).length;
+
+      const lessonCount =
+        getCoachLessonsForDay(
+          store,
+          dateKey
+        ).length;
 
       const button = document.createElement("button");
 
       button.type = "button";
+
       button.className = [
         "cal-day",
         status === "available"
           ? "available-day"
           : "unavailable-day",
         otherMonth ? "other-month" : "",
-        isSameDay(date, today) ? "today" : "",
-        isSameDay(date, selectedDate) ? "selected" : ""
+        isSameDay(date, today)
+          ? "today"
+          : "",
+        isSameDay(date, selectedDate)
+          ? "selected"
+          : ""
       ].join(" ");
 
       button.innerHTML = `
@@ -2047,7 +2328,12 @@
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
 
-        const firstDay = new Date(year, month, 1);
+        const firstDay = new Date(
+          year,
+          month,
+          1
+        );
+
         const startingDay = firstDay.getDay();
 
         const daysInMonth = new Date(
@@ -2085,7 +2371,11 @@
           day += 1
         ) {
           cells.push({
-            date: new Date(year, month, day),
+            date: new Date(
+              year,
+              month,
+              day
+            ),
             otherMonth: false
           });
         }
@@ -2094,7 +2384,11 @@
 
         while (cells.length < 42) {
           cells.push({
-            date: new Date(year, month + 1, nextMonthDay),
+            date: new Date(
+              year,
+              month + 1,
+              nextMonthDay
+            ),
             otherMonth: true
           });
 
@@ -2103,9 +2397,12 @@
 
         cells.forEach(cell => {
           calendarGrid.appendChild(
-            renderDayCard(cell.date, {
-              otherMonth: cell.otherMonth
-            })
+            renderDayCard(
+              cell.date,
+              {
+                otherMonth: cell.otherMonth
+              }
+            )
           );
         });
       }
@@ -2113,17 +2410,26 @@
       if (calendarView === "week") {
         calendarGrid.className = "week-grid";
 
-        const start = getWeekStart(currentDate);
+        const start = getWeekStart(
+          currentDate
+        );
 
-        for (let index = 0; index < 7; index += 1) {
+        for (
+          let index = 0;
+          index < 7;
+          index += 1
+        ) {
           calendarGrid.appendChild(
-            renderDayCard(addDays(start, index))
+            renderDayCard(
+              addDays(start, index)
+            )
           );
         }
       }
 
       if (calendarView === "day") {
         calendarGrid.className = "day-grid";
+
         calendarGrid.appendChild(
           renderDayCard(currentDate)
         );
@@ -2141,15 +2447,23 @@
           : selectedDate;
 
       const dateKey = ymd(day);
-      const lessons = getCoachLessonsForDay(store, dateKey);
+
+      const lessons =
+        getCoachLessonsForDay(
+          store,
+          dateKey
+        );
 
       selectedDateLabel.textContent =
-        `${day.toLocaleDateString(undefined, {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-          year: "numeric"
-        })} - Appointments`;
+        `${day.toLocaleDateString(
+          undefined,
+          {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          }
+        )} - Appointments`;
 
       if (!lessons.length) {
         selectedDayEvents.innerHTML = `
@@ -2157,26 +2471,41 @@
             No lessons scheduled.
           </p>
         `;
+
         return;
       }
 
       selectedDayEvents.innerHTML = lessons
-        .sort((a, b) => a.start.localeCompare(b.start))
+        .sort((a, b) => {
+          return a.start.localeCompare(
+            b.start
+          );
+        })
         .map(lesson => {
-          const student = store.students?.[lesson.studentId];
+          const student =
+            store.students?.[
+              lesson.studentId
+            ];
 
           return `
             <div class="border border-gray-200 rounded-lg px-3 py-3">
               <p class="font-semibold">
-                ${escapeHtml(lesson.title || "Lesson")}
+                ${escapeHtml(
+                  lesson.title || "Lesson"
+                )}
               </p>
 
               <p class="text-xs muted mt-1">
                 ${escapeHtml(lesson.start)}
                 ·
-                ${Number(lesson.duration || 30)} minutes
+                ${Number(
+                  lesson.duration || 30
+                )} minutes
                 ·
-                ${escapeHtml(student?.name || "Unknown student")}
+                ${escapeHtml(
+                  student?.name ||
+                    "Unknown student"
+                )}
               </p>
             </div>
           `;
@@ -2198,23 +2527,28 @@
             Saturday is unavailable.
           </p>
         `;
+
         return;
       }
 
       const dateKey = ymd(day);
+
       const duration = Number(
         coachDurationElement.value || 30
       );
 
-      const lessons = getCoachLessonsForDay(
-        store,
-        dateKey
-      ).map(lesson => {
-        return {
-          ...lesson,
-          startMinutes: timeToMinutes(lesson.start)
-        };
-      });
+      const lessons =
+        getCoachLessonsForDay(
+          store,
+          dateKey
+        ).map(lesson => {
+          return {
+            ...lesson,
+            startMinutes: timeToMinutes(
+              lesson.start
+            )
+          };
+        });
 
       const rows = [];
 
@@ -2225,9 +2559,13 @@
       ) {
         const label = minutesToLabel(time);
 
-        const bookedLesson = lessons.find(lesson => {
-          return lesson.startMinutes === time;
-        });
+        const bookedLesson = lessons.find(
+          lesson => {
+            return (
+              lesson.startMinutes === time
+            );
+          }
+        );
 
         const open = isSlotOpenForCoach(
           store,
@@ -2237,9 +2575,10 @@
         );
 
         if (bookedLesson) {
-          const student = store.students?.[
-            bookedLesson.studentId
-          ];
+          const student =
+            store.students?.[
+              bookedLesson.studentId
+            ];
 
           rows.push(`
             <div class="timeline-row timeline-booked">
@@ -2249,12 +2588,16 @@
                 </span>
 
                 <span class="ml-2">
-                  ${escapeHtml(student?.name || "Booked")}
+                  ${escapeHtml(
+                    student?.name || "Booked"
+                  )}
                 </span>
               </div>
 
               <span class="timeline-status status-booked">
-                ${Number(bookedLesson.duration || 30)}m
+                ${Number(
+                  bookedLesson.duration || 30
+                )}m
               </span>
             </div>
           `);
@@ -2307,7 +2650,9 @@
         .querySelectorAll("[data-open-slot]")
         .forEach(button => {
           button.addEventListener("click", () => {
-            quickBook(Number(button.dataset.openSlot));
+            quickBook(
+              Number(button.dataset.openSlot)
+            );
           });
         });
     }
@@ -2335,7 +2680,8 @@
         return;
       }
 
-      const studentIndex = Number(selection) - 1;
+      const studentIndex =
+        Number(selection) - 1;
 
       if (
         !Number.isInteger(studentIndex) ||
@@ -2345,7 +2691,9 @@
         return;
       }
 
-      const student = students[studentIndex];
+      const student =
+        students[studentIndex];
+
       const duration = Number(
         coachDurationElement.value || 30
       );
@@ -2388,6 +2736,7 @@
     dayViewButton.addEventListener("click", () => {
       calendarView = "day";
       currentDate = cloneDate(selectedDate);
+
       renderCalendar();
       renderSelectedDay();
     });
@@ -2395,6 +2744,7 @@
     weekViewButton.addEventListener("click", () => {
       calendarView = "week";
       currentDate = cloneDate(selectedDate);
+
       renderCalendar();
       renderSelectedDay();
     });
@@ -2402,6 +2752,7 @@
     monthViewButton.addEventListener("click", () => {
       calendarView = "month";
       currentDate = cloneDate(selectedDate);
+
       renderCalendar();
       renderSelectedDay();
     });
@@ -2414,10 +2765,19 @@
           1
         );
       } else if (calendarView === "week") {
-        currentDate = addDays(currentDate, -7);
+        currentDate = addDays(
+          currentDate,
+          -7
+        );
       } else {
-        currentDate = addDays(currentDate, -1);
-        selectedDate = cloneDate(currentDate);
+        currentDate = addDays(
+          currentDate,
+          -1
+        );
+
+        selectedDate = cloneDate(
+          currentDate
+        );
       }
 
       renderCalendar();
@@ -2432,30 +2792,60 @@
           1
         );
       } else if (calendarView === "week") {
-        currentDate = addDays(currentDate, 7);
+        currentDate = addDays(
+          currentDate,
+          7
+        );
       } else {
-        currentDate = addDays(currentDate, 1);
-        selectedDate = cloneDate(currentDate);
+        currentDate = addDays(
+          currentDate,
+          1
+        );
+
+        selectedDate = cloneDate(
+          currentDate
+        );
       }
 
       renderCalendar();
       renderSelectedDay();
     });
 
-    coachDurationElement.addEventListener("change", () => {
-      renderDayTimeline();
-    });
+    coachDurationElement.addEventListener(
+      "change",
+      () => {
+        renderDayTimeline();
+      }
+    );
 
     // ============================================================
     // Availability Blocks
     // ============================================================
 
-    const blockDateElement = document.getElementById("blockDate");
-    const blockStartElement = document.getElementById("blockStart");
-    const blockEndElement = document.getElementById("blockEnd");
-    const addBlockButton = document.getElementById("addBlockBtn");
-    const blockMessage = document.getElementById("blockMsg");
-    const blocksListElement = document.getElementById("blocksList");
+    const blockDateElement = document.getElementById(
+      "blockDate"
+    );
+
+    const blockStartElement = document.getElementById(
+      "blockStart"
+    );
+
+    const blockEndElement = document.getElementById(
+      "blockEnd"
+    );
+
+    const addBlockButton = document.getElementById(
+      "addBlockBtn"
+    );
+
+    const blockMessage = document.getElementById(
+      "blockMsg"
+    );
+
+    const blocksListElement = document.getElementById(
+      "blocksList"
+    );
+
     const clearBlocksButton = document.getElementById(
       "clearBlocksBtn"
     );
@@ -2466,7 +2856,9 @@
       const store = loadStore();
 
       const blocks = (store.coachBlocks || [])
-        .filter(block => block.coachId === COACH_ID)
+        .filter(block => {
+          return block.coachId === COACH_ID;
+        })
         .sort((a, b) => {
           return `${a.date}${a.start}`.localeCompare(
             `${b.date}${b.start}`
@@ -2479,6 +2871,7 @@
             No blocks added.
           </p>
         `;
+
         return;
       }
 
@@ -2495,7 +2888,9 @@
 
               <button
                 type="button"
-                data-delete-block="${escapeHtml(block.id)}"
+                data-delete-block="${escapeHtml(
+                  block.id
+                )}"
                 class="text-xs text-red-600 font-semibold"
               >
                 Delete
@@ -2511,9 +2906,15 @@
           button.addEventListener("click", () => {
             const store = loadStore();
 
-            store.coachBlocks = store.coachBlocks.filter(block => {
-              return block.id !== button.dataset.deleteBlock;
-            });
+            store.coachBlocks =
+              store.coachBlocks.filter(
+                block => {
+                  return (
+                    block.id !==
+                    button.dataset.deleteBlock
+                  );
+                }
+              );
 
             saveStore(store);
             renderAll();
@@ -2521,51 +2922,60 @@
         });
     }
 
-    addBlockButton.addEventListener("click", () => {
-      const date = blockDateElement.value;
-      const start = blockStartElement.value;
-      const end = blockEndElement.value;
+    addBlockButton.addEventListener(
+      "click",
+      () => {
+        const date = blockDateElement.value;
+        const start = blockStartElement.value;
+        const end = blockEndElement.value;
 
-      if (!date || !start || !end || end <= start) {
+        if (!date || !start || !end || end <= start) {
+          blockMessage.textContent =
+            "Please enter a valid date and time range.";
+          return;
+        }
+
+        const store = loadStore();
+
+        store.coachBlocks.push({
+          id: uid("block"),
+          coachId: COACH_ID,
+          date,
+          start,
+          end,
+          createdAt: new Date().toISOString()
+        });
+
+        saveStore(store);
+
         blockMessage.textContent =
-          "Please enter a valid date and time range.";
-        return;
+          "Availability block added.";
+
+        renderAll();
       }
+    );
 
-      const store = loadStore();
+    clearBlocksButton.addEventListener(
+      "click",
+      () => {
+        if (!confirm("Clear all availability blocks?")) {
+          return;
+        }
 
-      store.coachBlocks.push({
-        id: uid("block"),
-        coachId: COACH_ID,
-        date,
-        start,
-        end,
-        createdAt: new Date().toISOString()
-      });
+        const store = loadStore();
 
-      saveStore(store);
+        store.coachBlocks =
+          store.coachBlocks.filter(block => {
+            return block.coachId !== COACH_ID;
+          });
 
-      blockMessage.textContent = "Availability block added.";
-      renderAll();
-    });
-
-    clearBlocksButton.addEventListener("click", () => {
-      if (!confirm("Clear all availability blocks?")) {
-        return;
+        saveStore(store);
+        renderAll();
       }
-
-      const store = loadStore();
-
-      store.coachBlocks = store.coachBlocks.filter(block => {
-        return block.coachId !== COACH_ID;
-      });
-
-      saveStore(store);
-      renderAll();
-    });
+    );
 
     // ============================================================
-    // Rendering and Storage Synchronization
+    // Rendering and Synchronization
     // ============================================================
 
     function renderAll() {
@@ -2578,16 +2988,19 @@
       renderBlocksList();
     }
 
-    window.addEventListener("storage", event => {
-      if (
-        event.key === STORE_KEY ||
-        event.key === `${STORE_KEY}_tick`
-      ) {
-        renderAll();
+    window.addEventListener(
+      "storage",
+      event => {
+        if (
+          event.key === STORE_KEY ||
+          event.key === `${STORE_KEY}_tick`
+        ) {
+          renderAll();
+        }
       }
-    });
+    );
 
-    // Start the application
+    // Start application
     renderAll();
     showSection("dashboard");
   </script>
