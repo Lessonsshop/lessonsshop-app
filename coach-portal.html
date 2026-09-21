@@ -1046,25 +1046,44 @@
       showSection("calendar");
     });
 
-    navButtons.students.addEventListener("click", () => {
+        navButtons.students.addEventListener("click", () => {
       showSection("students");
     });
 
-    // ============================================================
-    // Dashboard
-    // ============================================================
+    const addStudentModalOverlay = document.getElementById(
+      "addStudentModalOverlay"
+    );
 
-    function getCoachStudents(store) {
-      return Object.values(store.students || {}).filter(
-        student => student.coachId === COACH_ID
-      );
+    const openAddStudentButton = document.getElementById(
+      "openAddStudentBtn"
+    );
+
+    const closeAddStudentModalButton = document.getElementById(
+      "closeAddStudentModalBtn"
+    );
+
+    function openAddStudentModal() {
+      addStudentModalOverlay.classList.remove("hidden");
     }
 
-    function getCoachLessons(store) {
-      return (store.lessons || []).filter(
-        lesson => lesson.coachId === COACH_ID
-      );
+    function closeAddStudentModal() {
+      addStudentModalOverlay.classList.add("hidden");
     }
+
+    openAddStudentButton.addEventListener("click", () => {
+      showSection("students");
+      openAddStudentModal();
+    });
+
+    closeAddStudentModalButton.addEventListener("click", () => {
+      closeAddStudentModal();
+    });
+
+    addStudentModalOverlay.addEventListener("click", event => {
+      if (event.target === addStudentModalOverlay) {
+        closeAddStudentModal();
+      }
+    });
 
     function renderDashboard() {
       const store = loadStore();
@@ -1192,7 +1211,7 @@
         });
     }
 
-    function renderStudentsList() {
+        function renderStudentsList() {
       const store = loadStore();
 
       const search = String(
@@ -1227,15 +1246,61 @@
 
       if (!students.length) {
         studentsListElement.innerHTML = `
-          <option value="">
-            No students found
-          </option>
+          <p class="muted text-sm px-2 py-2">
+            No students found.
+          </p>
         `;
 
-        selectedStudentId = null;
-        renderSelectedStudentPanel();
         return;
       }
+
+      studentsListElement.innerHTML = students
+        .map(student => {
+          const scheduledLessons = getStudentLessons(
+            store,
+            student.id
+          ).length;
+
+          const purchasedLessons = Number(
+            student.lessonsPurchased || 0
+          );
+
+          return `
+            <button
+              type="button"
+              data-student-id="${escapeHtml(student.id)}"
+              class="w-full text-left border rounded-lg px-3 py-2 hover:bg-gray-50 ${
+                student.id === selectedStudentId
+                  ? "border-blue-300 bg-blue-50"
+                  : "border-gray-200"
+              }"
+            >
+              <p class="font-semibold text-sm">
+                ${escapeHtml(student.name)}
+              </p>
+
+              <p class="text-xs muted">
+                ${escapeHtml(student.email || "")}
+              </p>
+
+              <p class="text-xs muted mt-1">
+                ${scheduledLessons}/${purchasedLessons} lessons scheduled
+              </p>
+            </button>
+          `;
+        })
+        .join("");
+
+      studentsListElement
+        .querySelectorAll("[data-student-id]")
+        .forEach(button => {
+          button.addEventListener("click", () => {
+            selectedStudentId = button.dataset.studentId;
+            renderStudentsList();
+            renderSelectedStudentPanel();
+          });
+        });
+    }
 
       studentsListElement.innerHTML = `
         <option value="">
@@ -1789,12 +1854,11 @@
 
         saveStore(store);
 
+               message.textContent = "Student added.";
+
+        closeAddStudentModal();
+
         renderAll();
-
-        selectedStudentId = student.id;
-
-        renderStudentsList();
-        renderSelectedStudentPanel();
       });
 
       document
