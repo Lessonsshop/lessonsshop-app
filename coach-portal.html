@@ -593,75 +593,118 @@
         </div>
       </section>
 
-      <!-- Students -->
+            <!-- Students -->
       <section
         id="studentsSection"
         class="hidden-section"
       >
         <div class="max-w-3xl mx-auto space-y-4">
 
-          <!-- Add Student First -->
+          <!-- Search and Select Student -->
           <div class="card p-5">
-            <h2 class="text-2xl font-bold mb-1">
-              Add Student
+            <h2 class="text-lg font-bold mb-2">
+              Find Student
             </h2>
 
-            <p class="muted text-sm mb-4">
-              Add a student to your coaching roster.
-            </p>
+            <input
+              id="studentSearch"
+              type="text"
+              placeholder="Search students..."
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm mb-3"
+            />
 
-            <div class="space-y-2">
-              <input
-                id="newStudentName"
-                type="text"
-                placeholder="Full name"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-              />
+            <div
+              id="studentsList"
+              class="space-y-2"
+            ></div>
+          </div>
 
-              <input
-                id="newStudentEmail"
-                type="email"
-                placeholder="Email"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-              />
-
-              <input
-                id="newStudentPhone"
-                type="text"
-                placeholder="Phone"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-              />
-
-              <div>
-                <label
-                  for="newStudentLessons"
-                  class="text-xs font-medium muted"
-                >
-                  Lessons Purchased
-                </label>
-
-                <input
-                  id="newStudentLessons"
-                  type="number"
-                  min="1"
-                  value="4"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                />
-              </div>
-
-              <button
-                id="addStudentBtn"
-                class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold"
-              >
-                Add Student
-              </button>
-
-              <p
-                id="addStudentMsg"
-                class="text-xs muted"
-              ></p>
+          <!-- Selected Student Profile -->
+          <div id="selectedStudentPanel">
+            <div class="card p-5">
+              <p class="muted">
+                Select a student to view their profile, lessons, notes, photos, and videos.
+              </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Add Student Modal -->
+      <div
+        id="addStudentModalOverlay"
+        class="hidden fixed inset-0 bg-black/40 z-40 flex items-center justify-center p-4"
+      >
+        <div class="card p-5 w-full max-w-md relative">
+          <button
+            id="closeAddStudentModalBtn"
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+            aria-label="Close"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <h2 class="text-xl font-bold mb-1">
+            Add Student
+          </h2>
+
+          <p class="muted text-sm mb-4">
+            Add a student to your coaching roster.
+          </p>
+
+          <div class="space-y-2">
+            <input
+              id="newStudentName"
+              type="text"
+              placeholder="Full name"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            />
+
+            <input
+              id="newStudentEmail"
+              type="email"
+              placeholder="Email"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            />
+
+            <input
+              id="newStudentPhone"
+              type="text"
+              placeholder="Phone"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+            />
+
+            <div>
+              <label
+                for="newStudentLessons"
+                class="text-xs font-medium muted"
+              >
+                Lessons Purchased
+              </label>
+
+              <input
+                id="newStudentLessons"
+                type="number"
+                min="1"
+                value="4"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              />
+            </div>
+
+            <button
+              id="addStudentBtn"
+              class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+            >
+              Add Student
+            </button>
+
+            <p
+              id="addStudentMsg"
+              class="text-xs muted"
+            ></p>
+          </div>
+        </div>
+      </div>
 
           <!-- Search and Select Student -->
           <div class="card p-5">
