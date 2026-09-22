@@ -131,63 +131,44 @@
     </div>
 
     <script>
-        function switchTab(tab) {
-            const studentForm = document.getElementById('studentForm');
-            const coachForm = document.getElementById('coachForm');
-            const studentTab = document.getElementById('studentTab');
-            const coachTab = document.getElementById('coachTab');
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
 
-            if (tab === 'student') {
-                studentForm.style.display = 'block';
-                coachForm.style.display = 'none';
-                studentTab.style.background = '#2563eb';
-                studentTab.style.color = 'white';
-                coachTab.style.background = '#e5e7eb';
-                coachTab.style.color = '#6b7280';
-            } else {
-                studentForm.style.display = 'none';
-                coachForm.style.display = 'block';
-                studentTab.style.background = '#e5e7eb';
-                studentTab.style.color = '#6b7280';
-                coachTab.style.background = '#2563eb';
-                coachTab.style.color = 'white';
-            }
+        field.type = field.type === "password"
+            ? "text"
+            : "password";
+    }
+
+    function handleCoachLogin(event) {
+        event.preventDefault();
+
+        const email = document
+            .getElementById("coachEmail")
+            .value
+            .trim();
+
+        const password = document
+            .getElementById("coachPassword")
+            .value;
+
+        const loginMessage = document.getElementById("loginMessage");
+
+        loginMessage.classList.add("hidden");
+        loginMessage.textContent = "";
+
+        if (
+            email === "coach@example.com" &&
+            password === "lessons123"
+        ) {
+            window.location.href = "coach-portal.html";
+            return;
         }
 
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            if (field.type === 'password') {
-                field.type = 'text';
-            } else {
-                field.type = 'password';
-            }
-        }
+        loginMessage.textContent =
+            "The email address or password is incorrect.";
 
-        function handleStudentLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('studentEmail').value;
-            const password = document.getElementById('studentPassword').value;
-
-            // Demo credentials
-            if (email === 'student@example.com' && password === 'lessons123') {
-                window.location.href = 'student-portal.html';
-            } else {
-                alert('Invalid credentials. Use:\nEmail: student@example.com\nPassword: lessons123');
-            }
-        }
-
-        function handleCoachLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('coachEmail').value;
-            const password = document.getElementById('coachPassword').value;
-
-            // Demo credentials
-            if (email === 'coach@example.com' && password === 'lessons123') {
-                window.location.href = 'coach-portal.html';
-            } else {
-                alert('Invalid credentials. Use:\nEmail: coach@example.com\nPassword: lessons123');
-            }
-        }
-    </script>
+        loginMessage.classList.remove("hidden");
+    }
+</script>
 </body>
 </html>
